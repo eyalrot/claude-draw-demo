@@ -1,0 +1,1503 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Initialize Project Structure",
+        "description": "Set up the Python project with modern tooling, directory structure, and development environment",
+        "details": "Create project structure with src/claude_draw/, tests/, docs/, and examples/ directories. Set up pyproject.toml with project metadata, dependencies (pydantic>=2.0, typing-extensions for Python 3.9+). Configure development tools: ruff for linting, black for formatting, mypy for type checking, pytest for testing. Create .gitignore, README.md, and LICENSE files. Set up pre-commit hooks for code quality checks.",
+        "testStrategy": "Verify project can be installed with pip install -e ., all development tools run without errors, and a simple 'hello world' test passes",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create project directory structure",
+            "description": "Set up the standard Python project directory layout with src, tests, docs, and other essential folders",
+            "dependencies": [],
+            "details": "Create the following directory structure:\n- src/claude_draw/ (main package directory)\n- tests/ (for unit and integration tests)\n- docs/ (for documentation)\n- examples/ (for example scripts)\n- scripts/ (for utility scripts)\n\nEnsure proper __init__.py files are created in package directories.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Configure Python packaging with pyproject.toml",
+            "description": "Create and configure pyproject.toml for modern Python packaging using setuptools",
+            "dependencies": [
+              1
+            ],
+            "details": "Set up pyproject.toml with:\n- Project metadata (name, version, description, author)\n- Dependencies specification\n- Build system configuration (setuptools)\n- Entry points if needed\n- Optional dependencies for development\n- Package discovery configuration",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Set up development tools configuration",
+            "description": "Configure essential Python development tools like pytest, black, flake8, mypy, and isort",
+            "dependencies": [
+              2
+            ],
+            "details": "Create configuration files:\n- pytest.ini or setup.cfg for pytest settings\n- .flake8 for linting rules\n- mypy.ini for type checking\n- .isort.cfg for import sorting\n- pyproject.toml sections for black formatting\n\nEnsure all tools are properly configured to work together without conflicts.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Create essential documentation files",
+            "description": "Generate README, LICENSE, CONTRIBUTING, and other documentation files",
+            "dependencies": [
+              1
+            ],
+            "details": "Create the following files:\n- README.md with project overview, installation, and usage instructions\n- LICENSE file (choose appropriate license)\n- CONTRIBUTING.md with contribution guidelines\n- CHANGELOG.md for version history\n- .gitignore with Python-specific patterns\n- requirements.txt and requirements-dev.txt if needed",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Initialize Git repository and configure",
+            "description": "Set up Git repository with appropriate configuration and initial commit",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Execute Git initialization:\n- git init\n- Configure .gitignore\n- Set up .gitattributes if needed\n- Create initial commit with project structure\n- Configure branch protection rules if applicable\n- Set up git-flow or preferred branching strategy",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Configure pre-commit hooks",
+            "description": "Set up pre-commit framework with hooks for code quality and formatting",
+            "dependencies": [
+              3,
+              5
+            ],
+            "details": "Configure pre-commit:\n- Create .pre-commit-config.yaml\n- Add hooks for: black, isort, flake8, mypy, trailing whitespace, end-of-file fixer\n- Install pre-commit hooks\n- Test hooks work correctly\n- Document pre-commit usage in CONTRIBUTING.md",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create minimal working example",
+            "description": "Implement a basic 'hello world' module to verify package structure works",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create a minimal working implementation:\n- src/claude_draw/__init__.py with version info\n- src/claude_draw/core.py with basic functionality\n- tests/test_core.py with simple test\n- examples/hello_world.py demonstrating usage\n\nEnsure the package can be imported and basic functionality works.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Verify complete setup functionality",
+            "description": "Run comprehensive checks to ensure all components work together correctly",
+            "dependencies": [
+              6,
+              7
+            ],
+            "details": "Perform verification steps:\n- Run pytest to ensure tests pass\n- Run all linters and formatters\n- Verify pre-commit hooks trigger correctly\n- Test package installation with pip install -e .\n- Verify documentation builds if applicable\n- Run example scripts\n- Check all development tools work as expected\n- Create setup verification checklist",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Implement Base Data Models",
+        "description": "Create foundational Pydantic models for core graphics concepts including points, colors, and transforms",
+        "details": "Implement Point2D model with x, y coordinates and validation. Create Color model supporting RGB/RGBA with hex string parsing and named color lookup. Build Transform2D model for affine transformations (translate, rotate, scale, skew) with matrix representation. Add BoundingBox model with min/max points and collision detection. Use Pydantic v2 with strict validation, custom validators for ranges (0-255 for colors, valid angles). Include helper methods for common operations (color mixing, transform composition).",
+        "testStrategy": "Unit test all models with valid/invalid inputs, edge cases (negative coordinates, color overflow), transformation matrix multiplication, bounding box calculations",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up base model infrastructure and common validation utilities",
+            "description": "Create the foundational model infrastructure including base classes, common interfaces, and shared validation utilities that will be used across all models",
+            "dependencies": [],
+            "details": "Implement BaseModel abstract class with common functionality, create validation utility functions for numeric ranges, implement common error types and messages, set up model serialization/deserialization interfaces",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Point2D model with coordinate validation",
+            "description": "Create the Point2D model class with x and y coordinates, including proper type definitions and basic coordinate validation",
+            "dependencies": [
+              1
+            ],
+            "details": "Define Point2D class with x and y properties, implement coordinate validation for numeric values, handle edge cases like NaN and Infinity, implement toString and valueOf methods",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Add Point2D helper methods for geometric operations",
+            "description": "Implement helper methods for Point2D including distance calculations, vector operations, and point transformations",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement distanceTo method using Euclidean distance formula, add vector operations (add, subtract, scale), implement rotate and translate methods, add midpoint and interpolation calculations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Color model with multiple format support",
+            "description": "Create the Color model supporting RGB, HSL, and hex color formats with proper validation for each format",
+            "dependencies": [
+              1
+            ],
+            "details": "Define Color class with RGB, HSL, and hex representations, implement validation for color channel ranges (0-255 for RGB, 0-360/0-100 for HSL), support alpha channel, implement format detection and parsing",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add Color conversion and manipulation methods",
+            "description": "Implement color format conversion methods and color manipulation utilities like brightness, saturation adjustments",
+            "dependencies": [
+              4
+            ],
+            "details": "Implement RGB to HSL conversion and vice versa, add hex to RGB/HSL conversions, implement color manipulation methods (lighten, darken, saturate, desaturate), add color mixing and blending methods",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Transform2D model with matrix operations",
+            "description": "Create the Transform2D model representing 2D affine transformations using a 3x3 matrix with proper matrix math implementation",
+            "dependencies": [
+              1
+            ],
+            "details": "Define Transform2D class with 3x3 matrix representation, implement matrix multiplication for transform composition, add identity and inverse matrix calculations, ensure numerical stability in matrix operations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Add Transform2D transformation methods",
+            "description": "Implement specific transformation methods for Transform2D including translate, rotate, scale, and skew operations",
+            "dependencies": [
+              6
+            ],
+            "details": "Implement translate method updating matrix appropriately, add rotate method with angle in radians/degrees, implement scale with uniform and non-uniform scaling, add skew transformation, implement transform chaining",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement BoundingBox model with dimension validation",
+            "description": "Create the BoundingBox model with position, width, and height properties including proper validation for dimensions",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Define BoundingBox class with x, y, width, height properties, implement validation ensuring non-negative dimensions, add methods to get corners and center point, implement contains and intersects logic",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Add BoundingBox geometric operations and utilities",
+            "description": "Implement helper methods for BoundingBox including intersection, union, and containment checks",
+            "dependencies": [
+              8
+            ],
+            "details": "Implement intersection calculation returning new BoundingBox or null, add union method combining multiple bounding boxes, implement contains methods for points and other boxes, add expand/contract methods with margins",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Create comprehensive unit tests for all models",
+            "description": "Develop thorough unit tests for all models covering validation, edge cases, helper methods, and integration scenarios",
+            "dependencies": [
+              3,
+              5,
+              7,
+              9
+            ],
+            "details": "Write tests for Point2D validation and geometric operations, test Color format conversions and manipulations, verify Transform2D matrix operations and transformations, test BoundingBox intersection and containment logic, include edge case and error condition tests",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Design Abstract Base Classes",
+        "description": "Create the abstract base classes and interfaces that define the graphics object hierarchy",
+        "details": "Create Drawable abstract base class with id, transform, and get_bounds() method. Design StyleMixin for objects with fill/stroke properties. Implement Primitive base class extending Drawable for basic shapes. Create Container base class for objects that can contain other drawables (groups, layers). Define protocols/interfaces for visitors (DrawableVisitor) and renderers (Renderer). All classes should be immutable with Pydantic's frozen=True.",
+        "testStrategy": "Test inheritance hierarchies work correctly, abstract methods raise NotImplementedError, immutability is enforced, type annotations are correct with mypy",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design and document class hierarchy architecture",
+            "description": "Create comprehensive design documentation for the entire class hierarchy including abstract classes, mixins, protocols, and their relationships",
+            "dependencies": [],
+            "details": "Document the purpose and responsibilities of each abstract class (Drawable, StyleMixin, Primitive, Container), protocol definitions (DrawableVisitor, Renderer), and how they interact. Include UML diagrams, design patterns used, and rationale for architectural decisions. This documentation will guide the implementation of all subsequent subtasks.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement DrawableVisitor protocol",
+            "description": "Define the DrawableVisitor protocol that establishes the visitor pattern interface for traversing drawable objects",
+            "dependencies": [
+              1
+            ],
+            "details": "Create the protocol with abstract methods for visiting each type of drawable object. Include type hints using Python's Protocol from typing module. Define the contract that all visitor implementations must follow.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Renderer protocol",
+            "description": "Define the Renderer protocol that establishes the interface for rendering drawable objects to different output formats",
+            "dependencies": [
+              1
+            ],
+            "details": "Create the protocol with abstract methods for rendering operations. Include methods for different rendering contexts (SVG, Canvas, etc.). Define type signatures and expected behavior for renderer implementations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement StyleMixin abstract class",
+            "description": "Create the StyleMixin abstract class that provides style-related functionality to be mixed into drawable classes",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement style properties (fill, stroke, opacity, etc.) with Pydantic fields ensuring immutability. Include validation rules, default values, and methods for style manipulation that return new instances rather than modifying state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement Drawable abstract base class",
+            "description": "Create the main Drawable abstract base class that all drawable objects will inherit from",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Define abstract methods for accept() visitor pattern, bounds calculation, and transformation. Integrate with Pydantic BaseModel for immutability. Include type annotations and ensure proper integration with DrawableVisitor and Renderer protocols.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement Primitive abstract class",
+            "description": "Create the Primitive abstract class that extends Drawable for basic shape objects",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Inherit from both Drawable and StyleMixin. Define common properties and methods for primitive shapes. Ensure proper multiple inheritance resolution and maintain immutability through Pydantic configuration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Container abstract class",
+            "description": "Create the Container abstract class that extends Drawable for objects that can contain other drawables",
+            "dependencies": [
+              5
+            ],
+            "details": "Define methods for adding, removing, and iterating over child drawables while maintaining immutability. Implement proper bounds calculation that considers all children. Include visitor pattern support for traversing container hierarchies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Set up type system and Pydantic configuration",
+            "description": "Configure Pydantic models for immutability enforcement and set up comprehensive type hints throughout the hierarchy",
+            "dependencies": [
+              4,
+              5,
+              6,
+              7
+            ],
+            "details": "Configure all Pydantic models with frozen=True for immutability. Set up proper validators, serializers, and type coercion. Create custom types where needed. Ensure all methods have complete type annotations including generics where appropriate.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Create comprehensive inheritance and immutability tests",
+            "description": "Develop extensive test suite to verify proper inheritance, protocol implementation, and immutability enforcement",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8
+            ],
+            "details": "Write tests for each abstract class and protocol. Test multiple inheritance scenarios, visitor pattern implementation, immutability (attempting modifications should raise exceptions), type checking, and proper method resolution order. Include edge cases and integration tests.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement Basic Shape Primitives",
+        "description": "Create concrete implementations of basic 2D shapes: Circle, Rectangle, Ellipse, and Line",
+        "details": "Implement Circle with center point and radius. Create Rectangle with position, width, height, and optional corner radius. Build Ellipse with center, rx, ry radii. Implement Line with start/end points and stroke properties. Each shape should calculate its own bounding box, support transformations, and validate inputs (positive dimensions, valid coordinates). Include factory methods for common patterns (square from rectangle, circle from ellipse).",
+        "testStrategy": "Test each shape's bounding box calculation, transformation effects, edge cases (zero-size shapes, negative dimensions should fail), serialization/deserialization",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Circle shape class",
+            "description": "Create Circle class extending BaseShape with proper bounding box calculation and transformation support",
+            "dependencies": [],
+            "details": "Implement Circle class with center point and radius properties. Include methods for calculating bounding box (center ± radius), applying transformations (scale affects radius, translate affects center), and validation (radius must be positive). Ensure proper inheritance from BaseShape.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Rectangle shape class",
+            "description": "Create Rectangle class extending BaseShape with corner-based bounding box and transformation handling",
+            "dependencies": [],
+            "details": "Implement Rectangle class with position (x, y) and dimensions (width, height). Calculate bounding box from corners, handle transformations (scale affects dimensions, translate affects position), and validate that width and height are positive values.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Ellipse shape class",
+            "description": "Create Ellipse class extending BaseShape with axis-based bounding box calculation",
+            "dependencies": [],
+            "details": "Implement Ellipse class with center point and two radii (rx, ry). Calculate bounding box as center ± radii, handle transformations (scale affects both radii independently, translate affects center), and validate that both radii are positive.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Line shape class",
+            "description": "Create Line class extending BaseShape with endpoint-based bounding box",
+            "dependencies": [],
+            "details": "Implement Line class with two endpoints (x1, y1) and (x2, y2). Calculate bounding box from min/max coordinates of endpoints, handle transformations (apply to both endpoints), and ensure proper line representation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create shape factory methods",
+            "description": "Implement factory functions for creating each shape type with validation",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Create factory functions: createCircle(x, y, radius), createRectangle(x, y, width, height), createEllipse(x, y, rx, ry), createLine(x1, y1, x2, y2). Each factory should validate inputs and return properly initialized shape instances.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement common shape utilities",
+            "description": "Create utility functions for common shape operations and calculations",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Implement utilities for shape intersection detection, distance calculations between shapes, shape containment checks, and bounding box merging. These utilities should work with all shape types through the common interface.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Write comprehensive unit tests for all shapes",
+            "description": "Create thorough test suites for each shape class and their methods",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Write unit tests covering: shape creation with valid/invalid parameters, bounding box calculations for various configurations, transformation applications (translate, scale, rotate), edge cases (zero/negative dimensions), and proper inheritance from BaseShape.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Write unit tests for shape utilities and factories",
+            "description": "Create test coverage for factory methods and utility functions",
+            "dependencies": [
+              5,
+              6,
+              7
+            ],
+            "details": "Test factory method validation and error handling, utility function accuracy (intersection, containment, distance), edge cases in utility functions, and integration between different shape types through utilities.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Complex Shape Primitives",
+        "description": "Create implementations for Polygon, Polyline, Arc, and Path (SVG-compatible) primitives",
+        "details": "Implement Polygon with list of points and automatic closure. Create Polyline as open polygon variant. Build Arc with center, radii, start/end angles, and sweep flag. Implement Path with SVG path data string parsing supporting M, L, C, S, Q, T, A, Z commands. Include path simplification and validation. All shapes should properly calculate bounding boxes including curved segments.",
+        "testStrategy": "Test complex path parsing, bounding box for curves, invalid polygon detection (self-intersecting), arc angle normalization, path command validation",
+        "priority": "medium",
+        "dependencies": [
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Polygon shape class",
+            "description": "Create a Polygon class that extends Shape and handles closed polygonal shapes with multiple vertices",
+            "dependencies": [],
+            "details": "Implement constructor accepting array of points, validate minimum 3 points requirement, ensure automatic closure by connecting last point to first, implement render() method using ctx.moveTo and ctx.lineTo, handle fill and stroke rendering modes",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Polyline shape class",
+            "description": "Create a Polyline class that extends Shape for open multi-segment lines",
+            "dependencies": [],
+            "details": "Implement constructor accepting array of points, validate minimum 2 points requirement, implement render() method using ctx.moveTo and ctx.lineTo for connected line segments, ensure no automatic closure, handle stroke-only rendering",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Arc shape mathematics",
+            "description": "Implement mathematical calculations for arc rendering including angle conversions and arc parameters",
+            "dependencies": [],
+            "details": "Create helper functions for degree to radian conversion, calculate arc endpoints from center/radius/angles, handle clockwise vs counterclockwise direction, implement proper angle normalization (0-2π), create utilities for arc-to-bezier conversion if needed",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Arc shape rendering",
+            "description": "Create Arc class extending Shape with proper rendering using canvas arc API",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement constructor with center point, radius, start/end angles, and direction parameters, use ctx.arc() for rendering, handle both fill and stroke modes, implement proper path construction with beginPath/closePath, support partial arcs and full circles",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create SVG path tokenizer",
+            "description": "Implement a tokenizer to parse SVG path strings into command tokens",
+            "dependencies": [],
+            "details": "Create regex patterns for path commands (M,L,C,S,Q,T,A,Z) and numeric values, handle both absolute and relative commands, parse coordinate pairs and flag values, handle whitespace and comma separators, return array of command objects with type and parameters",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement SVG path command handlers",
+            "description": "Create handler functions for each SVG path command type",
+            "dependencies": [
+              5
+            ],
+            "details": "Implement MoveTo (M/m), LineTo (L/l), CubicBezier (C/c,S/s), QuadraticBezier (Q/q,T/t), Arc (A/a), and ClosePath (Z/z) handlers, handle absolute vs relative coordinate transformations, maintain current position state, handle smooth curve continuation for S/T commands",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Path class with SVG parsing",
+            "description": "Create main Path class that uses tokenizer and command handlers to parse and store path data",
+            "dependencies": [
+              5,
+              6
+            ],
+            "details": "Extend Shape class, implement constructor accepting SVG path string, use tokenizer to parse commands, convert commands to internal segment representation, maintain path state during parsing, handle path validation and error cases",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement path validation and simplification",
+            "description": "Add validation logic and path simplification algorithms to Path class",
+            "dependencies": [
+              7
+            ],
+            "details": "Validate command sequences (e.g., must start with M), check parameter counts for each command type, implement path simplification to reduce redundant commands, convert relative commands to absolute internally, optimize consecutive moves or lines",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Calculate bounding boxes for curves",
+            "description": "Implement accurate bounding box calculations for bezier curves and arcs",
+            "dependencies": [
+              7
+            ],
+            "details": "Find extrema points for cubic bezier curves using derivative roots, calculate quadratic bezier curve bounds, handle arc segment bounding boxes considering angle ranges, combine all segment bounds for total path bounds, cache calculated bounds for performance",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Implement Path rendering",
+            "description": "Create render method for Path class that draws all segments to canvas",
+            "dependencies": [
+              7,
+              8
+            ],
+            "details": "Iterate through path segments and call appropriate canvas methods, use ctx.moveTo, ctx.lineTo, ctx.bezierCurveTo, ctx.quadraticCurveTo, ctx.arc, handle path closure with ctx.closePath, support both fill and stroke rendering modes, maintain proper path state",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Create comprehensive shape tests",
+            "description": "Write unit tests for Polygon, Polyline, Arc, and basic Path functionality",
+            "dependencies": [
+              1,
+              2,
+              4,
+              10
+            ],
+            "details": "Test polygon with various vertex counts and configurations, verify polyline doesn't auto-close, test arc with different angle ranges and directions, verify basic path parsing and rendering, test shape bounds calculations, validate edge cases and error handling",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 12,
+            "title": "Test complex SVG paths and edge cases",
+            "description": "Create extensive tests for SVG path parsing including all command types and complex paths",
+            "dependencies": [
+              10,
+              11
+            ],
+            "details": "Test each SVG command type with various parameters, verify relative vs absolute command handling, test smooth curve continuations (S,T commands), validate arc flag combinations, test real-world SVG path examples, verify error handling for malformed paths",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Build Styling System",
+        "description": "Implement comprehensive styling with gradients, patterns, and line styles",
+        "details": "Create LinearGradient with stops (color, offset pairs) and angle/points. Implement RadialGradient with center, radius, focal point. Build Pattern system for repeatable fills. Create StrokeStyle with width, dash array, line cap (butt, round, square), line join (miter, round, bevel). Implement FillStyle supporting solid colors, gradients, patterns. Add opacity support throughout.",
+        "testStrategy": "Test gradient interpolation, pattern tiling, stroke dash calculations, style inheritance and overrides, invalid style parameters",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Core Style Abstraction Layer",
+            "description": "Create base interfaces and classes for Style, FillStyle, and StrokeStyle that will serve as foundation for all styling components",
+            "dependencies": [],
+            "details": "Define Style interface with common properties (opacity, transform), create abstract FillStyle and StrokeStyle base classes with shared functionality. Include style type enumeration and visitor pattern for style processing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement LinearGradient with Color Stops",
+            "description": "Build LinearGradient class supporting multiple color stops, angle/point-based direction, and gradient space transformations",
+            "dependencies": [
+              1
+            ],
+            "details": "Support both angle-based (degrees) and two-point definitions. Implement color stop interpolation with position validation. Handle gradient bounding box calculations and coordinate system transformations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement RadialGradient with Focal Points",
+            "description": "Create RadialGradient class with center/radius definition and optional focal point offset for non-centered gradients",
+            "dependencies": [
+              1
+            ],
+            "details": "Calculate gradient circles with focal point mathematics. Implement conic gradient fallback when focal point is outside radius. Support spread methods (pad, reflect, repeat).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Design Pattern System Architecture",
+            "description": "Architect pattern system supporting image patterns, custom draw patterns, and tiling strategies",
+            "dependencies": [
+              1
+            ],
+            "details": "Define Pattern interface with source abstraction (image, canvas, custom draw function). Implement pattern transform matrix support and tiling modes (repeat, repeat-x, repeat-y, no-repeat).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement StrokeStyle with Dash Arrays",
+            "description": "Build comprehensive StrokeStyle supporting dash patterns, line caps, line joins, and miter limits",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement dash array validation and offset calculations. Support all line cap styles (butt, round, square) and join styles (miter, round, bevel). Calculate proper miter limit transitions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create Style Inheritance Mechanism",
+            "description": "Implement cascading style inheritance system allowing child elements to inherit parent styles with local overrides",
+            "dependencies": [
+              1,
+              2,
+              3,
+              5
+            ],
+            "details": "Build style resolution chain with property-level inheritance control. Support style composition and merging. Implement efficient style caching to avoid redundant calculations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Opacity and Compositing",
+            "description": "Add comprehensive opacity handling including group opacity, individual fill/stroke opacity, and blend modes",
+            "dependencies": [
+              1,
+              6
+            ],
+            "details": "Handle opacity multiplication through inheritance chain. Implement common blend modes (multiply, screen, overlay). Ensure proper compositing order for nested transparent elements.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Build Style Serialization System",
+            "description": "Create serialization/deserialization system for all style types supporting JSON and CSS-like syntax",
+            "dependencies": [
+              2,
+              3,
+              4,
+              5
+            ],
+            "details": "Implement style to JSON converters preserving all properties. Create CSS-like string parser for human-readable style definitions. Support style validation and error reporting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Integrate Styles with Rendering Pipeline",
+            "description": "Connect style system to canvas rendering context, handling all style applications and transformations",
+            "dependencies": [
+              7,
+              8
+            ],
+            "details": "Create RenderContext style application methods. Implement efficient style state management to minimize context switching. Handle style-specific rendering optimizations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Create Comprehensive Visual Test Suite",
+            "description": "Build extensive visual regression tests covering all style combinations and edge cases",
+            "dependencies": [
+              9
+            ],
+            "details": "Generate test cases for gradient interpolations, pattern tiling, stroke dash variations, opacity compositing. Create visual diff tools for style rendering validation. Include performance benchmarks for complex styles.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Text Support",
+        "description": "Create Text primitive with comprehensive font and layout support",
+        "details": "Implement Text model with position, content, font family/size/weight/style. Add text alignment (left, center, right, justify) and baseline (top, middle, bottom, alphabetic). Support text decoration (underline, strikethrough), letter/word spacing. Calculate approximate bounding box using font metrics. Handle multi-line text with line height. Include text-on-path support for curved text.",
+        "testStrategy": "Test font validation, bounding box approximation, alignment calculations, special characters handling, empty text edge cases",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement basic Text model structure",
+            "description": "Create the foundational Text class with core properties like content, position, and basic rendering methods",
+            "dependencies": [],
+            "details": "Define Text class extending from a base shape/element class. Include properties for text content, x/y position, and basic render method stub. Set up TypeScript interfaces for text-specific properties.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create font property handling system",
+            "description": "Implement comprehensive font property management including font-family, font-size, font-weight, and font-style",
+            "dependencies": [
+              1
+            ],
+            "details": "Create a FontProperties interface and class to manage font-family (with fallback support), font-size (with various units), font-weight (numeric and keyword values), font-style (normal, italic, oblique). Include validation and normalization methods.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement text alignment algorithms",
+            "description": "Develop algorithms for horizontal and vertical text alignment including start, middle, end, and baseline alignments",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create alignment calculation methods for text-anchor (start, middle, end) and dominant-baseline (auto, middle, hanging, mathematical, etc.). Calculate proper offset adjustments based on text metrics and alignment settings.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Build multi-line text layout engine",
+            "description": "Create a layout system for handling multi-line text with line spacing and text wrapping",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "details": "Implement line breaking logic, calculate line heights based on font metrics, handle line-spacing/leading, support manual line breaks with tspan elements. Create methods to position each line relative to the text element's origin.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Develop bounding box approximation system",
+            "description": "Create methods to approximate text bounding boxes using font metrics without full font rendering",
+            "dependencies": [
+              2,
+              4
+            ],
+            "details": "Implement character width estimation based on font metrics, calculate text width using average character widths or monospace assumptions, compute text height from font size and line count. Include adjustments for ascenders, descenders, and line gaps.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add text decoration support",
+            "description": "Implement text decoration features including underline, overline, and line-through",
+            "dependencies": [
+              1,
+              5
+            ],
+            "details": "Create methods to calculate decoration line positions based on font metrics, implement rendering for underline (below baseline), overline (above ascender), and line-through (middle of x-height). Support decoration styling properties like color and thickness.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create text-on-path implementation",
+            "description": "Develop system for rendering text along arbitrary SVG paths",
+            "dependencies": [
+              1,
+              3,
+              5
+            ],
+            "details": "Implement path parsing and sampling, calculate character positions and rotations along the path, handle text alignment on curved paths (start, middle, end), support startOffset property. Create methods to transform individual characters to follow path geometry.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement special character handling",
+            "description": "Add support for special characters, Unicode, and character encoding",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Handle UTF-8/UTF-16 character encoding, implement proper escaping for XML special characters (&, <, >, etc.), support numeric character references and named entities. Include methods for character normalization and validation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Create font validation system",
+            "description": "Build validation logic for font properties and fallback mechanisms",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement font-family validation with web-safe font detection, create fallback chains for missing fonts, validate font-size units and ranges, check font-weight values. Include methods to sanitize and normalize font specifications.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Develop text rendering optimizations",
+            "description": "Implement performance optimizations for text rendering and caching",
+            "dependencies": [
+              1,
+              5,
+              7
+            ],
+            "details": "Create text metrics caching system, implement dirty flag mechanism for re-rendering, optimize bounding box calculations with memoization. Add text complexity analysis to choose optimal rendering strategies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Create comprehensive text testing suite",
+            "description": "Build extensive unit and integration tests for all text features",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "details": "Write unit tests for font property parsing and validation, alignment calculations, bounding box approximations, multi-line layout, text decorations, text-on-path positioning, and special character handling. Include visual regression tests and performance benchmarks.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Create Container Objects",
+        "description": "Implement Group container and Layer system for organizing graphics hierarchically",
+        "details": "Implement Group as a container holding multiple Drawable objects with combined transformations. Create Layer with visibility toggle, opacity, and blend modes. Build Drawing as root container with layers, dimensions, and viewport. Support nested groups with proper transform composition. Implement z-index ordering within containers. Add methods for adding, removing, and finding child objects.",
+        "testStrategy": "Test nested transformations, bounding box aggregation, child object management, rendering order, deep nesting performance",
+        "priority": "high",
+        "dependencies": [
+          4,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement Group Container Base Class",
+            "description": "Create the foundational Group container class that extends the base drawing object",
+            "dependencies": [],
+            "details": "Define the Group class with properties for children array, transform matrix, opacity, and visibility. Implement basic constructor and initialization logic. Set up the container interface for adding, removing, and accessing child objects.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Build Layer System with Blend Modes",
+            "description": "Implement a layer-based rendering system with support for various blend modes",
+            "dependencies": [
+              1
+            ],
+            "details": "Create Layer class that extends Group with blend mode support. Implement blend mode enums (normal, multiply, screen, overlay, etc.). Add layer opacity and blend mode composition logic. Ensure proper integration with the rendering pipeline.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create Drawing Root Container",
+            "description": "Implement the root container that serves as the top-level drawing context",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create DrawingRoot class as the main container for all drawing objects. Implement viewport management and coordinate system setup. Add scene graph traversal starting point. Handle global drawing state and context management.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Transform Composition for Nested Containers",
+            "description": "Build the transform propagation system for nested container hierarchies",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement matrix multiplication for nested transforms. Create transform caching mechanism to avoid redundant calculations. Add methods for local-to-world and world-to-local coordinate conversions. Handle transform invalidation and propagation through the hierarchy.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Develop Z-Index Ordering Implementation",
+            "description": "Create a robust z-index ordering system for proper rendering order",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement z-index property on all drawable objects. Create sorting algorithm for rendering order within containers. Handle automatic vs manual z-index assignment. Implement stable sorting to maintain insertion order for equal z-indices.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Build Child Object Management API",
+            "description": "Create comprehensive API for managing child objects within containers",
+            "dependencies": [
+              1,
+              5
+            ],
+            "details": "Implement methods: addChild, removeChild, removeAllChildren, getChildAt, getChildByName, contains, swapChildren. Add event system for child added/removed notifications. Implement parent-child relationship management with proper cleanup.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement Bounding Box Aggregation",
+            "description": "Create system for calculating aggregate bounding boxes of container contents",
+            "dependencies": [
+              1,
+              4
+            ],
+            "details": "Implement recursive bounding box calculation for containers. Handle empty containers and transformed children. Create caching mechanism for bounding box calculations. Add dirty flag system for invalidation when children change.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Optimize Performance for Deep Hierarchies",
+            "description": "Implement performance optimizations for deeply nested container structures",
+            "dependencies": [
+              4,
+              6,
+              7
+            ],
+            "details": "Implement view frustum culling to skip off-screen containers. Add dirty rectangle tracking for partial redraws. Create object pooling for frequently created/destroyed containers. Implement lazy evaluation for transform and bounding box calculations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Add Container Interaction and Hit Testing",
+            "description": "Implement interaction system for containers with proper hit testing through hierarchies",
+            "dependencies": [
+              4,
+              5,
+              6
+            ],
+            "details": "Create hit testing that respects container transforms and z-order. Implement event bubbling through container hierarchy. Add interactive property to control hit testing per container. Handle pointer events with proper coordinate transformation.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Build Visitor Pattern Renderer",
+        "description": "Implement the visitor pattern architecture for extensible rendering",
+        "details": "Create DrawableVisitor protocol with visit methods for each drawable type. Implement BaseRenderer with common rendering logic and transform stack management. Build RenderContext to track current transformation matrix, clipping, and style state. Support pre/post visit hooks for containers. Handle proper rendering order respecting z-index and layer hierarchy.",
+        "testStrategy": "Test visitor dispatch to correct methods, transform stack push/pop, rendering order verification, custom visitor implementation",
+        "priority": "high",
+        "dependencies": [
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Define DrawableVisitor protocol interface",
+            "description": "Create the DrawableVisitor protocol with visit methods for each drawable type in the system",
+            "dependencies": [],
+            "details": "Define a protocol/interface that declares visit methods for Rectangle, Circle, Ellipse, Polygon, Path, Group, and any other drawable types. Include proper return types and parameter signatures for each visit method.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement RenderContext with transform stack",
+            "description": "Create RenderContext class that manages transformation matrix stack and rendering state",
+            "dependencies": [],
+            "details": "Implement a RenderContext that maintains a stack of transformation matrices, current rendering attributes (stroke, fill, opacity), and provides push/pop operations for state management. Include methods for applying transformations and querying current state.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create BaseRenderer abstract class",
+            "description": "Implement BaseRenderer as the foundation for concrete renderer implementations",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Create an abstract BaseRenderer class that implements DrawableVisitor, manages RenderContext, and provides template methods for pre/post visit hooks. Include abstract methods for primitive rendering operations that concrete renderers must implement.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement visitor methods for primitive shapes",
+            "description": "Implement visit methods for Rectangle, Circle, Ellipse, and Polygon drawable types",
+            "dependencies": [
+              3
+            ],
+            "details": "In BaseRenderer, implement visitRectangle, visitCircle, visitEllipse, and visitPolygon methods. Each method should apply transformations from RenderContext, call appropriate rendering primitives, and handle style attributes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement visitor methods for complex drawables",
+            "description": "Implement visit methods for Path and Group drawable types with proper traversal",
+            "dependencies": [
+              3,
+              4
+            ],
+            "details": "Implement visitPath for path rendering and visitGroup for composite drawables. The visitGroup method must handle pushing/popping transform state and recursively visiting children in the correct order.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add pre/post visit hooks system",
+            "description": "Implement pre-visit and post-visit hook mechanisms in BaseRenderer",
+            "dependencies": [
+              3
+            ],
+            "details": "Add preVisit and postVisit protected methods that are called before and after each drawable is processed. These hooks should allow derived renderers to perform setup/cleanup operations and can be overridden for custom behavior.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement z-index sorting and traversal order",
+            "description": "Add z-index handling and proper traversal order implementation for correct rendering",
+            "dependencies": [
+              5
+            ],
+            "details": "Implement z-index sorting logic in Group traversal, ensuring children are visited in the correct order (lowest z-index first). Add depth-first traversal with proper transform stack management. Handle edge cases like equal z-indices and missing z-index values.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Create extensibility tests and examples",
+            "description": "Write comprehensive tests and examples demonstrating visitor pattern extensibility",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "details": "Create unit tests for visitor pattern implementation, transform stack operations, and rendering order. Write example custom visitors (e.g., BoundingBoxCalculator, HitTestVisitor) to demonstrate extensibility. Include integration tests with mock renderers.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Implement SVG Renderer",
+        "description": "Create complete SVG output renderer supporting all graphics features",
+        "details": "Implement SVGRenderer extending BaseRenderer, generating valid SVG 1.1 XML. Map all primitives to SVG elements (circle, rect, ellipse, line, polygon, polyline, path, text). Convert styling to SVG attributes/CSS. Implement gradient and pattern definitions with unique IDs. Handle transform attribute generation. Support viewBox and preserveAspectRatio. Generate clean, readable output with proper indentation.",
+        "testStrategy": "Validate SVG output with XML parser, test all shape types render correctly, verify gradients/patterns work, test complex nested transforms",
+        "priority": "high",
+        "dependencies": [
+          9
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design SVG document structure generator",
+            "description": "Create the core SVG document wrapper with proper namespace declarations and root element generation",
+            "dependencies": [],
+            "details": "Implement SVGDocument class that generates the root <svg> element with xmlns attributes, version declaration, and proper XML structure. Include methods for setting width, height, and initial document properties.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement Rectangle to SVG element mapper",
+            "description": "Create mapping logic to convert Rectangle primitives to SVG <rect> elements",
+            "dependencies": [],
+            "details": "Build RectangleToSVG converter that maps Rectangle properties (x, y, width, height, cornerRadius) to SVG rect attributes. Handle rounded corners with rx/ry attributes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement Circle to SVG element mapper",
+            "description": "Create mapping logic to convert Circle primitives to SVG <circle> elements",
+            "dependencies": [],
+            "details": "Build CircleToSVG converter that maps Circle properties (center.x, center.y, radius) to SVG circle attributes (cx, cy, r).",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement Path to SVG element mapper",
+            "description": "Create mapping logic to convert Path primitives to SVG <path> elements",
+            "dependencies": [],
+            "details": "Build PathToSVG converter that translates Path segments (moveTo, lineTo, curveTo, arcTo) to SVG path data string format. Generate proper d attribute with command letters and coordinates.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Build style-to-SVG attribute converter",
+            "description": "Convert Style objects to SVG presentation attributes",
+            "dependencies": [
+              1
+            ],
+            "details": "Create StyleToSVGAttributes converter that maps fillColor to fill, strokeColor to stroke, strokeWidth to stroke-width, opacity to opacity/fill-opacity/stroke-opacity. Handle color format conversions.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Implement gradient definition manager",
+            "description": "Create system for managing gradient definitions with unique ID generation",
+            "dependencies": [
+              1,
+              5
+            ],
+            "details": "Build GradientManager that generates <linearGradient> and <radialGradient> definitions in <defs> section. Implement unique ID generation, stop elements creation, and gradient attribute mapping.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement pattern definition manager",
+            "description": "Create system for managing pattern definitions with unique ID generation",
+            "dependencies": [
+              1,
+              5
+            ],
+            "details": "Build PatternManager that generates <pattern> definitions in <defs> section. Handle pattern units, content bounds, and unique ID generation for pattern references.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Build transform attribute generator",
+            "description": "Convert Transform objects to SVG transform attribute strings",
+            "dependencies": [
+              2,
+              3,
+              4
+            ],
+            "details": "Create TransformToSVG converter that generates transform attribute values from Transform matrices. Support translate, rotate, scale, skew, and matrix operations with proper formatting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Implement viewBox calculator",
+            "description": "Calculate optimal viewBox values based on canvas content bounds",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Build ViewBoxCalculator that computes bounding box of all elements, adds padding, and generates viewBox attribute. Handle preserveAspectRatio settings and coordinate system alignment.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Create XML formatter and serializer",
+            "description": "Build proper XML formatting with indentation and encoding",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "details": "Implement XMLFormatter that handles proper element nesting, attribute formatting, self-closing tags, and indentation. Include XML declaration and encoding specification.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Implement SVG specification validator",
+            "description": "Create validation system to ensure generated SVG complies with SVG specification",
+            "dependencies": [
+              10
+            ],
+            "details": "Build SVGValidator that checks element names, attribute names and values, required attributes, namespace declarations, and structural validity against SVG 1.1/2.0 specifications.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 12,
+            "title": "Create comprehensive SVG rendering test suite",
+            "description": "Develop tests for all SVG generation components and edge cases",
+            "dependencies": [
+              11
+            ],
+            "details": "Write unit tests for each converter, integration tests for complete SVG generation, visual regression tests, and compliance tests against SVG test suite. Include edge cases and error handling.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Add Serialization Support",
+        "description": "Implement JSON serialization/deserialization for all graphics objects",
+        "details": "Leverage Pydantic's built-in JSON serialization with custom encoders for complex types. Implement type discriminators for polymorphic deserialization of Drawable objects. Support version field for future compatibility. Handle circular references in groups. Create load_drawing() and save_drawing() convenience functions. Preserve all properties including IDs and metadata.",
+        "testStrategy": "Test round-trip serialization preserves all data, handle malformed JSON gracefully, verify type discrimination works, test large drawings",
+        "priority": "medium",
+        "dependencies": [
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up JSON encoder infrastructure",
+            "description": "Create custom JSON encoder class that handles Vector2D instances and other custom types",
+            "dependencies": [],
+            "details": "Implement a custom JSONEncoder subclass that can serialize Vector2D objects by converting them to dictionaries with their x, y coordinates. Set up the base infrastructure for extending to other custom types.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement type discriminator system",
+            "description": "Add type field to serialized objects for polymorphic identification",
+            "dependencies": [
+              1
+            ],
+            "details": "Modify model classes to include a '__type__' field during serialization that identifies the class type. This will enable proper deserialization of polymorphic collections like shapes and primitives.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Build polymorphic deserialization logic",
+            "description": "Create deserializer that reconstructs correct object types based on discriminators",
+            "dependencies": [
+              2
+            ],
+            "details": "Implement a factory pattern or registry system that maps type discriminators to their corresponding classes. Handle nested polymorphic objects and collections properly.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Handle circular reference detection and resolution",
+            "description": "Implement system to detect and properly serialize/deserialize circular references",
+            "dependencies": [
+              3
+            ],
+            "details": "Create reference tracking system using object IDs or paths. On serialization, detect cycles and replace with references. On deserialization, maintain object cache and resolve references in a second pass.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Add version field support to models",
+            "description": "Implement versioning system for forward/backward compatibility",
+            "dependencies": [
+              2
+            ],
+            "details": "Add 'version' field to all serialized models. Create version migration logic that can upgrade older saved files to current format. Design system to be extensible for future version changes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create convenience load/save functions",
+            "description": "Implement high-level functions for saving and loading drawings to/from files",
+            "dependencies": [
+              4,
+              5
+            ],
+            "details": "Create Drawing.save_to_file(filename) and Drawing.load_from_file(filename) methods. Handle file I/O, compression options, and proper error reporting. Support both JSON and potentially compressed formats.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement error handling for malformed data",
+            "description": "Add robust error handling and validation for corrupted or invalid serialized data",
+            "dependencies": [
+              6
+            ],
+            "details": "Create custom exception classes for serialization errors. Validate data structure, types, and relationships during deserialization. Provide meaningful error messages indicating what part of the data is invalid.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Create comprehensive round-trip tests",
+            "description": "Build test suite verifying perfect serialization/deserialization fidelity",
+            "dependencies": [
+              7
+            ],
+            "details": "Test all model types, complex nested structures, circular references, and edge cases. Verify that serialized then deserialized objects are functionally identical to originals. Include performance benchmarks for large drawings.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Create Examples and Benchmarks",
+        "description": "Build comprehensive examples demonstrating library usage and performance benchmarking suite",
+        "details": "Create examples: basic shapes gallery, complex illustrations, generative art, data visualization, logo recreation. Build performance benchmarks testing object creation, rendering time, memory usage for 100-10,000 objects. Implement profiling decorators to identify bottlenecks. Create comparison metrics for future C++ version. Document performance characteristics and optimization tips.",
+        "testStrategy": "Ensure all examples run without errors, benchmark results are reproducible, performance meets targets (<1KB per object, linear rendering time)",
+        "priority": "low",
+        "dependencies": [
+          10,
+          11
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create basic shapes example",
+            "description": "Develop a simple demonstration showing how to draw basic geometric shapes",
+            "dependencies": [],
+            "details": "Create an example that draws circles, rectangles, triangles, and polygons using the Claude Draw API. Include code comments explaining each shape creation method and parameter usage.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Build complex illustration example",
+            "description": "Create an advanced example demonstrating layered drawing with multiple shapes and transformations",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop a complex scene (e.g., a landscape or cityscape) that combines multiple shapes, uses transformations, layers, and styling options to showcase the library's capabilities.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement generative art demo",
+            "description": "Create an example that generates algorithmic art patterns",
+            "dependencies": [
+              1
+            ],
+            "details": "Build a demo that uses mathematical functions, randomization, and iterative drawing to create generative art patterns like fractals, spirals, or particle systems.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Develop data visualization example",
+            "description": "Create examples showing how to visualize data using the drawing library",
+            "dependencies": [
+              1
+            ],
+            "details": "Implement examples for common data visualizations: bar charts, pie charts, line graphs, and scatter plots. Include sample data and clear rendering logic.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create logo recreation demo",
+            "description": "Demonstrate precise drawing capabilities by recreating a well-known logo",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Choose a recognizable logo and recreate it using the drawing API, showcasing precision drawing, color matching, and complex path creation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Design performance benchmark suite structure",
+            "description": "Create the architecture and framework for performance testing",
+            "dependencies": [],
+            "details": "Design a modular benchmark suite that can test different aspects: shape creation speed, rendering performance, memory usage, and large dataset handling.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Implement profiling decorator",
+            "description": "Create a decorator function for automatic performance profiling",
+            "dependencies": [
+              6
+            ],
+            "details": "Build a TypeScript decorator that can be applied to methods to automatically measure execution time, memory usage, and call frequency. Include configurable options for different metrics.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Build metrics collection system",
+            "description": "Implement a system to collect and aggregate performance metrics",
+            "dependencies": [
+              6,
+              7
+            ],
+            "details": "Create classes for collecting metrics from profiled functions, aggregating results, calculating statistics (mean, median, percentiles), and storing results for comparison.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Create performance optimization guide",
+            "description": "Write comprehensive documentation on performance best practices",
+            "dependencies": [
+              6,
+              7,
+              8
+            ],
+            "details": "Document performance optimization techniques specific to the drawing library, including batch operations, efficient shape reuse, memory management, and rendering optimization strategies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Complete example documentation",
+            "description": "Write detailed documentation for all examples and benchmarking tools",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              9
+            ],
+            "details": "Create comprehensive documentation including: example walkthroughs, code explanations, performance benchmark usage guide, and links between examples and optimization techniques.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-07-17T14:37:11.669Z",
+      "updated": "2025-07-17T14:37:11.669Z",
+      "description": "Tasks for master context"
+    }
+  }
+}
