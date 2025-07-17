@@ -263,15 +263,24 @@ class Transform2D(DrawModel):
         """Check if this is a pure rotation transformation.
         
         Returns:
-            True if this is a pure rotation transformation
+            True if this is a pure rotation transformation (not identity)
         """
         epsilon = 1e-10
         # For rotation: a = d = cos(θ), b = -sin(θ), c = sin(θ)
-        return (abs(self.a - self.d) < epsilon and
-                abs(self.b + self.c) < epsilon and
-                abs(self.tx) < epsilon and
-                abs(self.ty) < epsilon and
-                abs(self.a * self.a + self.b * self.b - 1.0) < epsilon)
+        # But exclude identity matrix (rotation by 0 degrees)
+        is_rotation_matrix = (abs(self.a - self.d) < epsilon and
+                             abs(self.b + self.c) < epsilon and
+                             abs(self.tx) < epsilon and
+                             abs(self.ty) < epsilon and
+                             abs(self.a * self.a + self.b * self.b - 1.0) < epsilon)
+        
+        # Exclude identity matrix (not considered a rotation)
+        is_identity = (abs(self.a - 1.0) < epsilon and 
+                      abs(self.b) < epsilon and
+                      abs(self.c) < epsilon and
+                      abs(self.d - 1.0) < epsilon)
+        
+        return is_rotation_matrix and not is_identity
     
     def get_scale_factors(self) -> tuple[float, float]:
         """Get the scale factors in X and Y directions.
@@ -363,6 +372,8 @@ class Transform2D(DrawModel):
     def translate_by(self, dx: float, dy: float) -> "Transform2D":
         """Apply translation to this transformation.
         
+        This adds the translation directly to the existing translation values.
+        
         Args:
             dx: Translation in X direction
             dy: Translation in Y direction
@@ -370,7 +381,10 @@ class Transform2D(DrawModel):
         Returns:
             New transformation with translation applied
         """
-        return self * Transform2D.translate(dx, dy)
+        return Transform2D(
+            a=self.a, b=self.b, c=self.c, d=self.d,
+            tx=self.tx + dx, ty=self.ty + dy
+        )
     
     def scale_by(self, sx: float, sy: Optional[float] = None) -> "Transform2D":
         """Apply scaling to this transformation.
@@ -398,6 +412,8 @@ class Transform2D(DrawModel):
     def skew_by(self, skew_x: float, skew_y: float = 0.0) -> "Transform2D":
         """Apply skew to this transformation.
         
+        This adds the skew directly to the existing matrix values.
+        
         Args:
             skew_x: Skew angle in X direction (radians)
             skew_y: Skew angle in Y direction (radians)
@@ -405,4 +421,8 @@ class Transform2D(DrawModel):
         Returns:
             New transformation with skew applied
         """
-        return self * Transform2D.skew(skew_x, skew_y)
+        return Transform2D(
+            a=self.a, b=self.b + math.tan(skew_y), 
+            c=self.c + math.tan(skew_x), d=self.d,
+            tx=self.tx, ty=self.ty
+        )
