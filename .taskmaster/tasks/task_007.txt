@@ -1,0 +1,79 @@
+# Task ID: 7
+# Title: Implement Text Support
+# Status: deferred
+# Dependencies: 3, 6
+# Priority: medium
+# Description: Create Text primitive with comprehensive font and layout support
+# Details:
+Implement Text model with position, content, font family/size/weight/style. Add text alignment (left, center, right, justify) and baseline (top, middle, bottom, alphabetic). Support text decoration (underline, strikethrough), letter/word spacing. Calculate approximate bounding box using font metrics. Handle multi-line text with line height. Include text-on-path support for curved text.
+
+# Test Strategy:
+Test font validation, bounding box approximation, alignment calculations, special characters handling, empty text edge cases
+
+# Subtasks:
+## 1. Implement basic Text model structure [pending]
+### Dependencies: None
+### Description: Create the foundational Text class with core properties like content, position, and basic rendering methods
+### Details:
+Define Text class extending from a base shape/element class. Include properties for text content, x/y position, and basic render method stub. Set up TypeScript interfaces for text-specific properties.
+
+## 2. Create font property handling system [pending]
+### Dependencies: 7.1
+### Description: Implement comprehensive font property management including font-family, font-size, font-weight, and font-style
+### Details:
+Create a FontProperties interface and class to manage font-family (with fallback support), font-size (with various units), font-weight (numeric and keyword values), font-style (normal, italic, oblique). Include validation and normalization methods.
+
+## 3. Implement text alignment algorithms [pending]
+### Dependencies: 7.1, 7.2
+### Description: Develop algorithms for horizontal and vertical text alignment including start, middle, end, and baseline alignments
+### Details:
+Create alignment calculation methods for text-anchor (start, middle, end) and dominant-baseline (auto, middle, hanging, mathematical, etc.). Calculate proper offset adjustments based on text metrics and alignment settings.
+
+## 4. Build multi-line text layout engine [pending]
+### Dependencies: 7.1, 7.2, 7.3
+### Description: Create a layout system for handling multi-line text with line spacing and text wrapping
+### Details:
+Implement line breaking logic, calculate line heights based on font metrics, handle line-spacing/leading, support manual line breaks with tspan elements. Create methods to position each line relative to the text element's origin.
+
+## 5. Develop bounding box approximation system [pending]
+### Dependencies: 7.2, 7.4
+### Description: Create methods to approximate text bounding boxes using font metrics without full font rendering
+### Details:
+Implement character width estimation based on font metrics, calculate text width using average character widths or monospace assumptions, compute text height from font size and line count. Include adjustments for ascenders, descenders, and line gaps.
+
+## 6. Add text decoration support [pending]
+### Dependencies: 7.1, 7.5
+### Description: Implement text decoration features including underline, overline, and line-through
+### Details:
+Create methods to calculate decoration line positions based on font metrics, implement rendering for underline (below baseline), overline (above ascender), and line-through (middle of x-height). Support decoration styling properties like color and thickness.
+
+## 7. Create text-on-path implementation [pending]
+### Dependencies: 7.1, 7.3, 7.5
+### Description: Develop system for rendering text along arbitrary SVG paths
+### Details:
+Implement path parsing and sampling, calculate character positions and rotations along the path, handle text alignment on curved paths (start, middle, end), support startOffset property. Create methods to transform individual characters to follow path geometry.
+
+## 8. Implement special character handling [pending]
+### Dependencies: 7.1, 7.4
+### Description: Add support for special characters, Unicode, and character encoding
+### Details:
+Handle UTF-8/UTF-16 character encoding, implement proper escaping for XML special characters (&, <, >, etc.), support numeric character references and named entities. Include methods for character normalization and validation.
+
+## 9. Create font validation system [pending]
+### Dependencies: 7.2
+### Description: Build validation logic for font properties and fallback mechanisms
+### Details:
+Implement font-family validation with web-safe font detection, create fallback chains for missing fonts, validate font-size units and ranges, check font-weight values. Include methods to sanitize and normalize font specifications.
+
+## 10. Develop text rendering optimizations [pending]
+### Dependencies: 7.1, 7.5, 7.7
+### Description: Implement performance optimizations for text rendering and caching
+### Details:
+Create text metrics caching system, implement dirty flag mechanism for re-rendering, optimize bounding box calculations with memoization. Add text complexity analysis to choose optimal rendering strategies.
+
+## 11. Create comprehensive text testing suite [pending]
+### Dependencies: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9
+### Description: Build extensive unit and integration tests for all text features
+### Details:
+Write unit tests for font property parsing and validation, alignment calculations, bounding box approximations, multi-line layout, text decorations, text-on-path positioning, and special character handling. Include visual regression tests and performance benchmarks.
+

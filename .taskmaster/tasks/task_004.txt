@@ -1,0 +1,61 @@
+# Task ID: 4
+# Title: Implement Basic Shape Primitives
+# Status: done
+# Dependencies: 3
+# Priority: high
+# Description: Create concrete implementations of basic 2D shapes: Circle, Rectangle, Ellipse, and Line
+# Details:
+Implement Circle with center point and radius. Create Rectangle with position, width, height, and optional corner radius. Build Ellipse with center, rx, ry radii. Implement Line with start/end points and stroke properties. Each shape should calculate its own bounding box, support transformations, and validate inputs (positive dimensions, valid coordinates). Include factory methods for common patterns (square from rectangle, circle from ellipse).
+
+# Test Strategy:
+Test each shape's bounding box calculation, transformation effects, edge cases (zero-size shapes, negative dimensions should fail), serialization/deserialization
+
+# Subtasks:
+## 1. Implement Circle shape class [done]
+### Dependencies: None
+### Description: Create Circle class extending BaseShape with proper bounding box calculation and transformation support
+### Details:
+Implement Circle class with center point and radius properties. Include methods for calculating bounding box (center ± radius), applying transformations (scale affects radius, translate affects center), and validation (radius must be positive). Ensure proper inheritance from BaseShape.
+
+## 2. Implement Rectangle shape class [done]
+### Dependencies: None
+### Description: Create Rectangle class extending BaseShape with corner-based bounding box and transformation handling
+### Details:
+Implement Rectangle class with position (x, y) and dimensions (width, height). Calculate bounding box from corners, handle transformations (scale affects dimensions, translate affects position), and validate that width and height are positive values.
+
+## 3. Implement Ellipse shape class [done]
+### Dependencies: None
+### Description: Create Ellipse class extending BaseShape with axis-based bounding box calculation
+### Details:
+Implement Ellipse class with center point and two radii (rx, ry). Calculate bounding box as center ± radii, handle transformations (scale affects both radii independently, translate affects center), and validate that both radii are positive.
+
+## 4. Implement Line shape class [done]
+### Dependencies: None
+### Description: Create Line class extending BaseShape with endpoint-based bounding box
+### Details:
+Implement Line class with two endpoints (x1, y1) and (x2, y2). Calculate bounding box from min/max coordinates of endpoints, handle transformations (apply to both endpoints), and ensure proper line representation.
+
+## 5. Create shape factory methods [done]
+### Dependencies: 4.1, 4.2, 4.3, 4.4
+### Description: Implement factory functions for creating each shape type with validation
+### Details:
+Create factory functions: createCircle(x, y, radius), createRectangle(x, y, width, height), createEllipse(x, y, rx, ry), createLine(x1, y1, x2, y2). Each factory should validate inputs and return properly initialized shape instances.
+
+## 6. Implement common shape utilities [done]
+### Dependencies: 4.1, 4.2, 4.3, 4.4
+### Description: Create utility functions for common shape operations and calculations
+### Details:
+Implement utilities for shape intersection detection, distance calculations between shapes, shape containment checks, and bounding box merging. These utilities should work with all shape types through the common interface.
+
+## 7. Write comprehensive unit tests for all shapes [done]
+### Dependencies: 4.1, 4.2, 4.3, 4.4, 4.5
+### Description: Create thorough test suites for each shape class and their methods
+### Details:
+Write unit tests covering: shape creation with valid/invalid parameters, bounding box calculations for various configurations, transformation applications (translate, scale, rotate), edge cases (zero/negative dimensions), and proper inheritance from BaseShape.
+
+## 8. Write unit tests for shape utilities and factories [done]
+### Dependencies: 4.5, 4.6, 4.7
+### Description: Create test coverage for factory methods and utility functions
+### Details:
+Test factory method validation and error handling, utility function accuracy (intersection, containment, distance), edge cases in utility functions, and integration between different shape types through utilities.
+

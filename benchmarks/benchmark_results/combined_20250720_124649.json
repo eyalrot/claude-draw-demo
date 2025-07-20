@@ -1,0 +1,181 @@
+{
+  "timestamp": "2025-07-20T12:46:49.340634",
+  "summary": {
+    "total_benchmarks": 12,
+    "total_objects_created": 43000,
+    "execution_time_stats": {
+      "mean": 0.049286422067477055,
+      "median": 0.022256652009673417,
+      "min": 0.016532573848962784,
+      "max": 0.11906963982619345,
+      "stdev": 0.04009814202191072
+    },
+    "memory_delta_stats": {
+      "mean": 0.5061848958333334,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 3.0,
+      "stdev": 0.9086491349451085
+    },
+    "time_per_object_stats": {
+      "mean": 18.345844434313193,
+      "median": 20.561012555845082,
+      "min": 4.316309805620801,
+      "max": 23.81392796523869,
+      "stdev": 6.243302977517747
+    },
+    "objects_per_second_stats": {
+      "mean": 71235.1998855959,
+      "median": 48661.23406428488,
+      "min": 41992.23250610756,
+      "max": 231679.3847137146,
+      "stdev": 56984.299378136704
+    }
+  },
+  "individual_results": [
+    {
+      "name": "Create 1000 Mixed Shapes (Direct)",
+      "execution_time_seconds": 0.022825818043202162,
+      "memory_before_mb": 33.2734375,
+      "memory_after_mb": 36.2734375,
+      "memory_peak_mb": 36.2734375,
+      "memory_delta_mb": 3.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 22.825818043202162,
+      "objects_per_second": 43810.039934048
+    },
+    {
+      "name": "Create 1000 Mixed Shapes (Factory)",
+      "execution_time_seconds": 0.02009036298841238,
+      "memory_before_mb": 36.2734375,
+      "memory_after_mb": 36.2734375,
+      "memory_peak_mb": 36.2734375,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 20.09036298841238,
+      "objects_per_second": 49775.10862181908
+    },
+    {
+      "name": "Create 1000 Mixed Shapes (Random)",
+      "execution_time_seconds": 0.016532573848962784,
+      "memory_before_mb": 35.375,
+      "memory_after_mb": 35.375,
+      "memory_peak_mb": 35.375,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 16.532573848962784,
+      "objects_per_second": 60486.649516024256
+    },
+    {
+      "name": "Create 5000 Mixed Shapes (Direct)",
+      "execution_time_seconds": 0.11574605898931623,
+      "memory_before_mb": 35.375,
+      "memory_after_mb": 36.46484375,
+      "memory_peak_mb": 36.46484375,
+      "memory_delta_mb": 1.08984375,
+      "iterations": 1,
+      "objects_created": 5000,
+      "time_per_object_microseconds": 23.149211797863245,
+      "objects_per_second": 43198.01506556277
+    },
+    {
+      "name": "Create 5000 Mixed Shapes (Factory)",
+      "execution_time_seconds": 0.11906963982619345,
+      "memory_before_mb": 36.46484375,
+      "memory_after_mb": 37.46484375,
+      "memory_peak_mb": 37.46484375,
+      "memory_delta_mb": 1.0,
+      "iterations": 1,
+      "objects_created": 5000,
+      "time_per_object_microseconds": 23.81392796523869,
+      "objects_per_second": 41992.23250610756
+    },
+    {
+      "name": "Create 5000 Mixed Shapes (Random)",
+      "execution_time_seconds": 0.09406555397436023,
+      "memory_before_mb": 37.46484375,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 44.33984375,
+      "memory_delta_mb": 0.984375,
+      "iterations": 1,
+      "objects_created": 5000,
+      "time_per_object_microseconds": 18.813110794872046,
+      "objects_per_second": 53154.42038817809
+    },
+    {
+      "name": "Add 1000 Shapes to Group",
+      "execution_time_seconds": 0.021031662123277783,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 21.031662123277783,
+      "objects_per_second": 47547.359506750676
+    },
+    {
+      "name": "Add 1000 Shapes to Layer",
+      "execution_time_seconds": 0.021424377104267478,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 21.424377104267478,
+      "objects_per_second": 46675.80276118329
+    },
+    {
+      "name": "Create Hierarchical Drawing (1000 shapes)",
+      "execution_time_seconds": 0.02168748597614467,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 21.68748597614467,
+      "objects_per_second": 46109.53990241
+    },
+    {
+      "name": "Calculate Bounding Boxes (1000 shapes)",
+      "execution_time_seconds": 0.07224314589984715,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 10000,
+      "time_per_object_microseconds": 7.224314589984715,
+      "objects_per_second": 138421.43604686458
+    },
+    {
+      "name": "Group Operations (Add/Remove)",
+      "execution_time_seconds": 0.01924097817391157,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 19.24097817391157,
+      "objects_per_second": 51972.40966448777
+    },
+    {
+      "name": "Layer Z-Index Sorting (1000 shapes)",
+      "execution_time_seconds": 0.047479407861828804,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 11000,
+      "time_per_object_microseconds": 4.316309805620801,
+      "objects_per_second": 231679.3847137146
+    }
+  ]
+}

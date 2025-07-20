@@ -1,0 +1,85 @@
+# Task ID: 10
+# Title: Implement SVG Renderer
+# Status: deferred
+# Dependencies: 9
+# Priority: high
+# Description: Create complete SVG output renderer supporting all graphics features
+# Details:
+Implement SVGRenderer extending BaseRenderer, generating valid SVG 1.1 XML. Map all primitives to SVG elements (circle, rect, ellipse, line, polygon, polyline, path, text). Convert styling to SVG attributes/CSS. Implement gradient and pattern definitions with unique IDs. Handle transform attribute generation. Support viewBox and preserveAspectRatio. Generate clean, readable output with proper indentation.
+
+# Test Strategy:
+Validate SVG output with XML parser, test all shape types render correctly, verify gradients/patterns work, test complex nested transforms
+
+# Subtasks:
+## 1. Design SVG document structure generator [pending]
+### Dependencies: None
+### Description: Create the core SVG document wrapper with proper namespace declarations and root element generation
+### Details:
+Implement SVGDocument class that generates the root <svg> element with xmlns attributes, version declaration, and proper XML structure. Include methods for setting width, height, and initial document properties.
+
+## 2. Implement Rectangle to SVG element mapper [pending]
+### Dependencies: None
+### Description: Create mapping logic to convert Rectangle primitives to SVG <rect> elements
+### Details:
+Build RectangleToSVG converter that maps Rectangle properties (x, y, width, height, cornerRadius) to SVG rect attributes. Handle rounded corners with rx/ry attributes.
+
+## 3. Implement Circle to SVG element mapper [pending]
+### Dependencies: None
+### Description: Create mapping logic to convert Circle primitives to SVG <circle> elements
+### Details:
+Build CircleToSVG converter that maps Circle properties (center.x, center.y, radius) to SVG circle attributes (cx, cy, r).
+
+## 4. Implement Path to SVG element mapper [pending]
+### Dependencies: None
+### Description: Create mapping logic to convert Path primitives to SVG <path> elements
+### Details:
+Build PathToSVG converter that translates Path segments (moveTo, lineTo, curveTo, arcTo) to SVG path data string format. Generate proper d attribute with command letters and coordinates.
+
+## 5. Build style-to-SVG attribute converter [pending]
+### Dependencies: 10.1
+### Description: Convert Style objects to SVG presentation attributes
+### Details:
+Create StyleToSVGAttributes converter that maps fillColor to fill, strokeColor to stroke, strokeWidth to stroke-width, opacity to opacity/fill-opacity/stroke-opacity. Handle color format conversions.
+
+## 6. Implement gradient definition manager [pending]
+### Dependencies: 10.1, 10.5
+### Description: Create system for managing gradient definitions with unique ID generation
+### Details:
+Build GradientManager that generates <linearGradient> and <radialGradient> definitions in <defs> section. Implement unique ID generation, stop elements creation, and gradient attribute mapping.
+
+## 7. Implement pattern definition manager [pending]
+### Dependencies: 10.1, 10.5
+### Description: Create system for managing pattern definitions with unique ID generation
+### Details:
+Build PatternManager that generates <pattern> definitions in <defs> section. Handle pattern units, content bounds, and unique ID generation for pattern references.
+
+## 8. Build transform attribute generator [pending]
+### Dependencies: 10.2, 10.3, 10.4
+### Description: Convert Transform objects to SVG transform attribute strings
+### Details:
+Create TransformToSVG converter that generates transform attribute values from Transform matrices. Support translate, rotate, scale, skew, and matrix operations with proper formatting.
+
+## 9. Implement viewBox calculator [pending]
+### Dependencies: 10.1, 10.2, 10.3, 10.4
+### Description: Calculate optimal viewBox values based on canvas content bounds
+### Details:
+Build ViewBoxCalculator that computes bounding box of all elements, adds padding, and generates viewBox attribute. Handle preserveAspectRatio settings and coordinate system alignment.
+
+## 10. Create XML formatter and serializer [pending]
+### Dependencies: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7, 10.8, 10.9
+### Description: Build proper XML formatting with indentation and encoding
+### Details:
+Implement XMLFormatter that handles proper element nesting, attribute formatting, self-closing tags, and indentation. Include XML declaration and encoding specification.
+
+## 11. Implement SVG specification validator [pending]
+### Dependencies: 10.10
+### Description: Create validation system to ensure generated SVG complies with SVG specification
+### Details:
+Build SVGValidator that checks element names, attribute names and values, required attributes, namespace declarations, and structural validity against SVG 1.1/2.0 specifications.
+
+## 12. Create comprehensive SVG rendering test suite [pending]
+### Dependencies: 10.11
+### Description: Develop tests for all SVG generation components and edge cases
+### Details:
+Write unit tests for each converter, integration tests for complete SVG generation, visual regression tests, and compliance tests against SVG test suite. Include edge cases and error handling.
+

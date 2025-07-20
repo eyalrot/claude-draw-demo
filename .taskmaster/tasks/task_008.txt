@@ -1,0 +1,67 @@
+# Task ID: 8
+# Title: Create Container Objects
+# Status: done
+# Dependencies: 4, 5
+# Priority: high
+# Description: Implement Group container and Layer system for organizing graphics hierarchically
+# Details:
+Implement Group as a container holding multiple Drawable objects with combined transformations. Create Layer with visibility toggle, opacity, and blend modes. Build Drawing as root container with layers, dimensions, and viewport. Support nested groups with proper transform composition. Implement z-index ordering within containers. Add methods for adding, removing, and finding child objects.
+
+# Test Strategy:
+Test nested transformations, bounding box aggregation, child object management, rendering order, deep nesting performance
+
+# Subtasks:
+## 1. Implement Group Container Base Class [done]
+### Dependencies: None
+### Description: Create the foundational Group container class that extends the base drawing object
+### Details:
+Define the Group class with properties for children array, transform matrix, opacity, and visibility. Implement basic constructor and initialization logic. Set up the container interface for adding, removing, and accessing child objects.
+
+## 2. Build Layer System with Blend Modes [done]
+### Dependencies: 8.1
+### Description: Implement a layer-based rendering system with support for various blend modes
+### Details:
+Create Layer class that extends Group with blend mode support. Implement blend mode enums (normal, multiply, screen, overlay, etc.). Add layer opacity and blend mode composition logic. Ensure proper integration with the rendering pipeline.
+
+## 3. Create Drawing Root Container [done]
+### Dependencies: 8.1, 8.2
+### Description: Implement the root container that serves as the top-level drawing context
+### Details:
+Create DrawingRoot class as the main container for all drawing objects. Implement viewport management and coordinate system setup. Add scene graph traversal starting point. Handle global drawing state and context management.
+
+## 4. Implement Transform Composition for Nested Containers [done]
+### Dependencies: 8.1
+### Description: Build the transform propagation system for nested container hierarchies
+### Details:
+Implement matrix multiplication for nested transforms. Create transform caching mechanism to avoid redundant calculations. Add methods for local-to-world and world-to-local coordinate conversions. Handle transform invalidation and propagation through the hierarchy.
+
+## 5. Develop Z-Index Ordering Implementation [done]
+### Dependencies: 8.1
+### Description: Create a robust z-index ordering system for proper rendering order
+### Details:
+Implement z-index property on all drawable objects. Create sorting algorithm for rendering order within containers. Handle automatic vs manual z-index assignment. Implement stable sorting to maintain insertion order for equal z-indices.
+
+## 6. Build Child Object Management API [done]
+### Dependencies: 8.1, 8.5
+### Description: Create comprehensive API for managing child objects within containers
+### Details:
+Implement methods: addChild, removeChild, removeAllChildren, getChildAt, getChildByName, contains, swapChildren. Add event system for child added/removed notifications. Implement parent-child relationship management with proper cleanup.
+
+## 7. Implement Bounding Box Aggregation [done]
+### Dependencies: 8.1, 8.4
+### Description: Create system for calculating aggregate bounding boxes of container contents
+### Details:
+Implement recursive bounding box calculation for containers. Handle empty containers and transformed children. Create caching mechanism for bounding box calculations. Add dirty flag system for invalidation when children change.
+
+## 8. Optimize Performance for Deep Hierarchies [done]
+### Dependencies: 8.4, 8.6, 8.7
+### Description: Implement performance optimizations for deeply nested container structures
+### Details:
+Implement view frustum culling to skip off-screen containers. Add dirty rectangle tracking for partial redraws. Create object pooling for frequently created/destroyed containers. Implement lazy evaluation for transform and bounding box calculations.
+
+## 9. Add Container Interaction and Hit Testing [done]
+### Dependencies: 8.4, 8.5, 8.6
+### Description: Implement interaction system for containers with proper hit testing through hierarchies
+### Details:
+Create hit testing that respects container transforms and z-order. Implement event bubbling through container hierarchy. Add interactive property to control hit testing per container. Handle pointer events with proper coordinate transformation.
+

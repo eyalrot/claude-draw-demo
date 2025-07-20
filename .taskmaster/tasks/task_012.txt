@@ -1,0 +1,103 @@
+# Task ID: 12
+# Title: Create Examples and Benchmarks
+# Status: in-progress
+# Dependencies: 10, 11
+# Priority: low
+# Description: Build comprehensive examples demonstrating library usage and performance benchmarking suite
+# Details:
+Create examples: basic shapes gallery, complex illustrations, generative art, data visualization, logo recreation. Build performance benchmarks testing object creation, rendering time, memory usage for 100-10,000 objects. Implement profiling decorators to identify bottlenecks. Create comparison metrics for future C++ version. Document performance characteristics and optimization tips.
+
+# Test Strategy:
+Ensure all examples run without errors, benchmark results are reproducible, performance meets targets (<1KB per object, linear rendering time)
+
+# Subtasks:
+## 1. Create basic shapes example [pending]
+### Dependencies: None
+### Description: Develop a simple demonstration showing how to draw basic geometric shapes
+### Details:
+Create an example that draws circles, rectangles, triangles, and polygons using the Claude Draw API. Include code comments explaining each shape creation method and parameter usage.
+
+## 2. Build complex illustration example [pending]
+### Dependencies: 12.1
+### Description: Create an advanced example demonstrating layered drawing with multiple shapes and transformations
+### Details:
+Develop a complex scene (e.g., a landscape or cityscape) that combines multiple shapes, uses transformations, layers, and styling options to showcase the library's capabilities.
+
+## 3. Implement generative art demo [pending]
+### Dependencies: 12.1
+### Description: Create an example that generates algorithmic art patterns
+### Details:
+Build a demo that uses mathematical functions, randomization, and iterative drawing to create generative art patterns like fractals, spirals, or particle systems.
+
+## 4. Develop data visualization example [pending]
+### Dependencies: 12.1
+### Description: Create examples showing how to visualize data using the drawing library
+### Details:
+Implement examples for common data visualizations: bar charts, pie charts, line graphs, and scatter plots. Include sample data and clear rendering logic.
+
+## 5. Create logo recreation demo [pending]
+### Dependencies: 12.1, 12.2
+### Description: Demonstrate precise drawing capabilities by recreating a well-known logo
+### Details:
+Choose a recognizable logo and recreate it using the drawing API, showcasing precision drawing, color matching, and complex path creation.
+
+## 6. Design performance benchmark suite structure [pending]
+### Dependencies: None
+### Description: Create the architecture and framework for performance testing
+### Details:
+Design a modular benchmark suite that can test different aspects: shape creation speed, rendering performance, memory usage, and large dataset handling.
+
+## 7. Implement profiling decorator [pending]
+### Dependencies: 12.6
+### Description: Create a decorator function for automatic performance profiling
+### Details:
+Build a TypeScript decorator that can be applied to methods to automatically measure execution time, memory usage, and call frequency. Include configurable options for different metrics.
+
+## 8. Build metrics collection system [pending]
+### Dependencies: 12.6, 12.7
+### Description: Implement a system to collect and aggregate performance metrics
+### Details:
+Create classes for collecting metrics from profiled functions, aggregating results, calculating statistics (mean, median, percentiles), and storing results for comparison.
+
+## 9. Create performance optimization guide [pending]
+### Dependencies: 12.6, 12.7, 12.8
+### Description: Write comprehensive documentation on performance best practices
+### Details:
+Document performance optimization techniques specific to the drawing library, including batch operations, efficient shape reuse, memory management, and rendering optimization strategies.
+
+## 10. Complete example documentation [pending]
+### Dependencies: 12.1, 12.2, 12.3, 12.4, 12.5, 12.9
+### Description: Write detailed documentation for all examples and benchmarking tools
+### Details:
+Create comprehensive documentation including: example walkthroughs, code explanations, performance benchmark usage guide, and links between examples and optimization techniques.
+
+## 11. Create Shape Creation Benchmark Framework [pending]
+### Dependencies: None
+### Description: Build timing utilities, memory measurement tools, and statistical analysis for shape creation benchmarks
+### Details:
+Implement timing decorators, memory profiling utilities, test data generators for mixed shape scenarios, and statistical analysis tools for benchmark results
+
+## 12. Implement 1000 Mixed Shapes Benchmark [pending]
+### Dependencies: None
+### Description: Benchmark creating 1000 shapes with mixed types (Circle, Rectangle, Ellipse, Line) measuring creation time and memory usage
+### Details:
+Create benchmark that instantiates 1000 shapes (25% each type), measures object creation time, memory usage, and GC pressure. Compare factory functions vs direct instantiation.
+
+## 13. Implement 5000 Mixed Shapes Benchmark [pending]
+### Dependencies: None
+### Description: Scale up benchmark to 5000 shapes to test memory efficiency and creation time scaling
+### Details:
+Benchmark creating 5000 mixed shapes with same distribution, test memory efficiency and creation time scaling, identify performance bottlenecks at larger scale
+
+## 14. Container Performance Benchmarks [pending]
+### Dependencies: None
+### Description: Benchmark adding shapes to Groups and Layers, test hierarchical container creation and bounding box calculations
+### Details:
+Test performance of adding shapes to containers, hierarchical container creation (Group → Layer → Drawing), and bounding box calculation performance with large numbers of shapes
+
+## 15. Benchmark Report Generation [pending]
+### Dependencies: None
+### Description: Create automated performance reports with timing charts and optimization recommendations
+### Details:
+Build automated reporting system that generates performance charts, tracks regression, and provides optimization recommendations based on benchmark results
+

@@ -1,0 +1,109 @@
+{
+  "timestamp": "2025-07-20T12:46:49.339304",
+  "summary": {
+    "total_benchmarks": 6,
+    "total_objects_created": 18000,
+    "execution_time_stats": {
+      "mean": 0.06472166794507454,
+      "median": 0.058445686008781195,
+      "min": 0.016532573848962784,
+      "max": 0.11906963982619345,
+      "stdev": 0.04997531107910185
+    },
+    "memory_delta_stats": {
+      "mean": 1.0123697916666667,
+      "median": 0.9921875,
+      "min": 0.0,
+      "max": 3.0,
+      "stdev": 1.096120246101111
+    },
+    "time_per_object_stats": {
+      "mean": 20.87083423975855,
+      "median": 21.45809051580727,
+      "min": 16.532573848962784,
+      "max": 23.81392796523869,
+      "stdev": 2.875365403357403
+    },
+    "objects_per_second_stats": {
+      "mean": 48736.07767195663,
+      "median": 46792.57427793354,
+      "min": 41992.23250610756,
+      "max": 60486.649516024256,
+      "stdev": 7198.509695540291
+    }
+  },
+  "individual_results": [
+    {
+      "name": "Create 1000 Mixed Shapes (Direct)",
+      "execution_time_seconds": 0.022825818043202162,
+      "memory_before_mb": 33.2734375,
+      "memory_after_mb": 36.2734375,
+      "memory_peak_mb": 36.2734375,
+      "memory_delta_mb": 3.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 22.825818043202162,
+      "objects_per_second": 43810.039934048
+    },
+    {
+      "name": "Create 1000 Mixed Shapes (Factory)",
+      "execution_time_seconds": 0.02009036298841238,
+      "memory_before_mb": 36.2734375,
+      "memory_after_mb": 36.2734375,
+      "memory_peak_mb": 36.2734375,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 20.09036298841238,
+      "objects_per_second": 49775.10862181908
+    },
+    {
+      "name": "Create 1000 Mixed Shapes (Random)",
+      "execution_time_seconds": 0.016532573848962784,
+      "memory_before_mb": 35.375,
+      "memory_after_mb": 35.375,
+      "memory_peak_mb": 35.375,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 16.532573848962784,
+      "objects_per_second": 60486.649516024256
+    },
+    {
+      "name": "Create 5000 Mixed Shapes (Direct)",
+      "execution_time_seconds": 0.11574605898931623,
+      "memory_before_mb": 35.375,
+      "memory_after_mb": 36.46484375,
+      "memory_peak_mb": 36.46484375,
+      "memory_delta_mb": 1.08984375,
+      "iterations": 1,
+      "objects_created": 5000,
+      "time_per_object_microseconds": 23.149211797863245,
+      "objects_per_second": 43198.01506556277
+    },
+    {
+      "name": "Create 5000 Mixed Shapes (Factory)",
+      "execution_time_seconds": 0.11906963982619345,
+      "memory_before_mb": 36.46484375,
+      "memory_after_mb": 37.46484375,
+      "memory_peak_mb": 37.46484375,
+      "memory_delta_mb": 1.0,
+      "iterations": 1,
+      "objects_created": 5000,
+      "time_per_object_microseconds": 23.81392796523869,
+      "objects_per_second": 41992.23250610756
+    },
+    {
+      "name": "Create 5000 Mixed Shapes (Random)",
+      "execution_time_seconds": 0.09406555397436023,
+      "memory_before_mb": 37.46484375,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 44.33984375,
+      "memory_delta_mb": 0.984375,
+      "iterations": 1,
+      "objects_created": 5000,
+      "time_per_object_microseconds": 18.813110794872046,
+      "objects_per_second": 53154.42038817809
+    }
+  ]
+}

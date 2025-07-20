@@ -1,0 +1,85 @@
+# Task ID: 5
+# Title: Implement Complex Shape Primitives
+# Status: deferred
+# Dependencies: 4
+# Priority: medium
+# Description: Create implementations for Polygon, Polyline, Arc, and Path (SVG-compatible) primitives
+# Details:
+Implement Polygon with list of points and automatic closure. Create Polyline as open polygon variant. Build Arc with center, radii, start/end angles, and sweep flag. Implement Path with SVG path data string parsing supporting M, L, C, S, Q, T, A, Z commands. Include path simplification and validation. All shapes should properly calculate bounding boxes including curved segments.
+
+# Test Strategy:
+Test complex path parsing, bounding box for curves, invalid polygon detection (self-intersecting), arc angle normalization, path command validation
+
+# Subtasks:
+## 1. Implement Polygon shape class [pending]
+### Dependencies: None
+### Description: Create a Polygon class that extends Shape and handles closed polygonal shapes with multiple vertices
+### Details:
+Implement constructor accepting array of points, validate minimum 3 points requirement, ensure automatic closure by connecting last point to first, implement render() method using ctx.moveTo and ctx.lineTo, handle fill and stroke rendering modes
+
+## 2. Implement Polyline shape class [pending]
+### Dependencies: None
+### Description: Create a Polyline class that extends Shape for open multi-segment lines
+### Details:
+Implement constructor accepting array of points, validate minimum 2 points requirement, implement render() method using ctx.moveTo and ctx.lineTo for connected line segments, ensure no automatic closure, handle stroke-only rendering
+
+## 3. Implement Arc shape mathematics [pending]
+### Dependencies: None
+### Description: Implement mathematical calculations for arc rendering including angle conversions and arc parameters
+### Details:
+Create helper functions for degree to radian conversion, calculate arc endpoints from center/radius/angles, handle clockwise vs counterclockwise direction, implement proper angle normalization (0-2π), create utilities for arc-to-bezier conversion if needed
+
+## 4. Implement Arc shape rendering [pending]
+### Dependencies: 5.3
+### Description: Create Arc class extending Shape with proper rendering using canvas arc API
+### Details:
+Implement constructor with center point, radius, start/end angles, and direction parameters, use ctx.arc() for rendering, handle both fill and stroke modes, implement proper path construction with beginPath/closePath, support partial arcs and full circles
+
+## 5. Create SVG path tokenizer [pending]
+### Dependencies: None
+### Description: Implement a tokenizer to parse SVG path strings into command tokens
+### Details:
+Create regex patterns for path commands (M,L,C,S,Q,T,A,Z) and numeric values, handle both absolute and relative commands, parse coordinate pairs and flag values, handle whitespace and comma separators, return array of command objects with type and parameters
+
+## 6. Implement SVG path command handlers [pending]
+### Dependencies: 5.5
+### Description: Create handler functions for each SVG path command type
+### Details:
+Implement MoveTo (M/m), LineTo (L/l), CubicBezier (C/c,S/s), QuadraticBezier (Q/q,T/t), Arc (A/a), and ClosePath (Z/z) handlers, handle absolute vs relative coordinate transformations, maintain current position state, handle smooth curve continuation for S/T commands
+
+## 7. Implement Path class with SVG parsing [pending]
+### Dependencies: 5.5, 5.6
+### Description: Create main Path class that uses tokenizer and command handlers to parse and store path data
+### Details:
+Extend Shape class, implement constructor accepting SVG path string, use tokenizer to parse commands, convert commands to internal segment representation, maintain path state during parsing, handle path validation and error cases
+
+## 8. Implement path validation and simplification [pending]
+### Dependencies: 5.7
+### Description: Add validation logic and path simplification algorithms to Path class
+### Details:
+Validate command sequences (e.g., must start with M), check parameter counts for each command type, implement path simplification to reduce redundant commands, convert relative commands to absolute internally, optimize consecutive moves or lines
+
+## 9. Calculate bounding boxes for curves [pending]
+### Dependencies: 5.7
+### Description: Implement accurate bounding box calculations for bezier curves and arcs
+### Details:
+Find extrema points for cubic bezier curves using derivative roots, calculate quadratic bezier curve bounds, handle arc segment bounding boxes considering angle ranges, combine all segment bounds for total path bounds, cache calculated bounds for performance
+
+## 10. Implement Path rendering [pending]
+### Dependencies: 5.7, 5.8
+### Description: Create render method for Path class that draws all segments to canvas
+### Details:
+Iterate through path segments and call appropriate canvas methods, use ctx.moveTo, ctx.lineTo, ctx.bezierCurveTo, ctx.quadraticCurveTo, ctx.arc, handle path closure with ctx.closePath, support both fill and stroke rendering modes, maintain proper path state
+
+## 11. Create comprehensive shape tests [pending]
+### Dependencies: 5.1, 5.2, 5.4, 5.10
+### Description: Write unit tests for Polygon, Polyline, Arc, and basic Path functionality
+### Details:
+Test polygon with various vertex counts and configurations, verify polyline doesn't auto-close, test arc with different angle ranges and directions, verify basic path parsing and rendering, test shape bounds calculations, validate edge cases and error handling
+
+## 12. Test complex SVG paths and edge cases [pending]
+### Dependencies: 5.10, 5.11
+### Description: Create extensive tests for SVG path parsing including all command types and complex paths
+### Details:
+Test each SVG command type with various parameters, verify relative vs absolute command handling, test smooth curve continuations (S,T commands), validate arc flag combinations, test real-world SVG path examples, verify error handling for malformed paths
+

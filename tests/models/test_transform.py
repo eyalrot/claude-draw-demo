@@ -348,7 +348,7 @@ class TestTransform2D:
     def test_scale_factory(self):
         """Test scale factory method."""
         # Uniform scaling
-        scale = Transform2D.scale(2.0)
+        scale = Transform2D.scale_transform(2.0)
         assert scale.a == 2.0
         assert scale.d == 2.0
         assert scale.tx == 0.0
@@ -356,7 +356,7 @@ class TestTransform2D:
         assert scale.is_scaling()
         
         # Non-uniform scaling
-        scale2 = Transform2D.scale(2.0, 3.0)
+        scale2 = Transform2D.scale_transform(2.0, 3.0)
         assert scale2.a == 2.0
         assert scale2.d == 3.0
         assert scale2.is_scaling()

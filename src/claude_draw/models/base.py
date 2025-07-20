@@ -62,3 +62,31 @@ class DrawModel(BaseModel):
             New model instance
         """
         return cls.model_validate_json(json_str)
+    
+    def to_json_enhanced(self, include_version: bool = True, **kwargs) -> str:
+        """Serialize to JSON with enhanced features including type discriminators.
+        
+        Args:
+            include_version: Whether to include version information
+            **kwargs: Additional arguments for JSON encoder
+            
+        Returns:
+            Enhanced JSON string representation
+        """
+        # Import here to avoid circular imports
+        from claude_draw.serialization import serialize_drawable
+        return serialize_drawable(self, **kwargs)
+    
+    def to_dict_enhanced(self, include_version: bool = True) -> Dict[str, Any]:
+        """Convert to dictionary with enhanced features including type discriminators.
+        
+        Args:
+            include_version: Whether to include version information
+            
+        Returns:
+            Enhanced dictionary representation
+        """
+        # Import here to avoid circular imports
+        from claude_draw.serialization import EnhancedJSONEncoder
+        encoder = EnhancedJSONEncoder(include_version=include_version)
+        return encoder._serialize_draw_model(self)

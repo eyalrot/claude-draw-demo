@@ -328,7 +328,7 @@ class Transform2D(DrawModel):
         return cls(tx=dx, ty=dy)
     
     @classmethod
-    def scale(cls, sx: float, sy: Optional[float] = None) -> "Transform2D":
+    def scale_transform(cls, sx: float, sy: Optional[float] = None) -> "Transform2D":
         """Create a scaling transformation.
         
         Args:
@@ -386,6 +386,18 @@ class Transform2D(DrawModel):
             tx=self.tx + dx, ty=self.ty + dy
         )
     
+    def scale(self, sx: float, sy: Optional[float] = None) -> "Transform2D":
+        """Apply scaling to this transformation.
+        
+        Args:
+            sx: Scale factor in X direction
+            sy: Scale factor in Y direction (defaults to sx for uniform scaling)
+            
+        Returns:
+            New transformation with scaling applied
+        """
+        return self * Transform2D.scale_transform(sx, sy)
+    
     def scale_by(self, sx: float, sy: Optional[float] = None) -> "Transform2D":
         """Apply scaling to this transformation.
         
@@ -396,7 +408,7 @@ class Transform2D(DrawModel):
         Returns:
             New transformation with scaling applied
         """
-        return self * Transform2D.scale(sx, sy)
+        return self * Transform2D.scale_transform(sx, sy)
     
     def rotate_by(self, angle: float) -> "Transform2D":
         """Apply rotation to this transformation.

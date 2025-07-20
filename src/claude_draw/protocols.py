@@ -3,9 +3,9 @@
 from typing import Protocol, Any, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from claude_draw.shapes import Circle, Rectangle, Line, Path
-    from claude_draw.containers import Group, Layer, Canvas
+    from claude_draw.shapes import Circle, Rectangle, Line, Ellipse
     from claude_draw.base import Drawable
+    from claude_draw.containers import Group, Layer, Drawing
 
 
 class DrawableVisitor(Protocol):
@@ -52,14 +52,14 @@ class DrawableVisitor(Protocol):
         """
         ...
     
-    def visit_path(self, path: "Path") -> Any:
-        """Visit a path object.
+    def visit_ellipse(self, ellipse: "Ellipse") -> Any:
+        """Visit an ellipse object.
         
         Args:
-            path: The path object to visit
+            ellipse: The ellipse object to visit
             
         Returns:
-            Any: Result of processing the path (depends on visitor implementation)
+            Any: Result of processing the ellipse (depends on visitor implementation)
         """
         ...
     
@@ -85,16 +85,17 @@ class DrawableVisitor(Protocol):
         """
         ...
     
-    def visit_canvas(self, canvas: "Canvas") -> Any:
-        """Visit a canvas object.
+    def visit_drawing(self, drawing: "Drawing") -> Any:
+        """Visit a drawing object.
         
         Args:
-            canvas: The canvas object to visit
+            drawing: The drawing object to visit
             
         Returns:
-            Any: Result of processing the canvas (depends on visitor implementation)
+            Any: Result of processing the drawing (depends on visitor implementation)
         """
         ...
+    
 
 
 class Renderer(Protocol):

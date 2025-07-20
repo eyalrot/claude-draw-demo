@@ -1,0 +1,109 @@
+{
+  "timestamp": "2025-07-20T12:46:49.339943",
+  "summary": {
+    "total_benchmarks": 6,
+    "total_objects_created": 25000,
+    "execution_time_stats": {
+      "mean": 0.033851176189879574,
+      "median": 0.021555931540206075,
+      "min": 0.01924097817391157,
+      "max": 0.07224314589984715,
+      "stdev": 0.021632616849631782
+    },
+    "memory_delta_stats": {
+      "mean": 0.0,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "stdev": 0.0
+    },
+    "time_per_object_stats": {
+      "mean": 15.820854628867837,
+      "median": 20.136320148594677,
+      "min": 4.316309805620801,
+      "max": 21.68748597614467,
+      "stdev": 7.88570402100589
+    },
+    "objects_per_second_stats": {
+      "mean": 93734.32209923516,
+      "median": 49759.88458561922,
+      "min": 46109.53990241,
+      "max": 231679.3847137146,
+      "stdev": 76662.50115668413
+    }
+  },
+  "individual_results": [
+    {
+      "name": "Add 1000 Shapes to Group",
+      "execution_time_seconds": 0.021031662123277783,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 21.031662123277783,
+      "objects_per_second": 47547.359506750676
+    },
+    {
+      "name": "Add 1000 Shapes to Layer",
+      "execution_time_seconds": 0.021424377104267478,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 21.424377104267478,
+      "objects_per_second": 46675.80276118329
+    },
+    {
+      "name": "Create Hierarchical Drawing (1000 shapes)",
+      "execution_time_seconds": 0.02168748597614467,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 21.68748597614467,
+      "objects_per_second": 46109.53990241
+    },
+    {
+      "name": "Calculate Bounding Boxes (1000 shapes)",
+      "execution_time_seconds": 0.07224314589984715,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 10000,
+      "time_per_object_microseconds": 7.224314589984715,
+      "objects_per_second": 138421.43604686458
+    },
+    {
+      "name": "Group Operations (Add/Remove)",
+      "execution_time_seconds": 0.01924097817391157,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 19.24097817391157,
+      "objects_per_second": 51972.40966448777
+    },
+    {
+      "name": "Layer Z-Index Sorting (1000 shapes)",
+      "execution_time_seconds": 0.047479407861828804,
+      "memory_before_mb": 38.44921875,
+      "memory_after_mb": 38.44921875,
+      "memory_peak_mb": 38.44921875,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 11000,
+      "time_per_object_microseconds": 4.316309805620801,
+      "objects_per_second": 231679.3847137146
+    }
+  ]
+}
