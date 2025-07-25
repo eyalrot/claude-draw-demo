@@ -32,6 +32,11 @@ add_executable(claude_draw_tests
     memory/test_mmap_file.cpp
     memory/test_memory_profiler.cpp
     
+    # Serialization tests
+    serialization/test_binary_format.cpp
+    serialization/test_binary_serializer.cpp
+    serialization/test_simple_serialization.cpp
+    
     # Batch operation tests
     batch/test_batch_operations.cpp
     

@@ -2280,14 +2280,14 @@
           15,
           16
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
             "title": "Design binary format specification",
             "description": "Create efficient, versioned format",
             "details": "- Define header structure\n- Design type encoding\n- Add version support\n- Plan extensibility",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2296,7 +2296,7 @@
             "title": "Write format specification tests",
             "description": "Test encoding/decoding",
             "details": "- Test header parsing\n- Verify type encoding\n- Test version handling\n- Check compatibility",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T19:43:37.254Z",
+      "updated": "2025-07-25T20:01:46.030Z",
       "description": "Tasks for master context"
     }
   }
