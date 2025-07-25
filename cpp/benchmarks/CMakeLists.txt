@@ -9,8 +9,8 @@ add_executable(claude_draw_benchmarks
     # SIMD benchmarks
     bench_simd.cpp
     
-    # Shape benchmarks (to be added)
-    # bench_shapes.cpp
+    # Shape benchmarks
+    bench_shapes.cpp
     
     # Container benchmarks
     bench_containers.cpp

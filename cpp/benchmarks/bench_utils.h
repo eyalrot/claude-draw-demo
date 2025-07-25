@@ -61,24 +61,16 @@ inline void SetMemoryBandwidth(benchmark::State& state, size_t bytes_per_iterati
     size_t total_bytes = state.iterations() * bytes_per_iteration;
     state.SetBytesProcessed(total_bytes);
     
-    // Calculate bandwidth in GB/s
-    double seconds = state.seconds_elapsed();
-    double gb_per_sec = (total_bytes / 1e9) / seconds;
-    state.counters["bandwidth_GB/s"] = gb_per_sec;
+    // Benchmark library calculates bandwidth automatically when SetBytesProcessed is used
 }
 
 // SIMD efficiency counter (operations per cycle estimate)
 inline void SetSimdEfficiency(benchmark::State& state, size_t operations_per_iteration, 
                               size_t vector_width = 8) {  // 8 floats for AVX2
     size_t total_ops = state.iterations() * operations_per_iteration;
-    double ops_per_sec = total_ops / state.seconds_elapsed();
+    state.SetItemsProcessed(total_ops);
     
-    // Assume 3GHz CPU for rough estimate
-    const double assumed_ghz = 3.0;
-    double ops_per_cycle = ops_per_sec / (assumed_ghz * 1e9);
-    
-    state.counters["ops_per_cycle"] = ops_per_cycle;
-    state.counters["simd_efficiency_%"] = (ops_per_cycle / vector_width) * 100.0;
+    // The benchmark library will calculate items/second automatically
 }
 
 // Benchmark fixture with data pre-generation

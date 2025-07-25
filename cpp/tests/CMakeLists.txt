@@ -20,6 +20,7 @@ add_executable(claude_draw_tests
     shapes/test_shape_batch_ops.cpp
     shapes/test_simd_bounds.cpp
     shapes/test_shape_validation.cpp
+    shapes/test_shape_integration.cpp
     # shapes/test_rectangle.cpp
     # shapes/test_ellipse.cpp
     # shapes/test_line.cpp
@@ -35,8 +36,11 @@ add_executable(claude_draw_tests
     
     # Container tests
     containers/test_soa_container.cpp
+    containers/test_soa_container_advanced.cpp
     containers/test_spatial_index.cpp
+    containers/test_spatial_index_performance.cpp
     containers/test_parallel_visitor.cpp
+    containers/test_parallel_visitor_performance.cpp
     containers/test_incremental_bounds.cpp
     containers/test_cow_container.cpp
     containers/test_bulk_operations.cpp

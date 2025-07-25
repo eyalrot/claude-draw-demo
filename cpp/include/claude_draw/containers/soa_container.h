@@ -136,6 +136,38 @@ public:
         shape_registry_.reserve(INITIAL_CAPACITY);
     }
     
+    // Copy constructor
+    SoAContainer(const SoAContainer& other) 
+        : circles_(other.circles_),
+          rectangles_(other.rectangles_),
+          ellipses_(other.ellipses_),
+          lines_(other.lines_),
+          shape_registry_(other.shape_registry_),
+          id_to_registry_index_(other.id_to_registry_index_),
+          next_id_(other.next_id_) {
+        // bounds trackers will be empty and need recalculation
+        bounds_tracker_.mark_dirty();
+    }
+    
+    // Assignment operator
+    SoAContainer& operator=(const SoAContainer& other) {
+        if (this != &other) {
+            circles_ = other.circles_;
+            rectangles_ = other.rectangles_;
+            ellipses_ = other.ellipses_;
+            lines_ = other.lines_;
+            shape_registry_ = other.shape_registry_;
+            id_to_registry_index_ = other.id_to_registry_index_;
+            next_id_ = other.next_id_;
+            
+            // bounds trackers will be empty and need recalculation
+            bounds_tracker_.clear();
+            hierarchical_bounds_.clear();
+            bounds_tracker_.mark_dirty();
+        }
+        return *this;
+    }
+    
     // Add shape methods
     uint32_t add_circle(const shapes::Circle& circle) {
         Index idx = circles_.add(circle.data());
@@ -296,6 +328,11 @@ public:
     // Get total shape count
     size_t size() const {
         return shape_registry_.size();
+    }
+    
+    // Check if container is empty
+    bool empty() const {
+        return shape_registry_.empty();
     }
     
     // Get count by type
