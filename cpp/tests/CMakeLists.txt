@@ -27,6 +27,10 @@ add_executable(claude_draw_tests
     
     # Memory tests
     memory/test_object_pool.cpp
+    memory/test_arena_allocator.cpp
+    memory/test_object_recycler.cpp
+    memory/test_mmap_file.cpp
+    memory/test_memory_profiler.cpp
     
     # Batch operation tests
     batch/test_batch_operations.cpp

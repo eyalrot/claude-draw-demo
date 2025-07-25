@@ -18,9 +18,9 @@ add_library(claude_draw_core STATIC
     # containers/container.cpp
     # containers/spatial_index.cpp
     
-    # Memory management (to be added)
-    # memory/arena_allocator.cpp
-    # memory/object_pool.cpp
+    # Memory management
+    memory/mmap_file.cpp
+    memory/memory_profiler.cpp
     
     # SIMD implementations (to be added)
     # simd/transform_scalar.cpp
