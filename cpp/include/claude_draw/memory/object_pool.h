@@ -81,7 +81,7 @@ public:
             }
         }
         
-        T* obj = &blocks_.back()[current_block_++];
+        T* obj = reinterpret_cast<T*>(&(*blocks_.back())[current_block_++]);
         new (obj) T(std::forward<Args>(args)...);
         ++allocated_count_;
         return obj;

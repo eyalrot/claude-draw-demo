@@ -47,127 +47,127 @@ struct BoundingBox {
     
     // Create from center and half-extents
     static BoundingBox from_center_half_extents(const Point2D& center, float half_width, float half_height) noexcept {
-        return BoundingBox(
+        return {
             center.x - half_width,
             center.y - half_height,
             center.x + half_width,
             center.y + half_height
-        );
+        };
     }
     
     // Create from center and size
     static BoundingBox from_center_size(const Point2D& center, float width, float height) noexcept {
-        float half_width = width * 0.5f;
-        float half_height = height * 0.5f;
+        float half_width = width * 0.5F;
+        float half_height = height * 0.5F;
         return from_center_half_extents(center, half_width, half_height);
     }
     
     // Check if the bounding box is empty
-    bool is_empty() const noexcept {
+    [[nodiscard]] bool is_empty() const noexcept {
         return min_x > max_x || min_y > max_y;
     }
     
     // Check if the bounding box is valid (non-empty)
-    bool is_valid() const noexcept {
+    [[nodiscard]] bool is_valid() const noexcept {
         return !is_empty();
     }
     
     // Get width
-    float width() const noexcept {
-        return is_empty() ? 0.0f : max_x - min_x;
+    [[nodiscard]] float width() const noexcept {
+        return is_empty() ? 0.0F : max_x - min_x;
     }
     
     // Get height
-    float height() const noexcept {
-        return is_empty() ? 0.0f : max_y - min_y;
+    [[nodiscard]] float height() const noexcept {
+        return is_empty() ? 0.0F : max_y - min_y;
     }
     
     // Get area
-    float area() const noexcept {
-        return is_empty() ? 0.0f : width() * height();
+    [[nodiscard]] float area() const noexcept {
+        return is_empty() ? 0.0F : width() * height();
     }
     
     // Get perimeter
-    float perimeter() const noexcept {
-        return is_empty() ? 0.0f : 2.0f * (width() + height());
+    [[nodiscard]] float perimeter() const noexcept {
+        return is_empty() ? 0.0F : 2.0F * (width() + height());
     }
     
     // Get center point
-    Point2D center() const noexcept {
-        return Point2D(
-            (min_x + max_x) * 0.5f,
-            (min_y + max_y) * 0.5f
-        );
+    [[nodiscard]] Point2D center() const noexcept {
+        return {
+            (min_x + max_x) * 0.5F,
+            (min_y + max_y) * 0.5F
+        };
     }
     
     // Get corner points
-    Point2D min_corner() const noexcept {
-        return Point2D(min_x, min_y);
+    [[nodiscard]] Point2D min_corner() const noexcept {
+        return {min_x, min_y};
     }
     
-    Point2D max_corner() const noexcept {
-        return Point2D(max_x, max_y);
+    [[nodiscard]] Point2D max_corner() const noexcept {
+        return {max_x, max_y};
     }
     
-    Point2D top_left() const noexcept {
-        return Point2D(min_x, max_y);
+    [[nodiscard]] Point2D top_left() const noexcept {
+        return {min_x, max_y};
     }
     
-    Point2D top_right() const noexcept {
-        return Point2D(max_x, max_y);
+    [[nodiscard]] Point2D top_right() const noexcept {
+        return {max_x, max_y};
     }
     
-    Point2D bottom_left() const noexcept {
-        return Point2D(min_x, min_y);
+    [[nodiscard]] Point2D bottom_left() const noexcept {
+        return {min_x, min_y};
     }
     
-    Point2D bottom_right() const noexcept {
-        return Point2D(max_x, min_y);
+    [[nodiscard]] Point2D bottom_right() const noexcept {
+        return {max_x, min_y};
     }
     
     // Check if a point is contained within the bounding box
-    bool contains(const Point2D& p) const noexcept {
+    [[nodiscard]] bool contains(const Point2D& p) const noexcept {
         return p.x >= min_x && p.x <= max_x &&
                p.y >= min_y && p.y <= max_y;
     }
     
     // Check if another bounding box is fully contained
-    bool contains(const BoundingBox& other) const noexcept {
+    [[nodiscard]] bool contains(const BoundingBox& other) const noexcept {
         if (is_empty() || other.is_empty()) return false;
         return other.min_x >= min_x && other.max_x <= max_x &&
                other.min_y >= min_y && other.max_y <= max_y;
     }
     
     // Check if two bounding boxes intersect
-    bool intersects(const BoundingBox& other) const noexcept {
+    [[nodiscard]] bool intersects(const BoundingBox& other) const noexcept {
         if (is_empty() || other.is_empty()) return false;
         return min_x <= other.max_x && max_x >= other.min_x &&
                min_y <= other.max_y && max_y >= other.min_y;
     }
     
     // Compute intersection of two bounding boxes
-    BoundingBox intersection(const BoundingBox& other) const noexcept {
+    [[nodiscard]] BoundingBox intersection(const BoundingBox& other) const noexcept {
         if (!intersects(other)) return BoundingBox();
         
-        return BoundingBox(
+        return {
             std::max(min_x, other.min_x),
             std::max(min_y, other.min_y),
             std::min(max_x, other.max_x),
             std::min(max_y, other.max_y)
-        );
+        };
     }
     
     // Compute union of two bounding boxes
-    BoundingBox union_with(const BoundingBox& other) const noexcept {
+    [[nodiscard]] BoundingBox union_with(const BoundingBox& other) const noexcept {
         if (is_empty()) return other;
         if (other.is_empty()) return *this;
         
-        return BoundingBox(
+        return {
             std::min(min_x, other.min_x),
             std::min(min_y, other.min_y),
             std::max(max_x, other.max_x),
             std::max(max_y, other.max_y)
-        );
+        };
     }
     
     // Expand to include a point
@@ -213,8 +213,8 @@ struct BoundingBox {
         if (is_empty()) return;
         
         Point2D c = center();
-        float hw = width() * 0.5f * factor;
-        float hh = height() * 0.5f * factor;
+        float hw = width() * 0.5F * factor;
+        float hh = height() * 0.5F * factor;
         
         min_x = c.x - hw;
         min_y = c.y - hh;
@@ -240,17 +240,17 @@ struct BoundingBox {
     }
     
     // Equality operators
-    bool operator==(const BoundingBox& other) const noexcept {
+    [[nodiscard]] bool operator==(const BoundingBox& other) const noexcept {
         return min_x == other.min_x && min_y == other.min_y &&
                max_x == other.max_x && max_y == other.max_y;
     }
     
-    bool operator!=(const BoundingBox& other) const noexcept {
+    [[nodiscard]] bool operator!=(const BoundingBox& other) const noexcept {
         return !(*this == other);
     }
     
     // Check near equality with epsilon
-    bool nearly_equal(const BoundingBox& other, float epsilon = 1e-6f) const noexcept {
+    [[nodiscard]] bool nearly_equal(const BoundingBox& other, float epsilon = 1e-6F) const noexcept {
         return std::abs(min_x - other.min_x) < epsilon &&
                std::abs(min_y - other.min_y) < epsilon &&
                std::abs(max_x - other.max_x) < epsilon &&

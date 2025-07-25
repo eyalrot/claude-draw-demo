@@ -16,6 +16,9 @@ add_executable(claude_draw_tests
     # shapes/test_ellipse.cpp
     # shapes/test_line.cpp
     
+    # Memory tests
+    memory/test_object_pool.cpp
+    
     # Container tests (to be added)
     # containers/test_group.cpp
     # containers/test_layer.cpp
@@ -35,6 +38,7 @@ if(BUILD_PYTHON_BINDINGS)
             claude_draw_core
             GTest::gtest
             GTest::gtest_main
+            GTest::gmock
             pybind11::embed  # For embedded Python interpreter
     )
     
@@ -42,6 +46,11 @@ if(BUILD_PYTHON_BINDINGS)
         PRIVATE
             ${CMAKE_CURRENT_SOURCE_DIR}
             ${CMAKE_SOURCE_DIR}/include
+    )
+    
+    target_include_directories(claude_draw_bindings_tests
+        SYSTEM PRIVATE
+            ${CMAKE_BINARY_DIR}/_deps/googletest-src/googlemock/include
     )
     
     gtest_discover_tests(claude_draw_bindings_tests

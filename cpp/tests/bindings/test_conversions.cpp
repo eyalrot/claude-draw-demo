@@ -95,7 +95,7 @@ TEST_F(ConversionTest, ColorIntegerConversion) {
     EXPECT_EQ(c.a, 255);
     
     // Test Color -> integer conversion
-    Color c2(64, 128, 192, 255);
+    Color c2(uint8_t(64), uint8_t(128), uint8_t(192), uint8_t(255));
     py::int_ rgba2 = py::cast(c2);
     uint32_t val = rgba2.cast<uint32_t>();
     EXPECT_EQ(val, c2.rgba);
@@ -246,7 +246,7 @@ TEST_F(ConversionTest, BufferProtocol) {
     
     // Test Transform2D buffer protocol
     {
-        Transform2D t = Transform2D::identity();
+        Transform2D t;  // Default constructor is identity
         py::buffer_info info = py::buffer_info(
             t.data(), sizeof(float), py::format_descriptor<float>::format(),
             2, {3, 3}, {3 * sizeof(float), sizeof(float)}
