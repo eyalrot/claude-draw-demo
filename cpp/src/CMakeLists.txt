@@ -3,9 +3,10 @@ add_library(claude_draw_core STATIC
     # Core files
     core/placeholder.cpp
     core/simd.cpp
+    core/point2d.cpp
+    core/color.cpp
     
     # Core types (to be added)
-    # core/point2d.cpp
     # core/color.cpp
     # core/transform2d.cpp
     # core/bounding_box.cpp

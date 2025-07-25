@@ -5,9 +5,10 @@ add_executable(claude_draw_tests
     
     # Core tests
     core/test_simd.cpp
+    core/test_point2d.cpp
+    core/test_color.cpp
     
     # Core tests (to be added)
-    # core/test_point2d.cpp
     # core/test_color.cpp
     # core/test_transform2d.cpp
     # core/test_bounding_box.cpp
