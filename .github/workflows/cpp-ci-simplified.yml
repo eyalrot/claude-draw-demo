@@ -1,0 +1,138 @@
+name: C++ CI (Simplified)
+
+on:
+  push:
+    branches: [ main, develop, cpp-*, CPP* ]
+    paths:
+      - 'cpp/**'
+      - '.github/workflows/cpp-ci*.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'cpp/**'
+      - '.github/workflows/cpp-ci*.yml'
+
+env:
+  BUILD_TYPE: Release
+  JOBS: 2
+
+jobs:
+  build-and-test:
+    name: Build and Test - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies (Ubuntu)
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-dev
+
+    - name: Install dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install ninja
+
+    - name: Build
+      working-directory: cpp
+      run: make ci-build BUILD_TYPE=${{ env.BUILD_TYPE }} JOBS=${{ env.JOBS }}
+
+    - name: Run Tests
+      working-directory: cpp
+      run: make ci-test
+
+    - name: Test Python Bindings
+      working-directory: cpp
+      run: make test-python
+
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build clang-tidy clang-format lcov python3-dev
+
+    - name: Check Formatting
+      working-directory: cpp
+      run: make format-check
+
+    - name: Run Linter
+      working-directory: cpp
+      run: make lint
+
+    - name: Run Sanitizers
+      working-directory: cpp
+      run: make ci-sanitize
+
+    - name: Generate Coverage
+      working-directory: cpp
+      run: make ci-coverage
+
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./cpp/build-coverage/coverage.info
+        flags: cpp
+        name: claude-draw-cpp
+        fail_ci_if_error: false
+
+  benchmarks:
+    name: Performance Benchmarks
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
+
+    - name: Build and Run Benchmarks
+      working-directory: cpp
+      run: |
+        make bench
+        ./build-release/benchmarks/claude_draw_benchmarks \
+          --benchmark_format=json \
+          --benchmark_out=benchmark_results.json
+
+    - name: Store Benchmark Result
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        tool: 'googlecpp'
+        output-file-path: cpp/benchmark_results.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        auto-push: true
+
+  # Quick check that runs on all PRs
+  quick-check:
+    name: Quick Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-dev clang-format
+
+    - name: Run all checks
+      working-directory: cpp
+      run: make check
