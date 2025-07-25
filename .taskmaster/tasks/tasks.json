@@ -2296,7 +2296,7 @@
             "title": "Write format specification tests",
             "description": "Test encoding/decoding",
             "details": "- Test header parsing\n- Verify type encoding\n- Test version handling\n- Check compatibility",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2305,7 +2305,7 @@
             "title": "Implement zero-copy serialization",
             "description": "Direct memory mapping support",
             "details": "- Design memory layout\n- Implement direct access\n- Add alignment handling\n- Optimize for speed",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2314,7 +2314,7 @@
             "title": "Write zero-copy tests",
             "description": "Test memory-mapped I/O",
             "details": "- Test direct access\n- Verify data integrity\n- Test alignment\n- Check performance",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T20:01:46.030Z",
+      "updated": "2025-07-25T20:21:29.924Z",
       "description": "Tasks for master context"
     }
   }
