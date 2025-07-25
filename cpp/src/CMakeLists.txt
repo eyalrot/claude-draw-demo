@@ -5,11 +5,10 @@ add_library(claude_draw_core STATIC
     core/simd.cpp
     core/point2d.cpp
     core/color.cpp
+    core/transform2d.cpp
     
-    # Core types (to be added)
-    # core/color.cpp
-    # core/transform2d.cpp
-    # core/bounding_box.cpp
+    # Core types
+    core/bounding_box.cpp
     
     # Shapes (to be added)
     # shapes/circle.cpp
