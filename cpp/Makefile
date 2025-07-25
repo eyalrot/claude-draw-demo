@@ -183,7 +183,7 @@ coverage:
 	@cd $(BUILD_DIR_COVERAGE) && $(CTEST) --quiet
 	@echo "$(GREEN)Generating coverage report...$(NC)"
 	@cd $(BUILD_DIR_COVERAGE) && lcov --capture --directory . --output-file coverage.info --no-external
-	@cd $(BUILD_DIR_COVERAGE) && lcov --remove coverage.info '*/tests/*' '*/_deps/*' '*/usr/*' --output-file coverage.info
+	@cd $(BUILD_DIR_COVERAGE) && lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info --ignore-errors empty,unused
 	@cd $(BUILD_DIR_COVERAGE) && lcov --list coverage.info
 
 .PHONY: coverage-html
@@ -323,7 +323,7 @@ perf: release
 
 # Combined check target
 .PHONY: check
-check: test lint format-check
+check: release test lint format-check
 	@echo "$(GREEN)All checks passed!$(NC)"
 
 # Quick rebuild for development
@@ -353,8 +353,23 @@ ci-test:
 	@cd build && $(CTEST) -C $(BUILD_TYPE) --verbose --output-on-failure
 
 .PHONY: ci-coverage
-ci-coverage: coverage
-	@echo "Coverage report generated for CI"
+ci-coverage:
+	@echo "$(GREEN)Building with coverage enabled...$(NC)"
+	@mkdir -p $(BUILD_DIR_COVERAGE)
+	@cd $(BUILD_DIR_COVERAGE) && $(CMAKE) .. \
+		-G "$(CMAKE_GENERATOR)" \
+		-DCMAKE_BUILD_TYPE=Debug \
+		-DENABLE_COVERAGE=ON \
+		-DBUILD_TESTS=ON \
+		-DBUILD_BENCHMARKS=OFF \
+		-DBUILD_PYTHON_BINDINGS=OFF
+	@$(CMAKE) --build $(BUILD_DIR_COVERAGE) --parallel $(JOBS)
+	@echo "$(GREEN)Running tests for coverage...$(NC)"
+	@cd $(BUILD_DIR_COVERAGE) && $(CTEST) --quiet
+	@echo "$(GREEN)Generating coverage report...$(NC)"
+	@cd $(BUILD_DIR_COVERAGE) && lcov --capture --directory . --output-file coverage.info --no-external
+	@cd $(BUILD_DIR_COVERAGE) && lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info --ignore-errors empty,unused
+	@cd $(BUILD_DIR_COVERAGE) && lcov --list coverage.info --ignore-errors empty
 
 .PHONY: ci-sanitize
 ci-sanitize: sanitize
