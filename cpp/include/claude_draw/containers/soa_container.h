@@ -12,6 +12,7 @@
 #include "../shapes/ellipse_optimized.h"
 #include "../shapes/line_optimized.h"
 #include "../core/simd.h"
+#include "incremental_bounds.h"
 
 namespace claude_draw {
 namespace containers {
@@ -126,9 +127,9 @@ private:
     std::unordered_map<uint32_t, size_t> id_to_registry_index_;
     uint32_t next_id_ = 1;
     
-    // Bounds caching
-    mutable BoundingBox cached_bounds_;
-    mutable bool bounds_dirty_ = true;
+    // Incremental bounds tracking
+    mutable IncrementalBounds bounds_tracker_;
+    mutable HierarchicalBounds hierarchical_bounds_;
     
 public:
     SoAContainer() {
@@ -138,22 +139,50 @@ public:
     // Add shape methods
     uint32_t add_circle(const shapes::Circle& circle) {
         Index idx = circles_.add(circle.data());
-        return add_to_registry(shapes::ShapeType::Circle, idx);
+        uint32_t id = add_to_registry(shapes::ShapeType::Circle, idx);
+        
+        // Update bounds
+        BoundingBox bounds = circle.get_bounds();
+        bounds_tracker_.add_shape(bounds);
+        hierarchical_bounds_.add_shape(bounds);
+        
+        return id;
     }
     
     uint32_t add_rectangle(const shapes::Rectangle& rect) {
         Index idx = rectangles_.add(rect.data());
-        return add_to_registry(shapes::ShapeType::Rectangle, idx);
+        uint32_t id = add_to_registry(shapes::ShapeType::Rectangle, idx);
+        
+        // Update bounds
+        BoundingBox bounds = rect.get_bounds();
+        bounds_tracker_.add_shape(bounds);
+        hierarchical_bounds_.add_shape(bounds);
+        
+        return id;
     }
     
     uint32_t add_ellipse(const shapes::Ellipse& ellipse) {
         Index idx = ellipses_.add(ellipse.data());
-        return add_to_registry(shapes::ShapeType::Ellipse, idx);
+        uint32_t id = add_to_registry(shapes::ShapeType::Ellipse, idx);
+        
+        // Update bounds
+        BoundingBox bounds = ellipse.get_bounds();
+        bounds_tracker_.add_shape(bounds);
+        hierarchical_bounds_.add_shape(bounds);
+        
+        return id;
     }
     
     uint32_t add_line(const shapes::Line& line) {
         Index idx = lines_.add(line.data());
-        return add_to_registry(shapes::ShapeType::Line, idx);
+        uint32_t id = add_to_registry(shapes::ShapeType::Line, idx);
+        
+        // Update bounds
+        BoundingBox bounds = line.get_bounds();
+        bounds_tracker_.add_shape(bounds);
+        hierarchical_bounds_.add_shape(bounds);
+        
+        return id;
     }
     
     // Remove shape by ID
@@ -165,6 +194,9 @@ public:
         
         size_t reg_idx = it->second;
         const ShapeEntry& entry = shape_registry_[reg_idx];
+        
+        // Get bounds before removal
+        BoundingBox shape_bounds = get_shape_bounds(entry);
         
         // Remove from type-specific array
         switch (entry.type) {
@@ -191,7 +223,10 @@ public:
             id_to_registry_index_[shape_registry_[i].id] = i;
         }
         
-        bounds_dirty_ = true;
+        // Update bounds trackers
+        bounds_tracker_.remove_shape(shape_bounds);
+        hierarchical_bounds_.remove_shape(shape_bounds);
+        
         return true;
     }
     
@@ -295,43 +330,40 @@ public:
         lines_.compact();
     }
     
+    // Get bounds for a specific region using hierarchical bounds
+    BoundingBox get_region_bounds(const BoundingBox& region) const {
+        return hierarchical_bounds_.get_region_bounds(region);
+    }
+    
     // Bounds calculation
     BoundingBox get_bounds() const {
-        if (!bounds_dirty_) {
-            return cached_bounds_;
-        }
-        
-        if (shape_registry_.empty()) {
-            cached_bounds_ = BoundingBox(0, 0, 0, 0);
-            bounds_dirty_ = false;
-            return cached_bounds_;
-        }
-        
-        // Initialize with first visible shape
-        bool found_first = false;
-        
-        for (const auto& entry : shape_registry_) {
-            if (!entry.visible) continue;
+        // Check if incremental bounds need recalculation
+        if (bounds_tracker_.is_dirty()) {
+            // Recalculate bounds from scratch
+            BoundingBox new_bounds;
+            bool found_first = false;
             
-            BoundingBox shape_bounds = get_shape_bounds(entry);
+            for (const auto& entry : shape_registry_) {
+                if (!entry.visible) continue;
+                
+                BoundingBox shape_bounds = get_shape_bounds(entry);
+                
+                if (!found_first) {
+                    new_bounds = shape_bounds;
+                    found_first = true;
+                } else {
+                    new_bounds = new_bounds.union_with(shape_bounds);
+                }
+            }
             
             if (!found_first) {
-                cached_bounds_ = shape_bounds;
-                found_first = true;
-            } else {
-                cached_bounds_.min_x = std::min(cached_bounds_.min_x, shape_bounds.min_x);
-                cached_bounds_.min_y = std::min(cached_bounds_.min_y, shape_bounds.min_y);
-                cached_bounds_.max_x = std::max(cached_bounds_.max_x, shape_bounds.max_x);
-                cached_bounds_.max_y = std::max(cached_bounds_.max_y, shape_bounds.max_y);
+                new_bounds = BoundingBox(0, 0, 0, 0);
             }
+            
+            bounds_tracker_.set_bounds(new_bounds);
         }
         
-        if (!found_first) {
-            cached_bounds_ = BoundingBox(0, 0, 0, 0);
-        }
-        
-        bounds_dirty_ = false;
-        return cached_bounds_;
+        return bounds_tracker_.get_bounds();
     }
     
     // Clear all shapes
@@ -343,7 +375,8 @@ public:
         shape_registry_.clear();
         id_to_registry_index_.clear();
         next_id_ = 1;
-        bounds_dirty_ = true;
+        bounds_tracker_.clear();
+        hierarchical_bounds_.clear();
     }
     
     // Get direct access to typed arrays for SIMD operations
@@ -365,7 +398,7 @@ public:
         }
         
         shape_registry_[it->second].visible = visible;
-        bounds_dirty_ = true;
+        bounds_tracker_.mark_dirty();
         return true;
     }
     
@@ -395,7 +428,7 @@ private:
         id_to_registry_index_[id] = shape_registry_.size();
         shape_registry_.push_back(entry);
         
-        bounds_dirty_ = true;
+        bounds_tracker_.mark_dirty();
         return id;
     }
     

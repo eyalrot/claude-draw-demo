@@ -12,8 +12,8 @@ add_executable(claude_draw_benchmarks
     # Shape benchmarks (to be added)
     # bench_shapes.cpp
     
-    # Container benchmarks (to be added)
-    # bench_containers.cpp
+    # Container benchmarks
+    bench_containers.cpp
     
     # Memory benchmarks (to be added)
     # bench_memory.cpp

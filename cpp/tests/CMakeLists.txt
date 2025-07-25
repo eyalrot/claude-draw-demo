@@ -36,6 +36,11 @@ add_executable(claude_draw_tests
     # Container tests
     containers/test_soa_container.cpp
     containers/test_spatial_index.cpp
+    containers/test_parallel_visitor.cpp
+    containers/test_incremental_bounds.cpp
+    containers/test_cow_container.cpp
+    containers/test_bulk_operations.cpp
+    containers/test_container_stress.cpp
     # containers/test_group.cpp
     # containers/test_layer.cpp
 )
