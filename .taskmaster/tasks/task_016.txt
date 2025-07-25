@@ -1,0 +1,139 @@
+# Task ID: 16
+# Title: Container Optimization
+# Status: pending
+# Dependencies: 15
+# Priority: high
+# Description: Create high-performance C++ implementations of Group, Layer, and Drawing containers
+# Details:
+Implement containers using std::vector with reserve strategies. Add spatial indexing (R-tree or Quadtree) for fast hit testing. Optimize child management with move semantics. Implement lazy bounding box calculation with caching. Add parallel traversal support. Design efficient z-index sorting. Create Python bindings maintaining container interface.
+
+# Test Strategy:
+Test container operations with thousands of children, verify spatial indexing performance, benchmark parallel traversal, test memory usage
+
+# Subtasks:
+## 1. Design Structure of Arrays layout [pending]
+### Dependencies: None
+### Description: Separate shape data for SIMD processing
+### Details:
+- Store shape types in separate arrays
+- Align arrays for SIMD access
+- Design efficient indexing scheme
+- Plan memory layout for cache efficiency
+
+## 2. Write SoA container tests [pending]
+### Dependencies: None
+### Description: Test data layout and access patterns
+### Details:
+- Test memory alignment verification
+- Verify SIMD-friendly access
+- Test iteration performance
+- Validate data integrity
+
+## 3. Implement spatial indexing [pending]
+### Dependencies: None
+### Description: Add R-tree for fast queries
+### Details:
+- Implement R-tree data structure
+- Add insertion/removal operations
+- Implement range queries
+- Add bulk loading support
+
+## 4. Write spatial index tests [pending]
+### Dependencies: None
+### Description: Test insertion, removal, queries
+### Details:
+- Test tree balancing
+- Verify query correctness
+- Test performance with large datasets
+- Test edge cases
+
+## 5. Create parallel visitor traversal [pending]
+### Dependencies: None
+### Description: Use thread pools for container traversal
+### Details:
+- Implement thread pool
+- Add work stealing queue
+- Create parallel visitor pattern
+- Handle synchronization
+
+## 6. Write parallel traversal tests [pending]
+### Dependencies: None
+### Description: Test thread safety and correctness
+### Details:
+- Test concurrent access
+- Verify result correctness
+- Test scalability
+- Check for race conditions
+
+## 7. Implement incremental bounds [pending]
+### Dependencies: None
+### Description: Cache and update bounds efficiently
+### Details:
+- Add dirty flag system
+- Implement lazy evaluation
+- Cache bounds per container
+- Update only affected regions
+
+## 8. Write bounds caching tests [pending]
+### Dependencies: None
+### Description: Test incremental updates
+### Details:
+- Test cache invalidation
+- Verify bounds accuracy
+- Test update performance
+- Check edge cases
+
+## 9. Design copy-on-write containers [pending]
+### Dependencies: None
+### Description: Enable cheap copies for immutability
+### Details:
+- Implement reference counting
+- Add COW semantics
+- Handle write operations
+- Optimize memory usage
+
+## 10. Write CoW container tests [pending]
+### Dependencies: None
+### Description: Test copy semantics and memory sharing
+### Details:
+- Test shallow vs deep copies
+- Verify memory sharing
+- Test write triggers
+- Check reference counting
+
+## 11. Add bulk operation support [pending]
+### Dependencies: None
+### Description: Transform/style thousands of objects at once
+### Details:
+- Design batch operation API
+- Implement SIMD transforms
+- Add parallel execution
+- Optimize memory access
+
+## 12. Write bulk operation tests [pending]
+### Dependencies: None
+### Description: Test batch transforms and styling
+### Details:
+- Test operation correctness
+- Verify performance gains
+- Test error handling
+- Check memory usage
+
+## 13. Create container stress tests [pending]
+### Dependencies: None
+### Description: Test with millions of objects
+### Details:
+- Generate large datasets
+- Test memory limits
+- Verify performance scaling
+- Check stability
+
+## 14. Implement container benchmarks [pending]
+### Dependencies: None
+### Description: Measure operations on large datasets
+### Details:
+- Benchmark insertions
+- Test query performance
+- Measure iteration speed
+- Compare with baseline
+

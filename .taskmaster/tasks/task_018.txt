@@ -1,0 +1,130 @@
+# Task ID: 18
+# Title: Binary Serialization
+# Status: pending
+# Dependencies: 14, 15, 16
+# Priority: medium
+# Description: Implement fast binary serialization format for C++ objects
+# Details:
+Design compact binary format for all object types. Implement zero-copy deserialization where possible. Add compression support (LZ4 or Zstd). Create versioning system for format evolution. Implement streaming serialization for large drawings. Add Python pickle protocol support. Create converters between JSON and binary formats.
+
+# Test Strategy:
+Test serialization round-trip accuracy, benchmark against JSON serialization, verify compression ratios, test streaming with large files
+
+# Subtasks:
+## 1. Design binary format specification [pending]
+### Dependencies: None
+### Description: Create efficient, versioned format
+### Details:
+- Define header structure
+- Design type encoding
+- Add version support
+- Plan extensibility
+
+## 2. Write format specification tests [pending]
+### Dependencies: None
+### Description: Test encoding/decoding
+### Details:
+- Test header parsing
+- Verify type encoding
+- Test version handling
+- Check compatibility
+
+## 3. Implement zero-copy serialization [pending]
+### Dependencies: None
+### Description: Direct memory mapping support
+### Details:
+- Design memory layout
+- Implement direct access
+- Add alignment handling
+- Optimize for speed
+
+## 4. Write zero-copy tests [pending]
+### Dependencies: None
+### Description: Test memory-mapped I/O
+### Details:
+- Test direct access
+- Verify data integrity
+- Test alignment
+- Check performance
+
+## 5. Add compression support [pending]
+### Dependencies: None
+### Description: Optional zstd/lz4 compression
+### Details:
+- Integrate compression libs
+- Add compression levels
+- Implement streaming
+- Handle errors
+
+## 6. Write compression tests [pending]
+### Dependencies: None
+### Description: Test compressed formats
+### Details:
+- Test compression ratios
+- Verify decompression
+- Test streaming mode
+- Check performance
+
+## 7. Create streaming API [pending]
+### Dependencies: None
+### Description: Handle files larger than memory
+### Details:
+- Design streaming protocol
+- Implement chunked I/O
+- Add progress callbacks
+- Handle interruptions
+
+## 8. Write streaming tests [pending]
+### Dependencies: None
+### Description: Test with large datasets
+### Details:
+- Test large files
+- Verify chunking works
+- Test interruption recovery
+- Check memory usage
+
+## 9. Implement format validation [pending]
+### Dependencies: None
+### Description: Ensure data integrity
+### Details:
+- Add checksums
+- Implement validation
+- Check structure integrity
+- Handle corruption
+
+## 10. Write validation tests [pending]
+### Dependencies: None
+### Description: Test corrupt data handling
+### Details:
+- Test checksum verification
+- Inject corruption
+- Test error recovery
+- Verify error messages
+
+## 11. Add backward compatibility [pending]
+### Dependencies: None
+### Description: Support format evolution
+### Details:
+- Design version handling
+- Implement migration
+- Add compatibility tests
+- Document changes
+
+## 12. Write compatibility tests [pending]
+### Dependencies: None
+### Description: Test version migration
+### Details:
+- Test old format loading
+- Verify data preservation
+- Test migration paths
+- Check edge cases
+
+## 13. Create serialization benchmarks [pending]
+### Dependencies: None
+### Description: Measure I/O performance
+### Details:
+- Benchmark vs JSON
+- Test compression impact
+- Measure throughput
+- Compare formats
+

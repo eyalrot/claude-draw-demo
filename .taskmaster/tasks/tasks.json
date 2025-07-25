@@ -1545,9 +1545,112 @@
         "details": "Configure CMake build system with proper dependency management. Set up pybind11 for Python bindings. Create development environment with C++17/20 compiler support. Configure testing framework (Google Test or Catch2). Set up benchmarking framework (Google Benchmark). Create build scripts for different platforms (Linux, macOS, Windows). Configure CI/CD for C++ components.",
         "testStrategy": "Verify build system works on all target platforms, Python can import C++ modules, basic C++ tests run, benchmarks execute properly",
         "priority": "high",
-        "dependencies": [1, 2],
+        "dependencies": [
+          1,
+          2
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set up CMake build system",
+            "description": "Configure modern CMake with C++20 support, proper dependency management, and platform-specific configurations",
+            "details": "- Create root CMakeLists.txt with C++20 standard requirement\n- Set up project structure with src/, include/, tests/, benchmarks/ directories\n- Configure compiler flags for Release/Debug builds\n- Add platform detection for Linux/Windows/macOS\n- Set up proper RPATH handling for shared libraries",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 2,
+            "title": "Configure pybind11 integration",
+            "description": "Set up Python bindings infrastructure with optimized type conversions",
+            "details": "- Add pybind11 as a git submodule or via FetchContent\n- Configure pybind11 CMake integration\n- Set up Python development headers detection\n- Create initial binding module structure\n- Configure optimized type conversion policies",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 3,
+            "title": "Set up Google Test framework",
+            "description": "Integrate gtest/gmock for comprehensive unit testing",
+            "details": "- Add Google Test via FetchContent or package manager\n- Configure GTest CMake integration\n- Set up test discovery in CMake\n- Create base test fixtures for common test patterns\n- Configure test output formatting and reporting",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 4,
+            "title": "Configure test coverage tools",
+            "description": "Set up gcov/lcov for code coverage reporting",
+            "details": "- Configure compiler flags for coverage generation\n- Set up lcov for coverage report generation\n- Create coverage targets in CMake\n- Configure coverage exclusions for third-party code\n- Set up HTML coverage report generation",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 5,
+            "title": "Set up development environment",
+            "description": "Configure compiler optimizations, sanitizers, and debug builds",
+            "details": "- Configure optimization flags for Release builds (-O3, -march=native)\n- Set up AddressSanitizer and UBSanitizer for Debug builds\n- Configure debug symbols generation\n- Set up ccache for faster rebuilds\n- Create build presets for different configurations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 6,
+            "title": "Create C++ project structure",
+            "description": "Organize headers, source files, and tests following best practices",
+            "details": "Create directories: src/core/, src/shapes/, src/containers/, include/claude_draw/, tests/, benchmarks/",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 7,
+            "title": "Set up SIMD detection",
+            "description": "Implement runtime CPU feature detection for AVX2/AVX512 (x86 only)",
+            "details": "Create CPU capability detection, implement dispatch mechanism, add compile-time feature flags",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 8,
+            "title": "Configure benchmarking framework",
+            "description": "Set up Google Benchmark for micro-benchmarks",
+            "details": "Add Google Benchmark via FetchContent, create benchmark targets, set up benchmark result parsing",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 9,
+            "title": "Create initial test infrastructure",
+            "description": "Base test fixtures and utilities",
+            "details": "Create test utilities, common test data generators, performance test helpers",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 10,
+            "title": "Set up CI/CD pipeline",
+            "description": "Configure automated builds and tests for Linux/Windows/macOS",
+            "details": "Create GitHub Actions workflows, set up matrix builds, configure artifact uploads",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 11,
+            "title": "Create build documentation",
+            "description": "Document build requirements and procedures",
+            "details": "Write build instructions, document dependencies, create troubleshooting guide",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          }
+        ]
       },
       {
         "id": 14,
@@ -1556,9 +1659,156 @@
         "details": "Create C++ struct for Point2D with SIMD-aligned memory. Implement Color with packed RGB representation. Build Transform2D with optimized matrix operations using SIMD. Create BoundingBox with fast intersection tests. Design memory-efficient representations. Implement copy-on-write semantics for immutability. Add pybind11 bindings maintaining Pydantic compatibility.",
         "testStrategy": "Unit test all C++ models, verify Python bindings work correctly, benchmark against pure Python versions, test memory alignment and SIMD operations",
         "priority": "high",
-        "dependencies": [13],
+        "dependencies": [
+          13
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design memory-efficient Point2D",
+            "description": "Implement as POD struct with aligned float storage",
+            "details": "Create 8-byte aligned struct with two floats, add SIMD-friendly operations, implement distance calculations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 2,
+            "title": "Write Point2D unit tests",
+            "description": "Test construction, operators, distance calculations",
+            "details": "Test default construction, copy/move semantics, arithmetic operators, distance methods, edge cases",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 3,
+            "title": "Implement SIMD-friendly Color",
+            "description": "Pack RGBA in uint32_t with fast conversion methods",
+            "details": "Union-based storage for component access, fast float<->byte conversions, alpha blending support",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 4,
+            "title": "Write Color unit tests",
+            "description": "Test conversions, blending, validation",
+            "details": "Test RGB/HSL conversions, alpha blending accuracy, clamping behavior, special values",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 5,
+            "title": "Create optimized Transform2D",
+            "description": "Implement 3x3 matrix with SIMD operations",
+            "details": "32-byte aligned storage, fast matrix multiplication, efficient point transformation",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 6,
+            "title": "Write Transform2D unit tests",
+            "description": "Test matrix operations, composition, inversion",
+            "details": "Test identity, rotation, scale, translation, matrix composition, inverse calculations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 7,
+            "title": "Design compact BoundingBox",
+            "description": "Optimize for cache efficiency and batch operations",
+            "details": "16-byte aligned struct, fast intersection tests, merge operations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 8,
+            "title": "Write BoundingBox unit tests",
+            "description": "Test intersection, union, containment",
+            "details": "Test empty boxes, point containment, box intersection, union operations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 9,
+            "title": "Implement fast type conversions",
+            "description": "Zero-copy conversions between Python and C++",
+            "details": "Create type traits for conversions, implement buffer protocol support, optimize pybind11 type casters",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 10,
+            "title": "Write conversion unit tests",
+            "description": "Test Python↔C++ round trips",
+            "details": "Test data integrity, performance overhead, edge cases, memory safety",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 11,
+            "title": "Create object pools",
+            "description": "Implement memory pools for frequently allocated objects",
+            "details": "Thread-safe pool implementation, configurable pool sizes, automatic growth",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 12,
+            "title": "Write pool allocator tests",
+            "description": "Test allocation, deallocation, thread safety",
+            "details": "Stress test with concurrent access, test pool exhaustion, measure allocation speed",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 13,
+            "title": "Add batch creation APIs",
+            "description": "Design APIs for creating thousands of objects at once",
+            "details": "Bulk allocation methods, iterator-based construction, performance optimizations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 14,
+            "title": "Write batch API tests",
+            "description": "Test performance and correctness",
+            "details": "Verify batch vs individual performance, test memory locality, validate results",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 15,
+            "title": "Create integration tests",
+            "description": "Test all models working together",
+            "details": "Complex transformation chains, mixed operations, real-world scenarios",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          },
+          {
+            "id": 16,
+            "title": "Write comprehensive benchmarks",
+            "description": "Measure and validate performance improvements",
+            "details": "Compare with Python baseline, test scaling behavior, profile hotspots",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 14
+          }
+        ]
       },
       {
         "id": 15,
@@ -1567,9 +1817,174 @@
         "details": "Create C++ classes for Circle, Rectangle, Ellipse, Line, Polygon, Arc, and Path. Implement fast bounding box calculations. Add SIMD-optimized transformation methods. Create efficient hit testing algorithms. Design shape memory pooling. Implement batch operations for multiple shapes. Add Python bindings preserving the Drawable interface.",
         "testStrategy": "Test shape creation performance, verify geometric calculations match Python, benchmark transformation operations, test batch processing",
         "priority": "high",
-        "dependencies": [14],
+        "dependencies": [
+          14
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design shape memory layout - Create cache-aligned structs with minimal padding",
+            "description": "Design and implement cache-aligned struct layouts for shape primitives to minimize memory footprint and maximize cache efficiency. Focus on packing data efficiently to avoid padding waste.",
+            "details": "- Analyze cache line sizes (typically 64 bytes) for optimal struct alignment\n- Design struct layouts to minimize padding between members\n- Use appropriate data types to balance precision and memory usage\n- Consider grouping frequently accessed members together\n- Document memory layout decisions and trade-offs",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 2,
+            "title": "Write shape layout tests - Verify alignment and size constraints",
+            "description": "Create comprehensive tests to verify that shape struct layouts meet alignment requirements and size constraints for optimal performance.",
+            "details": "- Test struct alignment using alignof() operator\n- Verify struct sizes match expected cache-aligned sizes\n- Test member offset calculations\n- Verify no unexpected padding between members\n- Test that frequently accessed members are in same cache line\n- Create static_assert tests for compile-time verification",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 3,
+            "title": "Implement Circle with 32-byte footprint - Pack all data efficiently",
+            "description": "Implement a highly optimized Circle primitive with a 32-byte memory footprint, packing center coordinates, radius, and essential metadata efficiently.",
+            "details": "- Use float for center_x, center_y, and radius (12 bytes)\n- Pack metadata flags in remaining bytes\n- Implement fast bounding box calculation\n- Add inline methods for common operations\n- Ensure proper alignment for SIMD operations\n- Consider using union for type punning if needed",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 4,
+            "title": "Write Circle unit tests - Test geometry, bounds, transformations",
+            "description": "Create comprehensive unit tests for the Circle primitive covering all geometric operations, bounding box calculations, and transformation methods.",
+            "details": "- Test circle creation with various parameters\n- Verify bounding box calculations are correct\n- Test point containment (inside, outside, on perimeter)\n- Test circle-circle intersection\n- Test transformation operations (translate, scale, rotate)\n- Verify performance meets sub-microsecond requirements\n- Test edge cases (zero radius, negative radius)",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 5,
+            "title": "Implement Rectangle optimization - Store as two points for efficiency",
+            "description": "Implement an optimized Rectangle primitive that stores only two corner points (top-left and bottom-right) for minimal memory usage and fast operations.",
+            "details": "- Store rectangle as two points (8 floats total)\n- Implement fast getter methods for width, height, center\n- Add efficient contains point algorithm\n- Implement rectangle-rectangle intersection\n- Add rotation support with cached sin/cos values\n- Ensure alignment for SIMD operations\n- Consider axis-aligned vs rotated rectangle variants",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 6,
+            "title": "Write Rectangle unit tests - Test corners, contains, intersection",
+            "description": "Create comprehensive unit tests for the Rectangle primitive covering corner calculations, point containment, and intersection algorithms.",
+            "details": "- Test rectangle creation from various inputs (corners, center+size, etc.)\n- Verify corner point calculations\n- Test point containment for all regions (inside, outside, on edges)\n- Test rectangle-rectangle intersection cases\n- Test rectangle-line intersection\n- Verify transformation operations preserve rectangularity\n- Test performance of batch operations\n- Test edge cases (zero area, negative dimensions)",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 7,
+            "title": "Implement Ellipse with shared code - Reuse circle infrastructure",
+            "description": "Implement Ellipse primitive by extending and reusing Circle infrastructure, adding support for separate x and y radii while maintaining performance.",
+            "details": "- Extend Circle class or share common base implementation\n- Store center and two radii (rx, ry)\n- Reuse Circle code when rx == ry\n- Implement efficient ellipse equation for contains point\n- Add fast approximate perimeter calculation\n- Implement ellipse-specific bounding box\n- Consider SIMD optimization for ellipse operations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 8,
+            "title": "Write Ellipse unit tests - Test radii, contains point, perimeter",
+            "description": "Create comprehensive unit tests for the Ellipse primitive covering radii handling, point containment algorithms, and perimeter calculations.",
+            "details": "- Test ellipse creation with various radii combinations\n- Verify ellipse degenerates to circle when rx == ry\n- Test point containment using ellipse equation\n- Test approximate perimeter calculation accuracy\n- Verify bounding box calculations\n- Test transformation operations (especially non-uniform scaling)\n- Test ellipse-line intersection\n- Verify performance requirements are met",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 9,
+            "title": "Implement Line with minimal overhead - Optimize for batch line operations",
+            "description": "Implement a lightweight Line primitive optimized for batch operations, with minimal memory overhead and fast geometric calculations.",
+            "details": "- Store line as two points (start and end)\n- Use compact representation (4 floats)\n- Implement fast length calculation with cached values\n- Add efficient point-to-line distance algorithm\n- Implement line-line intersection\n- Optimize for drawing many lines (polylines, grids)\n- Consider SSE/AVX for batch line operations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 10,
+            "title": "Write Line unit tests - Test length, midpoint, slope",
+            "description": "Create comprehensive unit tests for the Line primitive covering length calculations, midpoint determination, slope calculations, and geometric operations.",
+            "details": "- Test line creation from various point combinations\n- Verify length calculation accuracy\n- Test midpoint calculation\n- Test slope and angle calculations\n- Test point-to-line distance algorithm\n- Test line-line intersection (parallel, perpendicular, general)\n- Test line clipping algorithms\n- Verify batch operation performance\n- Test edge cases (zero-length lines, vertical lines)",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 11,
+            "title": "Create shape batch APIs - Enable creation of thousands of shapes in one call",
+            "description": "Design and implement batch APIs that allow creation of thousands of shapes in a single call, optimizing memory allocation and initialization.",
+            "details": "- Design batch creation APIs for each shape type\n- Implement bulk memory allocation strategies\n- Use placement new for in-place construction\n- Add iterator-based interfaces for shape access\n- Implement batch transformation operations\n- Consider memory pool allocation for shapes\n- Add batch update capabilities\n- Ensure thread-safe batch operations",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 12,
+            "title": "Write batch shape tests - Test bulk operations correctness",
+            "description": "Create comprehensive tests for batch shape APIs to verify correctness of bulk operations and performance characteristics.",
+            "details": "- Test batch creation of 1000+ shapes\n- Verify memory allocation efficiency\n- Test batch transformation correctness\n- Compare batch vs individual creation results\n- Test iterator-based access patterns\n- Verify thread safety of batch operations\n- Test memory pool behavior under stress\n- Benchmark batch vs sequential performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 13,
+            "title": "Implement SIMD bounds calculation - Process multiple shapes simultaneously",
+            "description": "Implement SIMD-optimized bounding box calculations that can process multiple shapes in parallel using SSE/AVX instructions.",
+            "details": "- Implement SSE/AVX versions of bounds calculation\n- Process 4-8 shapes simultaneously per instruction\n- Use aligned memory access for optimal performance\n- Implement fallback scalar code for non-SIMD systems\n- Add runtime CPU feature detection\n- Optimize for common shape types (circles, rectangles)\n- Consider AVX-512 for newer processors\n- Ensure results match scalar implementation exactly",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 14,
+            "title": "Write SIMD bounds tests - Verify SIMD results match scalar",
+            "description": "Create comprehensive tests for SIMD bounding box calculations to ensure they produce identical results to scalar implementations.",
+            "details": "- Test SIMD vs scalar bounds for all shape types\n- Verify bit-exact results between implementations\n- Test with aligned and unaligned memory\n- Test edge cases (NaN, infinity, denormals)\n- Verify performance improvements\n- Test CPU feature detection logic\n- Test fallback to scalar on non-SIMD systems\n- Benchmark SIMD speedup across different CPUs",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 15,
+            "title": "Add shape validation bypasses - Optional fast path without validation",
+            "description": "Implement optional validation bypass mechanisms for shape creation to enable ultra-fast shape instantiation when input data is known to be valid.",
+            "details": "- Add bypass flags to shape constructors\n- Create unsafe/fast construction methods\n- Document when validation can be safely skipped\n- Implement debug vs release validation strategies\n- Add compile-time validation options\n- Create trusted data path for batch operations\n- Ensure bypassed shapes still work correctly\n- Add performance comparison metrics",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 16,
+            "title": "Design shape memory layout",
+            "description": "Create cache-aligned structs with minimal padding",
+            "details": "- Design 32-byte Circle struct (x, y, radius, colors, flags)\n- Create 32-byte Rectangle struct (two points)\n- Optimize Ellipse layout (center, radii, colors)\n- Minimize Line struct (two points, stroke info)\n- Ensure all structs are cache-line aligned",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 17,
+            "title": "Create shape integration tests",
+            "description": "Test shapes with transforms and styles",
+            "details": "- Test shapes with complex transformation chains\n- Verify style application and inheritance\n- Test shape interactions in containers\n- Test serialization/deserialization\n- Verify Python binding behavior\n- Test real-world usage patterns",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          },
+          {
+            "id": 18,
+            "title": "Create shape benchmarks",
+            "description": "Validate sub-microsecond creation times",
+            "details": "- Benchmark individual shape creation\n- Test batch creation performance\n- Measure transformation operation speed\n- Compare with Python implementation\n- Test memory allocation patterns\n- Profile cache behavior\n- Validate <0.5μs per shape target",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 15
+          }
+        ]
       },
       {
         "id": 16,
@@ -1578,9 +1993,138 @@
         "details": "Implement containers using std::vector with reserve strategies. Add spatial indexing (R-tree or Quadtree) for fast hit testing. Optimize child management with move semantics. Implement lazy bounding box calculation with caching. Add parallel traversal support. Design efficient z-index sorting. Create Python bindings maintaining container interface.",
         "testStrategy": "Test container operations with thousands of children, verify spatial indexing performance, benchmark parallel traversal, test memory usage",
         "priority": "high",
-        "dependencies": [15],
+        "dependencies": [
+          15
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design Structure of Arrays layout",
+            "description": "Separate shape data for SIMD processing",
+            "details": "- Store shape types in separate arrays\n- Align arrays for SIMD access\n- Design efficient indexing scheme\n- Plan memory layout for cache efficiency",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 2,
+            "title": "Write SoA container tests",
+            "description": "Test data layout and access patterns",
+            "details": "- Test memory alignment verification\n- Verify SIMD-friendly access\n- Test iteration performance\n- Validate data integrity",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 3,
+            "title": "Implement spatial indexing",
+            "description": "Add R-tree for fast queries",
+            "details": "- Implement R-tree data structure\n- Add insertion/removal operations\n- Implement range queries\n- Add bulk loading support",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 4,
+            "title": "Write spatial index tests",
+            "description": "Test insertion, removal, queries",
+            "details": "- Test tree balancing\n- Verify query correctness\n- Test performance with large datasets\n- Test edge cases",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 5,
+            "title": "Create parallel visitor traversal",
+            "description": "Use thread pools for container traversal",
+            "details": "- Implement thread pool\n- Add work stealing queue\n- Create parallel visitor pattern\n- Handle synchronization",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 6,
+            "title": "Write parallel traversal tests",
+            "description": "Test thread safety and correctness",
+            "details": "- Test concurrent access\n- Verify result correctness\n- Test scalability\n- Check for race conditions",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 7,
+            "title": "Implement incremental bounds",
+            "description": "Cache and update bounds efficiently",
+            "details": "- Add dirty flag system\n- Implement lazy evaluation\n- Cache bounds per container\n- Update only affected regions",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 8,
+            "title": "Write bounds caching tests",
+            "description": "Test incremental updates",
+            "details": "- Test cache invalidation\n- Verify bounds accuracy\n- Test update performance\n- Check edge cases",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 9,
+            "title": "Design copy-on-write containers",
+            "description": "Enable cheap copies for immutability",
+            "details": "- Implement reference counting\n- Add COW semantics\n- Handle write operations\n- Optimize memory usage",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 10,
+            "title": "Write CoW container tests",
+            "description": "Test copy semantics and memory sharing",
+            "details": "- Test shallow vs deep copies\n- Verify memory sharing\n- Test write triggers\n- Check reference counting",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 11,
+            "title": "Add bulk operation support",
+            "description": "Transform/style thousands of objects at once",
+            "details": "- Design batch operation API\n- Implement SIMD transforms\n- Add parallel execution\n- Optimize memory access",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 12,
+            "title": "Write bulk operation tests",
+            "description": "Test batch transforms and styling",
+            "details": "- Test operation correctness\n- Verify performance gains\n- Test error handling\n- Check memory usage",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 13,
+            "title": "Create container stress tests",
+            "description": "Test with millions of objects",
+            "details": "- Generate large datasets\n- Test memory limits\n- Verify performance scaling\n- Check stability",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          },
+          {
+            "id": 14,
+            "title": "Implement container benchmarks",
+            "description": "Measure operations on large datasets",
+            "details": "- Benchmark insertions\n- Test query performance\n- Measure iteration speed\n- Compare with baseline",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 16
+          }
+        ]
       },
       {
         "id": 17,
@@ -1589,9 +2133,140 @@
         "details": "Create arena allocators for different object types. Implement object pooling for frequently created/destroyed shapes. Design slab allocation for uniform-sized objects. Add memory compaction for long-running applications. Implement reference counting with cycle detection. Create Python GC integration. Monitor and report memory usage.",
         "testStrategy": "Test allocation/deallocation performance, verify no memory leaks, benchmark pooling effectiveness, test Python GC interaction",
         "priority": "high",
-        "dependencies": [14, 15, 16],
+        "dependencies": [
+          14,
+          15,
+          16
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design arena allocator",
+            "description": "Pre-allocate memory blocks for shapes",
+            "details": "- Design block allocation strategy\n- Implement arena structure\n- Add allocation tracking\n- Plan deallocation strategy",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 2,
+            "title": "Write arena allocator tests",
+            "description": "Test allocation patterns and fragmentation",
+            "details": "- Test allocation speed\n- Verify no fragmentation\n- Test reset behavior\n- Check memory usage",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 3,
+            "title": "Implement object recycling",
+            "description": "Reuse deleted objects without deallocation",
+            "details": "- Create free lists per type\n- Implement recycling logic\n- Add size class buckets\n- Handle thread safety",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 4,
+            "title": "Write recycling system tests",
+            "description": "Test object reuse and cleanup",
+            "details": "- Test recycling efficiency\n- Verify object cleanup\n- Test thread safety\n- Check memory leaks",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 5,
+            "title": "Create memory-mapped persistence",
+            "description": "Direct file I/O without serialization",
+            "details": "- Implement mmap wrapper\n- Design file format\n- Add crash recovery\n- Handle file growth",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 6,
+            "title": "Write mmap persistence tests",
+            "description": "Test save/load with memory mapping",
+            "details": "- Test file creation\n- Verify data integrity\n- Test crash recovery\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 7,
+            "title": "Add memory usage profiling",
+            "description": "Track and optimize memory patterns",
+            "details": "- Implement allocation tracking\n- Add memory statistics\n- Create profiling API\n- Generate reports",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 8,
+            "title": "Write memory profiler tests",
+            "description": "Verify accurate tracking",
+            "details": "- Test tracking accuracy\n- Verify overhead is low\n- Test report generation\n- Check edge cases",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 9,
+            "title": "Implement compact object IDs",
+            "description": "Replace UUIDs with 32-bit indices",
+            "details": "- Design ID allocation\n- Implement ID recycling\n- Add ID mapping table\n- Handle collisions",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 10,
+            "title": "Write ID management tests",
+            "description": "Test uniqueness and recycling",
+            "details": "- Test ID uniqueness\n- Verify recycling works\n- Test mapping accuracy\n- Check overflow handling",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 11,
+            "title": "Design generational memory pools",
+            "description": "Optimize for different object lifetimes",
+            "details": "- Implement generation tracking\n- Add promotion logic\n- Design collection strategy\n- Handle inter-gen references",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 12,
+            "title": "Write generational pool tests",
+            "description": "Test promotion and collection",
+            "details": "- Test generation logic\n- Verify promotion works\n- Test collection safety\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 13,
+            "title": "Create memory stress tests",
+            "description": "Test under memory pressure",
+            "details": "- Simulate low memory\n- Test allocation failures\n- Verify cleanup behavior\n- Check stability",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          },
+          {
+            "id": 14,
+            "title": "Write allocation benchmarks",
+            "description": "Measure allocation performance",
+            "details": "- Benchmark vs malloc\n- Test different sizes\n- Measure fragmentation\n- Compare strategies",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 17
+          }
+        ]
       },
       {
         "id": 18,
@@ -1600,9 +2275,131 @@
         "details": "Design compact binary format for all object types. Implement zero-copy deserialization where possible. Add compression support (LZ4 or Zstd). Create versioning system for format evolution. Implement streaming serialization for large drawings. Add Python pickle protocol support. Create converters between JSON and binary formats.",
         "testStrategy": "Test serialization round-trip accuracy, benchmark against JSON serialization, verify compression ratios, test streaming with large files",
         "priority": "medium",
-        "dependencies": [14, 15, 16],
+        "dependencies": [
+          14,
+          15,
+          16
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design binary format specification",
+            "description": "Create efficient, versioned format",
+            "details": "- Define header structure\n- Design type encoding\n- Add version support\n- Plan extensibility",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 2,
+            "title": "Write format specification tests",
+            "description": "Test encoding/decoding",
+            "details": "- Test header parsing\n- Verify type encoding\n- Test version handling\n- Check compatibility",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 3,
+            "title": "Implement zero-copy serialization",
+            "description": "Direct memory mapping support",
+            "details": "- Design memory layout\n- Implement direct access\n- Add alignment handling\n- Optimize for speed",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 4,
+            "title": "Write zero-copy tests",
+            "description": "Test memory-mapped I/O",
+            "details": "- Test direct access\n- Verify data integrity\n- Test alignment\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 5,
+            "title": "Add compression support",
+            "description": "Optional zstd/lz4 compression",
+            "details": "- Integrate compression libs\n- Add compression levels\n- Implement streaming\n- Handle errors",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 6,
+            "title": "Write compression tests",
+            "description": "Test compressed formats",
+            "details": "- Test compression ratios\n- Verify decompression\n- Test streaming mode\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 7,
+            "title": "Create streaming API",
+            "description": "Handle files larger than memory",
+            "details": "- Design streaming protocol\n- Implement chunked I/O\n- Add progress callbacks\n- Handle interruptions",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 8,
+            "title": "Write streaming tests",
+            "description": "Test with large datasets",
+            "details": "- Test large files\n- Verify chunking works\n- Test interruption recovery\n- Check memory usage",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 9,
+            "title": "Implement format validation",
+            "description": "Ensure data integrity",
+            "details": "- Add checksums\n- Implement validation\n- Check structure integrity\n- Handle corruption",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 10,
+            "title": "Write validation tests",
+            "description": "Test corrupt data handling",
+            "details": "- Test checksum verification\n- Inject corruption\n- Test error recovery\n- Verify error messages",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 11,
+            "title": "Add backward compatibility",
+            "description": "Support format evolution",
+            "details": "- Design version handling\n- Implement migration\n- Add compatibility tests\n- Document changes",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 12,
+            "title": "Write compatibility tests",
+            "description": "Test version migration",
+            "details": "- Test old format loading\n- Verify data preservation\n- Test migration paths\n- Check edge cases",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          },
+          {
+            "id": 13,
+            "title": "Create serialization benchmarks",
+            "description": "Measure I/O performance",
+            "details": "- Benchmark vs JSON\n- Test compression impact\n- Measure throughput\n- Compare formats",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 18
+          }
+        ]
       },
       {
         "id": 19,
@@ -1611,9 +2408,130 @@
         "details": "Create SIMD wrappers for SSE/AVX operations. Implement vectorized point transformations. Add batch color operations. Create SIMD-optimized bounding box calculations. Implement parallel shape processing. Add runtime CPU feature detection. Create fallback scalar implementations. Optimize matrix multiplications.",
         "testStrategy": "Test SIMD operations produce correct results, benchmark against scalar versions, verify CPU feature detection, test on different architectures",
         "priority": "medium",
-        "dependencies": [14, 15],
+        "dependencies": [
+          14,
+          15
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement AVX2 transform operations",
+            "description": "Process 8 points simultaneously",
+            "details": "- Implement 8-wide point transform\n- Use FMA instructions\n- Handle alignment\n- Add masking support",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 2,
+            "title": "Write AVX2 transform tests",
+            "description": "Verify correctness vs scalar",
+            "details": "- Test transform accuracy\n- Verify edge cases\n- Test with NaN/Inf\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 3,
+            "title": "Create SIMD color blending",
+            "description": "Fast alpha compositing",
+            "details": "- Implement 8-wide blend\n- Use integer SIMD\n- Handle premultiplication\n- Optimize pipeline",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 4,
+            "title": "Write SIMD blend tests",
+            "description": "Test blending accuracy",
+            "details": "- Test blend modes\n- Verify alpha handling\n- Test edge cases\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 5,
+            "title": "Add SIMD bounds calculation",
+            "description": "Parallel min/max operations",
+            "details": "- Implement min/max reduction\n- Process multiple bounds\n- Use horizontal operations\n- Handle alignment",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 6,
+            "title": "Write SIMD bounds tests",
+            "description": "Test bounds accuracy",
+            "details": "- Test min/max accuracy\n- Verify reduction works\n- Test edge cases\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 7,
+            "title": "Implement SIMD distance calculations",
+            "description": "For spatial queries",
+            "details": "- Implement distance squared\n- Process 8 distances\n- Add early termination\n- Optimize for cache",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 8,
+            "title": "Write SIMD distance tests",
+            "description": "Test distance calculations",
+            "details": "- Test accuracy\n- Verify overflow handling\n- Test special cases\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 9,
+            "title": "Create CPU dispatch layer",
+            "description": "Runtime selection of implementations",
+            "details": "- Detect CPU features\n- Implement dispatch table\n- Add function pointers\n- Handle fallback",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 10,
+            "title": "Write dispatch tests",
+            "description": "Test fallback to scalar on older CPUs",
+            "details": "- Test feature detection\n- Verify dispatch works\n- Test all code paths\n- Check overhead",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 11,
+            "title": "Implement AVX512 optimizations",
+            "description": "For newer CPUs",
+            "details": "- Implement 16-wide ops\n- Use mask registers\n- Add scatter/gather\n- Optimize for Skylake+",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 12,
+            "title": "Write AVX512 tests",
+            "description": "Test on supported hardware",
+            "details": "- Test 16-wide accuracy\n- Verify masking works\n- Test new instructions\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          },
+          {
+            "id": 13,
+            "title": "Create SIMD benchmarks",
+            "description": "Compare performance gains",
+            "details": "- Benchmark vs scalar\n- Test different sizes\n- Measure speedup\n- Profile bottlenecks",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 19
+          }
+        ]
       },
       {
         "id": 20,
@@ -1622,9 +2540,141 @@
         "details": "Implement zero-copy data exchange where possible. Create automatic converters between Python and C++ objects. Add numpy array support for bulk operations. Implement lazy conversion strategies. Create Python buffer protocol support. Add asyncio support for parallel operations. Design exception translation system.",
         "testStrategy": "Test data exchange performance, verify no unnecessary copies, benchmark Python-C++ round trips, test exception handling",
         "priority": "high",
-        "dependencies": [14, 15, 16, 17],
+        "dependencies": [
+          14,
+          15,
+          16,
+          17
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Design lazy conversion layer",
+            "description": "Convert only when accessed",
+            "details": "- Design proxy objects\n- Implement lazy evaluation\n- Add conversion cache\n- Handle updates",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 2,
+            "title": "Write lazy conversion tests",
+            "description": "Test on-demand conversion",
+            "details": "- Test access patterns\n- Verify laziness\n- Test cache behavior\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 3,
+            "title": "Implement numpy array views",
+            "description": "Zero-copy for bulk data",
+            "details": "- Implement buffer protocol\n- Create array views\n- Handle strides\n- Add dtype support",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 4,
+            "title": "Write numpy integration tests",
+            "description": "Test array protocol",
+            "details": "- Test view creation\n- Verify zero-copy\n- Test modifications\n- Check dtypes",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 5,
+            "title": "Create async batch operations",
+            "description": "Non-blocking bulk operations",
+            "details": "- Design async API\n- Implement futures\n- Add progress tracking\n- Handle cancellation",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 6,
+            "title": "Write async operation tests",
+            "description": "Test concurrent operations",
+            "details": "- Test async execution\n- Verify results\n- Test cancellation\n- Check thread safety",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 7,
+            "title": "Add memory view protocols",
+            "description": "Direct memory access from Python",
+            "details": "- Implement memoryview\n- Add buffer protocol\n- Handle lifetimes\n- Ensure safety",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 8,
+            "title": "Write memory view tests",
+            "description": "Test buffer protocol",
+            "details": "- Test view creation\n- Verify memory safety\n- Test modifications\n- Check lifetimes",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 9,
+            "title": "Implement transparent mode switching",
+            "description": "Automatic C++ acceleration",
+            "details": "- Design switching logic\n- Add heuristics\n- Handle fallback\n- Maintain compatibility",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 10,
+            "title": "Write mode switching tests",
+            "description": "Test fallback behavior",
+            "details": "- Test switch triggers\n- Verify correctness\n- Test edge cases\n- Check overhead",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 11,
+            "title": "Create migration utilities",
+            "description": "Help users transition to C++ backend",
+            "details": "- Design migration API\n- Add compatibility layer\n- Create helpers\n- Write documentation",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 12,
+            "title": "Write migration tests",
+            "description": "Test compatibility layer",
+            "details": "- Test API compatibility\n- Verify behavior matches\n- Test edge cases\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 13,
+            "title": "Create Python binding tests",
+            "description": "Test all exposed APIs",
+            "details": "- Test all bindings\n- Verify type conversions\n- Test error handling\n- Check memory leaks",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          },
+          {
+            "id": 14,
+            "title": "Write performance comparison tests",
+            "description": "Python vs C++ benchmarks",
+            "details": "- Benchmark all operations\n- Compare memory usage\n- Test scaling\n- Generate reports",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 20
+          }
+        ]
       },
       {
         "id": 21,
@@ -1633,9 +2683,120 @@
         "details": "Create R-tree implementation for rectangle queries. Implement Quadtree for point queries. Add BVH (Bounding Volume Hierarchy) for complex shapes. Design dynamic rebalancing strategies. Implement frustum culling for rendering. Add nearest neighbor queries. Create spatial join operations. Integrate with container classes.",
         "testStrategy": "Test query performance with various data distributions, benchmark index construction time, verify correctness of spatial queries, test dynamic updates",
         "priority": "medium",
-        "dependencies": [16],
+        "dependencies": [
+          16
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Implement R-tree structure",
+            "description": "For efficient range queries",
+            "details": "- Implement node structure\n- Add splitting algorithm\n- Implement insertion\n- Add balancing",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 2,
+            "title": "Write R-tree unit tests",
+            "description": "Test insertion, deletion, rebalancing",
+            "details": "- Test tree operations\n- Verify balancing\n- Test edge cases\n- Check invariants",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 3,
+            "title": "Add viewport culling",
+            "description": "Render only visible objects",
+            "details": "- Implement frustum culling\n- Add visibility flags\n- Optimize traversal\n- Handle updates",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 4,
+            "title": "Write culling tests",
+            "description": "Test visibility determination",
+            "details": "- Test culling accuracy\n- Verify no false negatives\n- Test performance\n- Check edge cases",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 5,
+            "title": "Create hit testing acceleration",
+            "description": "Fast point-in-shape queries",
+            "details": "- Implement acceleration structure\n- Add early rejection\n- Optimize hot paths\n- Handle complex shapes",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 6,
+            "title": "Write hit testing tests",
+            "description": "Test accuracy and edge cases",
+            "details": "- Test hit accuracy\n- Verify edge cases\n- Test performance\n- Check complex shapes",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 7,
+            "title": "Implement nearest neighbor search",
+            "description": "For selection operations",
+            "details": "- Implement k-NN algorithm\n- Add priority queue\n- Optimize for k=1\n- Handle ties",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 8,
+            "title": "Write nearest neighbor tests",
+            "description": "Test k-NN queries",
+            "details": "- Test accuracy\n- Verify k results\n- Test edge cases\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 9,
+            "title": "Add incremental index updates",
+            "description": "Maintain index efficiently",
+            "details": "- Track dirty objects\n- Implement lazy updates\n- Batch modifications\n- Minimize rebuilds",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 10,
+            "title": "Write incremental update tests",
+            "description": "Test index consistency",
+            "details": "- Test update correctness\n- Verify consistency\n- Test batch updates\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 11,
+            "title": "Create spatial query tests",
+            "description": "Test complex spatial queries",
+            "details": "- Test range queries\n- Test intersections\n- Test containment\n- Verify accuracy",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          },
+          {
+            "id": 12,
+            "title": "Create spatial benchmarks",
+            "description": "Validate query performance",
+            "details": "- Benchmark queries\n- Test scaling\n- Compare structures\n- Profile hotspots",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 21
+          }
+        ]
       },
       {
         "id": 22,
@@ -1644,9 +2805,145 @@
         "details": "Build automated benchmark suite comparing Python vs C++ performance. Create stress tests with millions of objects. Implement memory usage profiling. Add rendering performance tests. Create regression detection system. Build performance dashboard. Document optimization techniques. Generate performance reports.",
         "testStrategy": "Verify benchmarks are reproducible, test performance improvements meet targets (50-100x), validate memory usage reduction, ensure no regressions",
         "priority": "high",
-        "dependencies": [14, 15, 16, 17, 18, 19, 20, 21],
+        "dependencies": [
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21
+        ],
         "status": "pending",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create macro benchmarks",
+            "description": "Test real-world scenarios",
+            "details": "- Design realistic workloads\n- Implement scene generation\n- Add timing infrastructure\n- Create baseline tests",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 2,
+            "title": "Write benchmark validation tests",
+            "description": "Ensure benchmarks are accurate",
+            "details": "- Test timing accuracy\n- Verify reproducibility\n- Test warmup behavior\n- Check statistics",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 3,
+            "title": "Implement memory profiling",
+            "description": "Track allocations and usage",
+            "details": "- Add allocation hooks\n- Track memory patterns\n- Generate heap profiles\n- Identify leaks",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 4,
+            "title": "Write profiler accuracy tests",
+            "description": "Verify profiling data",
+            "details": "- Test tracking accuracy\n- Verify overhead is low\n- Test edge cases\n- Check completeness",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 5,
+            "title": "Add regression detection",
+            "description": "Catch performance degradation",
+            "details": "- Store baseline results\n- Implement comparison\n- Set thresholds\n- Generate alerts",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 6,
+            "title": "Write regression test suite",
+            "description": "Automated performance tracking",
+            "details": "- Test detection logic\n- Verify thresholds\n- Test reporting\n- Check CI integration",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 7,
+            "title": "Create performance dashboard",
+            "description": "Visualize metrics over time",
+            "details": "- Design metric storage\n- Create visualizations\n- Add trend analysis\n- Generate reports",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 8,
+            "title": "Write dashboard data tests",
+            "description": "Test metric collection",
+            "details": "- Test data collection\n- Verify accuracy\n- Test aggregation\n- Check storage",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 9,
+            "title": "Implement stress tests",
+            "description": "Validate behavior with millions of objects",
+            "details": "- Create stress scenarios\n- Test memory limits\n- Verify stability\n- Check error handling",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 10,
+            "title": "Write stress test validators",
+            "description": "Ensure correctness under load",
+            "details": "- Verify correctness\n- Test invariants\n- Check for crashes\n- Monitor resources",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 11,
+            "title": "Add comparison framework",
+            "description": "Compare Python vs C++ performance",
+            "details": "- Design fair comparisons\n- Implement benchmarks\n- Add statistical analysis\n- Generate reports",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 12,
+            "title": "Write comparison tests",
+            "description": "Verify fair comparisons",
+            "details": "- Test methodology\n- Verify fairness\n- Check statistics\n- Validate results",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 13,
+            "title": "Create end-to-end tests",
+            "description": "Test complete workflows",
+            "details": "- Design workflows\n- Test integration\n- Verify results\n- Check performance",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          },
+          {
+            "id": 14,
+            "title": "Write performance report generator",
+            "description": "Automated reporting",
+            "details": "- Generate reports\n- Add visualizations\n- Include analysis\n- Export formats",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 22
+          }
+        ]
       }
     ],
     "metadata": {

@@ -1,0 +1,121 @@
+# Task ID: 21
+# Title: Spatial Indexing
+# Status: pending
+# Dependencies: 16
+# Priority: medium
+# Description: Implement spatial data structures for efficient spatial queries and hit testing
+# Details:
+Create R-tree implementation for rectangle queries. Implement Quadtree for point queries. Add BVH (Bounding Volume Hierarchy) for complex shapes. Design dynamic rebalancing strategies. Implement frustum culling for rendering. Add nearest neighbor queries. Create spatial join operations. Integrate with container classes.
+
+# Test Strategy:
+Test query performance with various data distributions, benchmark index construction time, verify correctness of spatial queries, test dynamic updates
+
+# Subtasks:
+## 1. Implement R-tree structure [pending]
+### Dependencies: None
+### Description: For efficient range queries
+### Details:
+- Implement node structure
+- Add splitting algorithm
+- Implement insertion
+- Add balancing
+
+## 2. Write R-tree unit tests [pending]
+### Dependencies: None
+### Description: Test insertion, deletion, rebalancing
+### Details:
+- Test tree operations
+- Verify balancing
+- Test edge cases
+- Check invariants
+
+## 3. Add viewport culling [pending]
+### Dependencies: None
+### Description: Render only visible objects
+### Details:
+- Implement frustum culling
+- Add visibility flags
+- Optimize traversal
+- Handle updates
+
+## 4. Write culling tests [pending]
+### Dependencies: None
+### Description: Test visibility determination
+### Details:
+- Test culling accuracy
+- Verify no false negatives
+- Test performance
+- Check edge cases
+
+## 5. Create hit testing acceleration [pending]
+### Dependencies: None
+### Description: Fast point-in-shape queries
+### Details:
+- Implement acceleration structure
+- Add early rejection
+- Optimize hot paths
+- Handle complex shapes
+
+## 6. Write hit testing tests [pending]
+### Dependencies: None
+### Description: Test accuracy and edge cases
+### Details:
+- Test hit accuracy
+- Verify edge cases
+- Test performance
+- Check complex shapes
+
+## 7. Implement nearest neighbor search [pending]
+### Dependencies: None
+### Description: For selection operations
+### Details:
+- Implement k-NN algorithm
+- Add priority queue
+- Optimize for k=1
+- Handle ties
+
+## 8. Write nearest neighbor tests [pending]
+### Dependencies: None
+### Description: Test k-NN queries
+### Details:
+- Test accuracy
+- Verify k results
+- Test edge cases
+- Check performance
+
+## 9. Add incremental index updates [pending]
+### Dependencies: None
+### Description: Maintain index efficiently
+### Details:
+- Track dirty objects
+- Implement lazy updates
+- Batch modifications
+- Minimize rebuilds
+
+## 10. Write incremental update tests [pending]
+### Dependencies: None
+### Description: Test index consistency
+### Details:
+- Test update correctness
+- Verify consistency
+- Test batch updates
+- Check performance
+
+## 11. Create spatial query tests [pending]
+### Dependencies: None
+### Description: Test complex spatial queries
+### Details:
+- Test range queries
+- Test intersections
+- Test containment
+- Verify accuracy
+
+## 12. Create spatial benchmarks [pending]
+### Dependencies: None
+### Description: Validate query performance
+### Details:
+- Benchmark queries
+- Test scaling
+- Compare structures
+- Profile hotspots
+

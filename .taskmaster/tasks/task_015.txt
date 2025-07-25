@@ -1,0 +1,231 @@
+# Task ID: 15
+# Title: Native Shape Primitives
+# Status: pending
+# Dependencies: 14
+# Priority: high
+# Description: Implement C++ versions of all shape primitives with optimized geometric calculations
+# Details:
+Create C++ classes for Circle, Rectangle, Ellipse, Line, Polygon, Arc, and Path. Implement fast bounding box calculations. Add SIMD-optimized transformation methods. Create efficient hit testing algorithms. Design shape memory pooling. Implement batch operations for multiple shapes. Add Python bindings preserving the Drawable interface.
+
+# Test Strategy:
+Test shape creation performance, verify geometric calculations match Python, benchmark transformation operations, test batch processing
+
+# Subtasks:
+## 1. Design shape memory layout - Create cache-aligned structs with minimal padding [pending]
+### Dependencies: None
+### Description: Design and implement cache-aligned struct layouts for shape primitives to minimize memory footprint and maximize cache efficiency. Focus on packing data efficiently to avoid padding waste.
+### Details:
+- Analyze cache line sizes (typically 64 bytes) for optimal struct alignment
+- Design struct layouts to minimize padding between members
+- Use appropriate data types to balance precision and memory usage
+- Consider grouping frequently accessed members together
+- Document memory layout decisions and trade-offs
+
+## 2. Write shape layout tests - Verify alignment and size constraints [pending]
+### Dependencies: None
+### Description: Create comprehensive tests to verify that shape struct layouts meet alignment requirements and size constraints for optimal performance.
+### Details:
+- Test struct alignment using alignof() operator
+- Verify struct sizes match expected cache-aligned sizes
+- Test member offset calculations
+- Verify no unexpected padding between members
+- Test that frequently accessed members are in same cache line
+- Create static_assert tests for compile-time verification
+
+## 3. Implement Circle with 32-byte footprint - Pack all data efficiently [pending]
+### Dependencies: None
+### Description: Implement a highly optimized Circle primitive with a 32-byte memory footprint, packing center coordinates, radius, and essential metadata efficiently.
+### Details:
+- Use float for center_x, center_y, and radius (12 bytes)
+- Pack metadata flags in remaining bytes
+- Implement fast bounding box calculation
+- Add inline methods for common operations
+- Ensure proper alignment for SIMD operations
+- Consider using union for type punning if needed
+
+## 4. Write Circle unit tests - Test geometry, bounds, transformations [pending]
+### Dependencies: None
+### Description: Create comprehensive unit tests for the Circle primitive covering all geometric operations, bounding box calculations, and transformation methods.
+### Details:
+- Test circle creation with various parameters
+- Verify bounding box calculations are correct
+- Test point containment (inside, outside, on perimeter)
+- Test circle-circle intersection
+- Test transformation operations (translate, scale, rotate)
+- Verify performance meets sub-microsecond requirements
+- Test edge cases (zero radius, negative radius)
+
+## 5. Implement Rectangle optimization - Store as two points for efficiency [pending]
+### Dependencies: None
+### Description: Implement an optimized Rectangle primitive that stores only two corner points (top-left and bottom-right) for minimal memory usage and fast operations.
+### Details:
+- Store rectangle as two points (8 floats total)
+- Implement fast getter methods for width, height, center
+- Add efficient contains point algorithm
+- Implement rectangle-rectangle intersection
+- Add rotation support with cached sin/cos values
+- Ensure alignment for SIMD operations
+- Consider axis-aligned vs rotated rectangle variants
+
+## 6. Write Rectangle unit tests - Test corners, contains, intersection [pending]
+### Dependencies: None
+### Description: Create comprehensive unit tests for the Rectangle primitive covering corner calculations, point containment, and intersection algorithms.
+### Details:
+- Test rectangle creation from various inputs (corners, center+size, etc.)
+- Verify corner point calculations
+- Test point containment for all regions (inside, outside, on edges)
+- Test rectangle-rectangle intersection cases
+- Test rectangle-line intersection
+- Verify transformation operations preserve rectangularity
+- Test performance of batch operations
+- Test edge cases (zero area, negative dimensions)
+
+## 7. Implement Ellipse with shared code - Reuse circle infrastructure [pending]
+### Dependencies: None
+### Description: Implement Ellipse primitive by extending and reusing Circle infrastructure, adding support for separate x and y radii while maintaining performance.
+### Details:
+- Extend Circle class or share common base implementation
+- Store center and two radii (rx, ry)
+- Reuse Circle code when rx == ry
+- Implement efficient ellipse equation for contains point
+- Add fast approximate perimeter calculation
+- Implement ellipse-specific bounding box
+- Consider SIMD optimization for ellipse operations
+
+## 8. Write Ellipse unit tests - Test radii, contains point, perimeter [pending]
+### Dependencies: None
+### Description: Create comprehensive unit tests for the Ellipse primitive covering radii handling, point containment algorithms, and perimeter calculations.
+### Details:
+- Test ellipse creation with various radii combinations
+- Verify ellipse degenerates to circle when rx == ry
+- Test point containment using ellipse equation
+- Test approximate perimeter calculation accuracy
+- Verify bounding box calculations
+- Test transformation operations (especially non-uniform scaling)
+- Test ellipse-line intersection
+- Verify performance requirements are met
+
+## 9. Implement Line with minimal overhead - Optimize for batch line operations [pending]
+### Dependencies: None
+### Description: Implement a lightweight Line primitive optimized for batch operations, with minimal memory overhead and fast geometric calculations.
+### Details:
+- Store line as two points (start and end)
+- Use compact representation (4 floats)
+- Implement fast length calculation with cached values
+- Add efficient point-to-line distance algorithm
+- Implement line-line intersection
+- Optimize for drawing many lines (polylines, grids)
+- Consider SSE/AVX for batch line operations
+
+## 10. Write Line unit tests - Test length, midpoint, slope [pending]
+### Dependencies: None
+### Description: Create comprehensive unit tests for the Line primitive covering length calculations, midpoint determination, slope calculations, and geometric operations.
+### Details:
+- Test line creation from various point combinations
+- Verify length calculation accuracy
+- Test midpoint calculation
+- Test slope and angle calculations
+- Test point-to-line distance algorithm
+- Test line-line intersection (parallel, perpendicular, general)
+- Test line clipping algorithms
+- Verify batch operation performance
+- Test edge cases (zero-length lines, vertical lines)
+
+## 11. Create shape batch APIs - Enable creation of thousands of shapes in one call [pending]
+### Dependencies: None
+### Description: Design and implement batch APIs that allow creation of thousands of shapes in a single call, optimizing memory allocation and initialization.
+### Details:
+- Design batch creation APIs for each shape type
+- Implement bulk memory allocation strategies
+- Use placement new for in-place construction
+- Add iterator-based interfaces for shape access
+- Implement batch transformation operations
+- Consider memory pool allocation for shapes
+- Add batch update capabilities
+- Ensure thread-safe batch operations
+
+## 12. Write batch shape tests - Test bulk operations correctness [pending]
+### Dependencies: None
+### Description: Create comprehensive tests for batch shape APIs to verify correctness of bulk operations and performance characteristics.
+### Details:
+- Test batch creation of 1000+ shapes
+- Verify memory allocation efficiency
+- Test batch transformation correctness
+- Compare batch vs individual creation results
+- Test iterator-based access patterns
+- Verify thread safety of batch operations
+- Test memory pool behavior under stress
+- Benchmark batch vs sequential performance
+
+## 13. Implement SIMD bounds calculation - Process multiple shapes simultaneously [pending]
+### Dependencies: None
+### Description: Implement SIMD-optimized bounding box calculations that can process multiple shapes in parallel using SSE/AVX instructions.
+### Details:
+- Implement SSE/AVX versions of bounds calculation
+- Process 4-8 shapes simultaneously per instruction
+- Use aligned memory access for optimal performance
+- Implement fallback scalar code for non-SIMD systems
+- Add runtime CPU feature detection
+- Optimize for common shape types (circles, rectangles)
+- Consider AVX-512 for newer processors
+- Ensure results match scalar implementation exactly
+
+## 14. Write SIMD bounds tests - Verify SIMD results match scalar [pending]
+### Dependencies: None
+### Description: Create comprehensive tests for SIMD bounding box calculations to ensure they produce identical results to scalar implementations.
+### Details:
+- Test SIMD vs scalar bounds for all shape types
+- Verify bit-exact results between implementations
+- Test with aligned and unaligned memory
+- Test edge cases (NaN, infinity, denormals)
+- Verify performance improvements
+- Test CPU feature detection logic
+- Test fallback to scalar on non-SIMD systems
+- Benchmark SIMD speedup across different CPUs
+
+## 15. Add shape validation bypasses - Optional fast path without validation [pending]
+### Dependencies: None
+### Description: Implement optional validation bypass mechanisms for shape creation to enable ultra-fast shape instantiation when input data is known to be valid.
+### Details:
+- Add bypass flags to shape constructors
+- Create unsafe/fast construction methods
+- Document when validation can be safely skipped
+- Implement debug vs release validation strategies
+- Add compile-time validation options
+- Create trusted data path for batch operations
+- Ensure bypassed shapes still work correctly
+- Add performance comparison metrics
+
+## 16. Design shape memory layout [pending]
+### Dependencies: None
+### Description: Create cache-aligned structs with minimal padding
+### Details:
+- Design 32-byte Circle struct (x, y, radius, colors, flags)
+- Create 32-byte Rectangle struct (two points)
+- Optimize Ellipse layout (center, radii, colors)
+- Minimize Line struct (two points, stroke info)
+- Ensure all structs are cache-line aligned
+
+## 17. Create shape integration tests [pending]
+### Dependencies: None
+### Description: Test shapes with transforms and styles
+### Details:
+- Test shapes with complex transformation chains
+- Verify style application and inheritance
+- Test shape interactions in containers
+- Test serialization/deserialization
+- Verify Python binding behavior
+- Test real-world usage patterns
+
+## 18. Create shape benchmarks [pending]
+### Dependencies: None
+### Description: Validate sub-microsecond creation times
+### Details:
+- Benchmark individual shape creation
+- Test batch creation performance
+- Measure transformation operation speed
+- Compare with Python implementation
+- Test memory allocation patterns
+- Profile cache behavior
+- Validate <0.5μs per shape target
+
