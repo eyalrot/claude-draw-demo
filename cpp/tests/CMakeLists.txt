@@ -16,6 +16,7 @@ add_executable(claude_draw_tests
     shapes/test_circle_optimized.cpp
     shapes/test_rectangle_optimized.cpp
     shapes/test_ellipse_optimized.cpp
+    shapes/test_line_optimized.cpp
     # shapes/test_rectangle.cpp
     # shapes/test_ellipse.cpp
     # shapes/test_line.cpp
