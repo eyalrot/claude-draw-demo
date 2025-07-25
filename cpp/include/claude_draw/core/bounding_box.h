@@ -6,6 +6,7 @@
 #include <limits>
 #include <ostream>
 #include <type_traits>
+#include <cmath>
 
 namespace claude_draw {
 
@@ -100,6 +101,15 @@ struct BoundingBox {
         };
     }
     
+    // Get center coordinates
+    [[nodiscard]] float center_x() const noexcept {
+        return (min_x + max_x) * 0.5F;
+    }
+    
+    [[nodiscard]] float center_y() const noexcept {
+        return (min_y + max_y) * 0.5F;
+    }
+    
     // Get corner points
     [[nodiscard]] Point2D min_corner() const noexcept {
         return {min_x, min_y};
@@ -145,6 +155,28 @@ struct BoundingBox {
                min_y <= other.max_y && max_y >= other.min_y;
     }
     
+    // Calculate minimum distance from a point to the bounding box
+    [[nodiscard]] float distance_to_point(float x, float y) const noexcept {
+        if (is_empty()) return std::numeric_limits<float>::infinity();
+        
+        // If point is inside, distance is 0
+        if (x >= min_x && x <= max_x && y >= min_y && y <= max_y) {
+            return 0.0f;
+        }
+        
+        // Calculate squared distance to avoid sqrt
+        float dx = 0.0f;
+        float dy = 0.0f;
+        
+        if (x < min_x) dx = min_x - x;
+        else if (x > max_x) dx = x - max_x;
+        
+        if (y < min_y) dy = min_y - y;
+        else if (y > max_y) dy = y - max_y;
+        
+        return std::sqrt(dx * dx + dy * dy);
+    }
+    
     // Compute intersection of two bounding boxes
     [[nodiscard]] BoundingBox intersection(const BoundingBox& other) const noexcept {
         if (!intersects(other)) return BoundingBox();
@@ -168,6 +200,11 @@ struct BoundingBox {
             std::max(max_x, other.max_x),
             std::max(max_y, other.max_y)
         };
+    }
+    
+    // Alias for union_with for compatibility
+    [[nodiscard]] BoundingBox merge(const BoundingBox& other) const noexcept {
+        return union_with(other);
     }
     
     // Expand to include a point

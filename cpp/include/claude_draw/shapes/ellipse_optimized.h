@@ -30,6 +30,9 @@ public:
     Ellipse(const Point2D& center, float radius_x, float radius_y)
         : data_(center.x, center.y, radius_x, radius_y) {}
     
+    // Constructor from raw data (for container use)
+    explicit Ellipse(const EllipseShape& data) : data_(data) {}
+    
     // Copy and move constructors
     Ellipse(const Ellipse&) = default;
     Ellipse(Ellipse&&) = default;

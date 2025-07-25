@@ -39,6 +39,9 @@ public:
         VALIDATE_IF_ENABLED(validate::is_non_negative(radius), "Circle radius must be non-negative");
     }
     
+    // Constructor from raw data (for container use)
+    explicit Circle(const CircleShape& data) : data_(data) {}
+    
     // Copy and move constructors
     Circle(const Circle&) = default;
     Circle(Circle&&) = default;

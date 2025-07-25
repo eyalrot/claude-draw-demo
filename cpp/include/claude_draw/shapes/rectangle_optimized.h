@@ -32,6 +32,9 @@ public:
                 bottom_right.x - top_left.x, 
                 bottom_right.y - top_left.y) {}
     
+    // Constructor from raw data (for container use)
+    explicit Rectangle(const RectangleShape& data) : data_(data) {}
+    
     // Copy and move constructors
     Rectangle(const Rectangle&) = default;
     Rectangle(Rectangle&&) = default;

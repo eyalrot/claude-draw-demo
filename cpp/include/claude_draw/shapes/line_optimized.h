@@ -30,6 +30,9 @@ public:
     Line(const Point2D& start, const Point2D& end)
         : data_(start.x, start.y, end.x, end.y) {}
     
+    // Constructor from raw data (for container use)
+    explicit Line(const LineShape& data) : data_(data) {}
+    
     // Copy and move constructors
     Line(const Line&) = default;
     Line(Line&&) = default;

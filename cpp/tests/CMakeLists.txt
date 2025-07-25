@@ -33,10 +33,11 @@ add_executable(claude_draw_tests
     # Integration tests
     # integration/test_integration.cpp
     
-    # Container tests (to be added)
+    # Container tests
+    containers/test_soa_container.cpp
+    containers/test_spatial_index.cpp
     # containers/test_group.cpp
     # containers/test_layer.cpp
-    # containers/test_spatial_index.cpp
 )
 
 # Add bindings tests if Python bindings are enabled
