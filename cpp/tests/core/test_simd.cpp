@@ -47,10 +47,8 @@ TEST(SimdCapabilities, SimdLevel) {
 TEST(SimdAlignment, AlignmentCheck) {
     // Test alignment detection
     alignas(32) int aligned_array[8];
-    int unaligned_array[8];
     
     EXPECT_TRUE(is_aligned(aligned_array, 32));
-    // Unaligned array might be aligned by chance, so we can't reliably test false
     
     // Test with different alignments
     EXPECT_TRUE(is_aligned(aligned_array, 16));

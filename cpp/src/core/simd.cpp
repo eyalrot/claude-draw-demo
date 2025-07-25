@@ -6,7 +6,7 @@
 
 #ifdef _MSC_VER
 #include <intrin.h>
-#else
+#elif defined(__x86_64__) || defined(__i386__)
 #include <cpuid.h>
 #endif
 
@@ -17,7 +17,21 @@ SimdCapabilities::CpuInfo SimdCapabilities::cpu_info_;
 void SimdCapabilities::detect_features() noexcept {
     if (cpu_info_.initialized) return;
     
-#ifdef _MSC_VER
+#if defined(__aarch64__) || defined(__arm__)
+    // ARM processors don't have AVX/SSE instructions
+    // ARM has NEON, but we're not detecting it here
+    cpu_info_.sse2 = false;
+    cpu_info_.sse3 = false;
+    cpu_info_.ssse3 = false;
+    cpu_info_.sse41 = false;
+    cpu_info_.sse42 = false;
+    cpu_info_.avx = false;
+    cpu_info_.avx2 = false;
+    cpu_info_.avx512f = false;
+    cpu_info_.avx512dq = false;
+    cpu_info_.avx512bw = false;
+    cpu_info_.fma = false;
+#elif defined(_MSC_VER)
     int info[4];
     __cpuid(info, 0);
     int max_id = info[0];
@@ -40,7 +54,7 @@ void SimdCapabilities::detect_features() noexcept {
         cpu_info_.avx512dq = (info[1] & (1 << 17)) != 0;
         cpu_info_.avx512bw = (info[1] & (1 << 30)) != 0;
     }
-#else
+#elif defined(__x86_64__) || defined(__i386__)
     unsigned int eax, ebx, ecx, edx;
     unsigned int max_id;
     
@@ -65,17 +79,27 @@ void SimdCapabilities::detect_features() noexcept {
             cpu_info_.avx512bw = (ebx & (1 << 30)) != 0;
         }
     }
+#else
+    // Unknown architecture, disable all features
+    cpu_info_.sse2 = false;
+    cpu_info_.sse3 = false;
+    cpu_info_.ssse3 = false;
+    cpu_info_.sse41 = false;
+    cpu_info_.sse42 = false;
+    cpu_info_.avx = false;
+    cpu_info_.avx2 = false;
+    cpu_info_.avx512f = false;
+    cpu_info_.avx512dq = false;
+    cpu_info_.avx512bw = false;
+    cpu_info_.fma = false;
 #endif
     
-    // Check OS support for AVX
+    // Check OS support for AVX (only on x86/x64)
+#if (defined(__x86_64__) || defined(__i386__)) && !defined(_MSC_VER)
     if (cpu_info_.avx) {
         // Check if OS supports XSAVE/XRSTOR
         unsigned int xcr0 = 0;
-#ifdef _MSC_VER
-        xcr0 = static_cast<unsigned int>(_xgetbv(0));
-#else
         __asm__("xgetbv" : "=a"(xcr0) : "c"(0) : "%edx");
-#endif
         // Check if XMM and YMM state are enabled
         if ((xcr0 & 0x6) != 0x6) {
             cpu_info_.avx = false;
@@ -85,6 +109,20 @@ void SimdCapabilities::detect_features() noexcept {
             cpu_info_.avx512bw = false;
         }
     }
+#elif defined(_MSC_VER) && (defined(_M_X64) || defined(_M_IX86))
+    if (cpu_info_.avx) {
+        // Check if OS supports XSAVE/XRSTOR
+        unsigned int xcr0 = static_cast<unsigned int>(_xgetbv(0));
+        // Check if XMM and YMM state are enabled
+        if ((xcr0 & 0x6) != 0x6) {
+            cpu_info_.avx = false;
+            cpu_info_.avx2 = false;
+            cpu_info_.avx512f = false;
+            cpu_info_.avx512dq = false;
+            cpu_info_.avx512bw = false;
+        }
+    }
+#endif
     
     cpu_info_.initialized = true;
 }
