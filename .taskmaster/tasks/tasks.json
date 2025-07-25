@@ -1863,7 +1863,7 @@
             "title": "Implement Rectangle optimization - Store as two points for efficiency",
             "description": "Implement an optimized Rectangle primitive that stores only two corner points (top-left and bottom-right) for minimal memory usage and fast operations.",
             "details": "- Store rectangle as two points (8 floats total)\n- Implement fast getter methods for width, height, center\n- Add efficient contains point algorithm\n- Implement rectangle-rectangle intersection\n- Add rotation support with cached sin/cos values\n- Ensure alignment for SIMD operations\n- Consider axis-aligned vs rotated rectangle variants",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [],
             "parentTaskId": 15
           },
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T09:39:30.563Z",
+      "updated": "2025-07-25T09:58:13.324Z",
       "description": "Tasks for master context"
     }
   }
