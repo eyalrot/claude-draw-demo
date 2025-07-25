@@ -10,11 +10,8 @@ add_library(claude_draw_core STATIC
     # Core types
     core/bounding_box.cpp
     
-    # Shapes (to be added)
-    # shapes/circle.cpp
-    # shapes/rectangle.cpp
-    # shapes/ellipse.cpp
-    # shapes/line.cpp
+    # Shapes (header-only for now)
+    shapes/placeholder.cpp
     
     # Containers (to be added)
     # containers/container.cpp

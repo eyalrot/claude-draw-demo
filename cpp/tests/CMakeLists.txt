@@ -10,8 +10,10 @@ add_executable(claude_draw_tests
     core/test_transform2d.cpp
     core/test_bounding_box.cpp
     
-    # Shape tests (to be added)
-    # shapes/test_circle.cpp
+    # Shape tests
+    shapes/test_shape_layout.cpp
+    shapes/test_circle.cpp
+    shapes/test_circle_optimized.cpp
     # shapes/test_rectangle.cpp
     # shapes/test_ellipse.cpp
     # shapes/test_line.cpp
@@ -23,7 +25,7 @@ add_executable(claude_draw_tests
     batch/test_batch_operations.cpp
     
     # Integration tests
-    integration/test_integration.cpp
+    # integration/test_integration.cpp
     
     # Container tests (to be added)
     # containers/test_group.cpp

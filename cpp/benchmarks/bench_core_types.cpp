@@ -77,8 +77,8 @@ static void BM_Color_Construction_Packed(benchmark::State& state) {
 BENCHMARK(BM_Color_Construction_Packed);
 
 static void BM_Color_BlendOver(benchmark::State& state) {
-    Color fg(255, 0, 0, 128);
-    Color bg(0, 0, 255, 255);
+    Color fg(uint8_t(255), uint8_t(0), uint8_t(0), uint8_t(128));
+    Color bg(uint8_t(0), uint8_t(0), uint8_t(255), uint8_t(255));
     
     for (auto _ : state) {
         Color result = fg.blend_over(bg);
@@ -88,7 +88,7 @@ static void BM_Color_BlendOver(benchmark::State& state) {
 BENCHMARK(BM_Color_BlendOver);
 
 static void BM_Color_Premultiply(benchmark::State& state) {
-    Color c(255, 128, 64, 200);
+    Color c(uint8_t(255), uint8_t(128), uint8_t(64), uint8_t(200));
     
     for (auto _ : state) {
         Color premul = c.premultiply();
@@ -266,8 +266,8 @@ static void BM_BatchBlend_Colors(benchmark::State& state) {
     std::vector<Color> results(count);
     
     for (size_t i = 0; i < count; ++i) {
-        fg_colors[i] = Color(255, 0, 0, 128);
-        bg_colors[i] = Color(0, 0, 255, 255);
+        fg_colors[i] = Color(uint8_t(255), uint8_t(0), uint8_t(0), uint8_t(128));
+        bg_colors[i] = Color(uint8_t(0), uint8_t(0), uint8_t(255), uint8_t(255));
     }
     
     for (auto _ : state) {
@@ -341,7 +341,7 @@ static void BM_Complex_ColorCompositing(benchmark::State& state) {
         layers.emplace_back(byte_dist(rng), byte_dist(rng), byte_dist(rng), 128);
     }
     
-    Color background(255, 255, 255, 255);
+    Color background(uint8_t(255), uint8_t(255), uint8_t(255), uint8_t(255));
     
     for (auto _ : state) {
         Color result = background;

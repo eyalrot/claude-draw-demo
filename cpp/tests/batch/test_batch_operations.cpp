@@ -175,8 +175,8 @@ TEST_F(BatchOperationsTest, BlendColorsBatch) {
     
     // Semi-transparent red over blue
     for (size_t i = 0; i < count; ++i) {
-        fg_colors[i] = Color(255, 0, 0, 128);  // Semi-transparent red
-        bg_colors[i] = Color(0, 0, 255, 255);  // Opaque blue
+        fg_colors[i] = Color(uint8_t(255), uint8_t(0), uint8_t(0), uint8_t(128));  // Semi-transparent red
+        bg_colors[i] = Color(uint8_t(0), uint8_t(0), uint8_t(255), uint8_t(255));  // Opaque blue
     }
     
     // Blend
@@ -200,7 +200,7 @@ TEST_F(BatchOperationsTest, ContainsPointsBatch) {
     
     // Create test points
     std::vector<Point2D> points(count);
-    std::vector<bool> results(count);
+    std::vector<uint8_t> results(count);  // Use uint8_t instead of bool
     
     // Half inside, half outside
     for (size_t i = 0; i < count; ++i) {
@@ -212,14 +212,14 @@ TEST_F(BatchOperationsTest, ContainsPointsBatch) {
     }
     
     // Test containment
-    BatchProcessor::contains_points(box, points.data(), results.data(), count);
+    BatchProcessor::contains_points(box, points.data(), reinterpret_cast<bool*>(results.data()), count);
     
     // Verify
     for (size_t i = 0; i < count; ++i) {
         if (i < count / 2) {
-            EXPECT_TRUE(results[i]) << "Point " << i << " should be inside";
+            EXPECT_TRUE(results[i] != 0) << "Point " << i << " should be inside";
         } else {
-            EXPECT_FALSE(results[i]) << "Point " << i << " should be outside";
+            EXPECT_FALSE(results[i] != 0) << "Point " << i << " should be outside";
         }
     }
 }
