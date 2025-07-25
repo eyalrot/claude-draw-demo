@@ -8,7 +8,7 @@ namespace py = pybind11;
 using namespace claude_draw;
 
 // Forward declarations for binding functions
-// void bind_core_types(py::module& m);
+void bind_core_types(py::module& m);
 // void bind_shapes(py::module& m);
 // void bind_containers(py::module& m);
 
@@ -59,8 +59,8 @@ PYBIND11_MODULE(_claude_draw_cpp, m) {
     auto containers = m.def_submodule("containers", "Container types (Group, Layer, Drawing)");
     auto memory = m.def_submodule("memory", "Memory management utilities");
     
-    // Bind types (to be implemented)
-    // bind_core_types(core);
+    // Bind types
+    bind_core_types(core);
     // bind_shapes(shapes);
     // bind_containers(containers);
     

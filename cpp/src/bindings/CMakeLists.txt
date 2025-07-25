@@ -3,8 +3,8 @@ pybind11_add_module(_claude_draw_cpp MODULE
     # Main binding file
     module.cpp
     
-    # Core type bindings (to be added)
-    # core_bindings.cpp
+    # Core type bindings
+    core_types.cpp
     
     # Shape bindings (to be added)
     # shape_bindings.cpp
