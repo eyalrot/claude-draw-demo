@@ -1,0 +1,204 @@
+{
+  "benchmarks": [
+    {
+      "name": "Serialize 1000 circles",
+      "execution_time_seconds": 0.04449294810183346,
+      "memory_before_mb": 35.91015625,
+      "memory_after_mb": 36.41015625,
+      "memory_peak_mb": 36.41015625,
+      "memory_delta_mb": 0.5,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 44.49294810183346,
+      "objects_per_second": 22475.471791872387
+    },
+    {
+      "name": "Serialize 1000 rectangles",
+      "execution_time_seconds": 0.04260996985249221,
+      "memory_before_mb": 37.03515625,
+      "memory_after_mb": 37.03515625,
+      "memory_peak_mb": 37.03515625,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 42.60996985249221,
+      "objects_per_second": 23468.685931058244
+    },
+    {
+      "name": "Serialize 1000 ellipses",
+      "execution_time_seconds": 0.040855425875633955,
+      "memory_before_mb": 37.03515625,
+      "memory_after_mb": 37.16015625,
+      "memory_peak_mb": 37.16015625,
+      "memory_delta_mb": 0.125,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 40.855425875633955,
+      "objects_per_second": 24476.553078752677
+    },
+    {
+      "name": "Serialize 1000 lines",
+      "execution_time_seconds": 0.04398627998307347,
+      "memory_before_mb": 37.16015625,
+      "memory_after_mb": 37.16015625,
+      "memory_peak_mb": 37.16015625,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 43.98627998307347,
+      "objects_per_second": 22734.36172335587
+    },
+    {
+      "name": "Deserialize 1000 circles",
+      "execution_time_seconds": 0.0506521500647068,
+      "memory_before_mb": 37.16015625,
+      "memory_after_mb": 40.53515625,
+      "memory_peak_mb": 40.53515625,
+      "memory_delta_mb": 3.375,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 50.6521500647068,
+      "objects_per_second": 19742.498565658636
+    },
+    {
+      "name": "Deserialize 1000 rectangles",
+      "execution_time_seconds": 0.0515691670589149,
+      "memory_before_mb": 38.5703125,
+      "memory_after_mb": 39.9453125,
+      "memory_peak_mb": 39.9453125,
+      "memory_delta_mb": 1.375,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 51.5691670589149,
+      "objects_per_second": 19391.432071368454
+    },
+    {
+      "name": "Deserialize 1000 ellipses",
+      "execution_time_seconds": 0.045567531837150455,
+      "memory_before_mb": 40.0703125,
+      "memory_after_mb": 40.5703125,
+      "memory_peak_mb": 40.5703125,
+      "memory_delta_mb": 0.5,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 45.567531837150455,
+      "objects_per_second": 21945.450185316302
+    },
+    {
+      "name": "Deserialize 1000 lines",
+      "execution_time_seconds": 0.04799104994162917,
+      "memory_before_mb": 40.5703125,
+      "memory_after_mb": 41.1953125,
+      "memory_peak_mb": 41.1953125,
+      "memory_delta_mb": 0.625,
+      "iterations": 1,
+      "objects_created": 1000,
+      "time_per_object_microseconds": 47.99104994162917,
+      "objects_per_second": 20837.218631729993
+    },
+    {
+      "name": "Serialize complex drawing (150 shapes)",
+      "execution_time_seconds": 0.005763284862041473,
+      "memory_before_mb": 41.1953125,
+      "memory_after_mb": 41.1953125,
+      "memory_peak_mb": 41.1953125,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 150,
+      "time_per_object_microseconds": 38.42189908027649,
+      "objects_per_second": 26026.82386705191
+    },
+    {
+      "name": "Serialize complex drawing (500 shapes)",
+      "execution_time_seconds": 0.018135533202439547,
+      "memory_before_mb": 41.1953125,
+      "memory_after_mb": 41.1953125,
+      "memory_peak_mb": 41.1953125,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 500,
+      "time_per_object_microseconds": 36.27106640487909,
+      "objects_per_second": 27570.184698663354
+    },
+    {
+      "name": "Serialize complex drawing (2000 shapes)",
+      "execution_time_seconds": 0.08464507292956114,
+      "memory_before_mb": 41.1953125,
+      "memory_after_mb": 42.12109375,
+      "memory_peak_mb": 41.1953125,
+      "memory_delta_mb": 0.92578125,
+      "iterations": 1,
+      "objects_created": 2000,
+      "time_per_object_microseconds": 42.32253646478057,
+      "objects_per_second": 23628.07344574367
+    },
+    {
+      "name": "Round-trip 50 drawings (1000 shapes)",
+      "execution_time_seconds": 0.09740305598825216,
+      "memory_before_mb": 41.20703125,
+      "memory_after_mb": 41.20703125,
+      "memory_peak_mb": 41.20703125,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 50,
+      "time_per_object_microseconds": 1948.0611197650433,
+      "objects_per_second": 513.3309164964037
+    },
+    {
+      "name": "Round-trip 100 drawings (2000 shapes)",
+      "execution_time_seconds": 0.19276928203180432,
+      "memory_before_mb": 41.20703125,
+      "memory_after_mb": 41.20703125,
+      "memory_peak_mb": 41.20703125,
+      "memory_delta_mb": 0.0,
+      "iterations": 1,
+      "objects_created": 100,
+      "time_per_object_microseconds": 1927.6928203180432,
+      "objects_per_second": 518.7548500777284
+    },
+    {
+      "name": "Round-trip 200 drawings (4000 shapes)",
+      "execution_time_seconds": 0.4138317590113729,
+      "memory_before_mb": 43.95703125,
+      "memory_after_mb": 44.08203125,
+      "memory_peak_mb": 44.08203125,
+      "memory_delta_mb": 0.125,
+      "iterations": 1,
+      "objects_created": 200,
+      "time_per_object_microseconds": 2069.1587950568646,
+      "objects_per_second": 483.2881857056882
+    }
+  ],
+  "summary": {
+    "total_benchmarks": 14,
+    "total_objects_created": 11000,
+    "execution_time_stats": {
+      "mean": 0.08430517933863614,
+      "median": 0.04677929088938981,
+      "min": 0.005763284862041473,
+      "max": 0.4138317590113729,
+      "stdev": 0.10485581404975489
+    },
+    "memory_delta_stats": {
+      "mean": 0.5393415178571429,
+      "median": 0.125,
+      "min": 0.0,
+      "max": 3.375,
+      "stdev": 0.9193537070417921
+    },
+    "time_per_object_stats": {
+      "mean": 459.2609114146658,
+      "median": 45.03023996949196,
+      "min": 36.27106640487909,
+      "max": 2069.1587950568646,
+      "stdev": 825.6027378122666
+    },
+    "objects_per_second_stats": {
+      "mean": 18129.437710203667,
+      "median": 22210.460988594343,
+      "min": 483.2881857056882,
+      "max": 27570.184698663354,
+      "stdev": 9800.144329637864
+    }
+  }
+}

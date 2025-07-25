@@ -10,21 +10,23 @@ A Python library for creating 2D vector graphics with an intuitive API and stron
 - **Container System**: Groups, Layers with blend modes, Drawing canvas
 - **Immutable Design**: Pydantic-based models with validation
 - **Type Safety**: Full type hints and runtime validation
-- **Transformations**: Translate, rotate, scale operations
+- **Transformations**: Translate, rotate, scale operations with fluent API
 - **Factory Functions**: Convenient shape creation utilities
+- **Visitor Pattern**: Complete renderer architecture with extensible visitors
+- **SVG Export**: Full SVG rendering with transformations and styling
+- **Serialization**: Enhanced JSON serialization with type discrimination
+- **Polymorphic Support**: Save/load complex drawings with full type safety
 
 ### 🚧 In Development
 - Path drawing with SVG-like commands
 - Complex shapes (Polygon, Polyline, Arc)
 - Styling system with gradients and patterns
 - Text rendering with font support
-- Visitor pattern renderer architecture
-- SVG export functionality
-- Serialization support
 
 ### 📋 Planned
 - PNG and PDF export
-- Performance optimizations
+- **C++ Performance Layer**: 50-100x speedup for millions of objects (see [C++ Architecture](cpp_architecture.md))
+- GPU acceleration
 - Documentation and examples
 
 ## Installation
@@ -47,6 +49,8 @@ pip install -e ".[dev]"
 from claude_draw import Drawing, Layer, Group, Circle, Rectangle
 from claude_draw.models.point import Point2D
 from claude_draw.models.color import Color
+from claude_draw.renderers import SVGRenderer
+from claude_draw.serialization import save_drawable, load_drawable
 
 # Create a drawing canvas
 drawing = Drawing(width=400, height=300, title="My Drawing")
@@ -78,9 +82,18 @@ shapes_group = shapes_group.add_child(circle).add_child(rectangle)
 drawing = drawing.add_child(background_layer).add_child(foreground_layer)
 foreground_layer = foreground_layer.add_child(shapes_group)
 
-# Apply transformations
-rotated_circle = circle.rotate(0.785)  # 45 degrees
-scaled_rect = rectangle.scale(1.5, 1.2)
+# Apply transformations with fluent API
+rotated_circle = circle.rotate(0.785).scale(1.2)  # Chain operations
+scaled_rect = rectangle.scale(1.5, 1.2).translate(20, 10)
+
+# Render to SVG
+renderer = SVGRenderer()
+svg_output = renderer.render(drawing)
+print(svg_output)
+
+# Save and load drawings
+save_drawable(drawing, "my_drawing.json")
+loaded_drawing = load_drawable("my_drawing.json")
 ```
 
 ## Architecture
@@ -130,14 +143,59 @@ square = create_square(0, 0, 100)
 line = create_horizontal_line(y=50, x_start=0, x_end=200)
 ```
 
+### Visitor Pattern & Rendering
+```python
+from claude_draw.renderers import SVGRenderer, BoundingBoxCalculator
+from claude_draw.visitors import BaseRenderer
+
+# SVG Export
+renderer = SVGRenderer(width=800, height=600)
+svg_content = renderer.render(drawing)
+
+# Calculate bounds
+bounds_calc = BoundingBoxCalculator()
+bounds_calc.render(drawing)
+x, y, width, height = bounds_calc.get_bounding_box()
+
+# Custom renderer example
+class MyRenderer(BaseRenderer):
+    def visit_circle(self, circle):
+        print(f"Processing circle at {circle.center}")
+    
+    def visit_rectangle(self, rectangle):
+        print(f"Processing rectangle {rectangle.width}x{rectangle.height}")
+```
+
+### Serialization & Persistence
+```python
+from claude_draw.serialization import (
+    serialize_drawable, deserialize_drawable,
+    save_drawable, load_drawable
+)
+
+# JSON serialization with type safety
+json_str = serialize_drawable(drawing)
+restored_drawing = deserialize_drawable(json_str)
+
+# File persistence
+save_drawable(drawing, "complex_artwork.json")
+loaded_drawing = load_drawable("complex_artwork.json")
+
+# All object relationships and types are preserved
+assert type(loaded_drawing) == Drawing
+assert type(loaded_drawing.children[0]) == Layer
+
 ## Development Status
 
 This library is currently in active development. The core foundation is solid with:
 
-- ✅ **33% Complete**: 4 of 12 major tasks implemented
+- ✅ **75% Complete**: 9 of 12 major tasks implemented
 - ✅ **Type-Safe Foundation**: Pydantic v2 with immutable models
-- ✅ **Test Coverage**: 60% overall, 93% for containers
+- ✅ **Test Coverage**: 89% overall, 373 tests passing
 - ✅ **Modern Python**: 3.12+ with full type hints
+- ✅ **Visitor Pattern**: Complete architecture for extensible rendering
+- ✅ **SVG Export**: Full featured SVG generation with styling
+- ✅ **Serialization**: Robust JSON persistence with type safety
 
 ### Running Tests
 
@@ -162,6 +220,8 @@ The library uses several key design patterns:
 - **Factory Pattern**: Convenient object creation with validation
 - **Hierarchical Containers**: Clean organization with Drawing → Layer → Group → Shape
 - **Transform Composition**: Matrix-based transformations with proper inheritance
+- **Type Discrimination**: Polymorphic serialization with automatic type resolution
+- **Fluent API**: Method chaining for intuitive object manipulation
 
 ## Documentation
 
@@ -177,11 +237,12 @@ For now, see:
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 Key areas needing work:
-- Visitor pattern renderer implementation
-- SVG export functionality
-- Complex shape primitives (Path, Polygon)
-- Styling system with gradients
+
+- Complex shape primitives (Path, Polygon, Arc)
+- Styling system with gradients and patterns
 - Text rendering support
+- PNG and PDF export capabilities
+- Performance optimizations and benchmarking
 
 ## License
 

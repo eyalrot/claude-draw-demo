@@ -8,6 +8,7 @@ from pathlib import Path
 
 from benchmark_shape_creation import run_shape_creation_benchmarks
 from benchmark_containers import run_container_benchmarks
+from benchmark_serialization import SerializationBenchmarks
 from benchmark_utils import BenchmarkSuite
 
 
@@ -52,6 +53,14 @@ def main():
         container_suite = run_container_benchmarks()
         combined_suite.results.extend(container_suite.results)
         
+        print("\n" + "="*60)
+        
+        # Run serialization benchmarks
+        print("🔥 Phase 3: Serialization Performance")
+        serialization_benchmarks = SerializationBenchmarks()
+        serialization_results = serialization_benchmarks.run_all_benchmarks()
+        combined_suite.results.extend(serialization_benchmarks.suite.results)
+        
         # Print combined summary
         combined_suite.print_summary()
         
@@ -61,6 +70,11 @@ def main():
         # Save individual suite results
         save_results_to_json(shape_suite, f"benchmark_results/shape_creation_{timestamp}.json")
         save_results_to_json(container_suite, f"benchmark_results/containers_{timestamp}.json")
+        
+        # Save serialization results (has its own format)
+        with open(f"benchmark_results/serialization_{timestamp}.json", 'w') as f:
+            json.dump(serialization_results, f, indent=2)
+        print(f"📁 Results saved to: benchmark_results/serialization_{timestamp}.json")
         
         # Save combined results
         save_results_to_json(combined_suite, f"benchmark_results/combined_{timestamp}.json")

@@ -146,16 +146,23 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         Returns:
             Dictionary representation with type information
         """
-        # Handle circular references if needed
-        obj_id = id(obj)
-        if obj_id in self._object_refs:
-            # Return a reference instead of the full object
-            return {"__ref__": self._object_refs[obj_id]}
+        # Import here to avoid circular imports
+        from claude_draw.base import Drawable
         
-        # Assign a reference ID
-        ref_id = f"obj_{self._ref_counter}"
-        self._object_refs[obj_id] = ref_id
-        self._ref_counter += 1
+        # Only handle references for Drawable objects, not basic data models
+        if isinstance(obj, Drawable):
+            # Handle circular references if needed
+            obj_id = id(obj)
+            if obj_id in self._object_refs:
+                # Return a reference instead of the full object
+                return {"__ref__": self._object_refs[obj_id]}
+            
+            # Assign a reference ID
+            ref_id = f"obj_{self._ref_counter}"
+            self._object_refs[obj_id] = ref_id
+            self._ref_counter += 1
+        else:
+            ref_id = None
         
         # Build dictionary manually to avoid polymorphic issues
         data = {}
@@ -180,24 +187,30 @@ class EnhancedJSONEncoder(json.JSONEncoder):
                 }
             elif hasattr(value, 'model_dump'):
                 # Handle other Pydantic models (but don't add type discriminators for non-DrawModel objects)
+                # Don't serialize references for non-DrawModel objects like Color, Point2D, etc
                 data[field_name] = value.model_dump()
+            elif isinstance(value, Enum):
+                # Handle enum values
+                data[field_name] = value.value
             else:
                 data[field_name] = value
         
-        # Add type discriminator
-        type_name = get_type_discriminator(obj)
-        if type_name:
-            data["__type__"] = type_name
-        else:
-            # Fallback to class name if not registered
-            data["__type__"] = obj.__class__.__name__
+        # Add type discriminator only for Drawable objects
+        if isinstance(obj, Drawable):
+            type_name = get_type_discriminator(obj)
+            if type_name:
+                data["__type__"] = type_name
+            else:
+                # Fallback to class name if not registered
+                data["__type__"] = obj.__class__.__name__
+            
+            # Add version if requested for Drawable objects
+            if self.include_version:
+                data["__version__"] = "1.0"
         
-        # Add version if requested
-        if self.include_version:
-            data["__version__"] = "1.0"
-        
-        # Add reference ID
-        data["__id__"] = ref_id
+        # Add reference ID only for Drawable objects
+        if ref_id:
+            data["__id__"] = ref_id
         
         return data
 
@@ -240,17 +253,50 @@ class SerializationMixin:
 
 
 def deserialize_drawable(data: Union[str, Dict[str, Any]]) -> "Drawable":
-    """Deserialize a drawable object from JSON data.
+    """Deserialize a drawable object from JSON data with type restoration.
+    
+    This function reconstructs Claude Draw objects from JSON data that
+    includes type discriminators. It handles the complete deserialization
+    process including type lookup, nested object processing, and validation.
+    
+    Deserialization process:
+    1. Parse JSON if string input
+    2. Extract __type__ discriminator
+    3. Look up class in registry
+    4. Recursively process nested objects
+    5. Handle enum conversions
+    6. Validate and instantiate object
+    
+    Type safety features:
+    - Registry-based type lookup
+    - Recursive type preservation
+    - Enum value conversion
+    - Pydantic validation
     
     Args:
-        data: JSON string or dictionary containing serialized data
+        data: JSON string or dictionary containing serialized data.
+            Must include __type__ field for proper deserialization.
+            Can be output from serialize_drawable() or compatible format.
         
     Returns:
-        Deserialized drawable object
+        Drawable: Deserialized object with correct type restored.
+            All nested objects also have proper types.
         
     Raises:
-        ValueError: If type discriminator is missing or unknown
-        TypeError: If data format is invalid
+        ValueError: If type discriminator is missing or unknown,
+            or if circular references are present
+        TypeError: If data format is invalid (not dict or string)
+        ValidationError: If data doesn't match the expected schema
+        json.JSONDecodeError: If string input is not valid JSON
+        
+    Example:
+        >>> data = {
+        ...     "__type__": "Circle",
+        ...     "center": {"x": 100, "y": 100},
+        ...     "radius": 50
+        ... }
+        >>> circle = deserialize_drawable(data)
+        >>> assert isinstance(circle, Circle)
     """
     if isinstance(data, str):
         data = json.loads(data)
@@ -312,17 +358,48 @@ def deserialize_drawable(data: Union[str, Dict[str, Any]]) -> "Drawable":
 
 
 def deserialize_with_references(data: Union[str, Dict[str, Any]]) -> "Drawable":
-    """Deserialize a drawable object with circular reference support.
+    """Deserialize drawable objects with full circular reference support.
+    
+    This advanced deserialization function handles complex object graphs
+    that may contain circular references. It uses a two-pass algorithm
+    to resolve references after all objects are created.
+    
+    Reference resolution algorithm:
+    1. **First pass**: Create all objects, cache by __id__
+    2. **Track references**: Note __ref__ fields for later
+    3. **Second pass**: Replace references with cached objects
+    4. **Validation**: Ensure all references are resolved
+    
+    Use cases:
+    - Complex drawings with shared components
+    - Graphs with cycles (future path objects)
+    - Memory-efficient storage of repeated elements
+    - Advanced composition patterns
+    
+    Reference format:
+    - Objects with __id__ field are cacheable
+    - {"__ref__": "obj_0"} refers to cached object
+    - Enables structure sharing in JSON
     
     Args:
         data: JSON string or dictionary containing serialized data
+            with potential __ref__ and __id__ fields for reference
+            management.
         
     Returns:
-        Deserialized drawable object with references resolved
+        Drawable: Deserialized object with all references resolved.
+            Circular references are properly reconstructed.
         
     Raises:
-        ValueError: If type discriminator is missing or unknown
+        ValueError: If type discriminator is missing, unknown, or if
+            any references cannot be resolved
         TypeError: If data format is invalid
+        ValidationError: If data doesn't match expected schemas
+        
+    Note:
+        This function is more complex than deserialize_drawable() and
+        should only be used when circular references are expected.
+        For simple hierarchies, use the standard function.
     """
     if isinstance(data, str):
         data = json.loads(data)
@@ -397,14 +474,36 @@ def deserialize_with_references(data: Union[str, Dict[str, Any]]) -> "Drawable":
 
 
 def serialize_drawable(obj: "Drawable", **kwargs) -> str:
-    """Serialize a drawable object to JSON.
+    """Serialize drawable objects to enhanced JSON format.
+    
+    Primary serialization function that converts Claude Draw objects
+    into JSON with full type information and metadata. This enables
+    perfect round-trip conversion of complex object hierarchies.
+    
+    Serialization features:
+    - Type discrimination via __type__ fields
+    - Circular reference detection and handling
+    - Version metadata for future compatibility
+    - Recursive processing of nested structures
+    - Clean, human-readable output
     
     Args:
-        obj: Drawable object to serialize
-        **kwargs: Additional arguments for JSON encoder
+        obj: Drawable object to serialize. Any DrawModel subclass
+            including shapes, containers, or complete drawings.
+        **kwargs: Additional arguments for JSON encoder:
+            - indent: Pretty-print indentation (e.g., indent=2)
+            - sort_keys: Sort dictionary keys alphabetically
+            - ensure_ascii: Force ASCII-only output
+            - include_version: Include __version__ field (default: True)
         
     Returns:
-        JSON string representation
+        str: JSON string with type discriminators and metadata.
+            Output is suitable for deserialize_drawable() function.
+            
+    Example:
+        >>> rect = Rectangle(x=0, y=0, width=100, height=50)
+        >>> json_str = serialize_drawable(rect, indent=2)
+        >>> # Output includes __type__ for deserialization
     """
     return json.dumps(obj, cls=EnhancedJSONEncoder, **kwargs)
 
@@ -412,11 +511,35 @@ def serialize_drawable(obj: "Drawable", **kwargs) -> str:
 def load_drawable(filename: str) -> "Drawable":
     """Load a drawable object from a JSON file.
     
+    Convenience function that reads a JSON file and deserializes it
+    into Claude Draw objects with proper type restoration. Handles
+    the complete loading process including file I/O and deserialization.
+    
+    File format expectations:
+    - Standard JSON with type discriminators
+    - UTF-8 encoding
+    - Created by save_drawable() or compatible
+    - Contains __type__ fields for objects
+    
     Args:
-        filename: Path to the JSON file
+        filename: Path to the JSON file to load. File must exist
+            and contain valid JSON with type discriminators.
         
     Returns:
-        Deserialized drawable object
+        Drawable: Deserialized object with correct types restored.
+            Typically a Drawing object containing a complete scene.
+            
+    Raises:
+        FileNotFoundError: If the specified file doesn't exist
+        IOError: If file cannot be read
+        json.JSONDecodeError: If file contains invalid JSON
+        ValueError: If type discriminators are missing or unknown
+        ValidationError: If data doesn't match expected schemas
+        
+    Example:
+        >>> # Load a saved drawing
+        >>> drawing = load_drawable("artwork.json")
+        >>> print(f"Loaded {drawing.title}")
     """
     with open(filename, 'r', encoding='utf-8') as f:
         data = json.load(f)
@@ -424,12 +547,44 @@ def load_drawable(filename: str) -> "Drawable":
 
 
 def save_drawable(obj: "Drawable", filename: str, **kwargs) -> None:
-    """Save a drawable object to a JSON file.
+    """Save a drawable object to a JSON file with type preservation.
+    
+    Convenience function that serializes Claude Draw objects and writes
+    them to disk in a human-readable JSON format. The output preserves
+    all type information for perfect reconstruction.
+    
+    Output characteristics:
+    - Pretty-printed JSON (2-space indent by default)
+    - UTF-8 encoding for international support
+    - Type discriminators for all Drawable objects
+    - Clean formatting for version control
+    
+    File handling:
+    - Creates new file or overwrites existing
+    - Atomic write would be ideal for production
+    - Parent directory must exist
+    - Extension .json recommended
     
     Args:
-        obj: Drawable object to save
-        filename: Path to save the JSON file
-        **kwargs: Additional arguments for JSON encoder
+        obj: Drawable object to save. Typically a Drawing object
+            containing a complete scene, but can be any drawable.
+        filename: Path where the JSON file will be saved. Parent
+            directory must exist. File will be created or overwritten.
+        **kwargs: Additional arguments for JSON encoder:
+            - indent: Indentation spaces (default: 2)  
+            - sort_keys: Sort keys alphabetically
+            - ensure_ascii: Force ASCII output
+            - include_version: Add version metadata
+    
+    Raises:
+        IOError: If file cannot be written
+        OSError: If path is invalid or permissions denied
+        
+    Example:
+        >>> drawing = Drawing(width=800, height=600, title="My Art")
+        >>> # ... add shapes ...
+        >>> save_drawable(drawing, "my_art.json")
+        >>> # Creates formatted JSON file with type info
     """
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(obj, f, cls=EnhancedJSONEncoder, indent=2, **kwargs)
@@ -437,7 +592,27 @@ def save_drawable(obj: "Drawable", filename: str, **kwargs) -> None:
 
 # Auto-register core drawable types
 def _register_core_types():
-    """Register core drawable types with the serialization system."""
+    """Register core drawable types with the serialization system.
+    
+    This initialization function registers all built-in Claude Draw types
+    with the serialization registry. It's called automatically on module
+    import to ensure types are available for deserialization.
+    
+    Registration strategy:
+    - Try to import and register each module's types
+    - Gracefully handle import failures (circular imports)
+    - Types are registered with simple string names
+    - Enables lookup during deserialization
+    
+    Registered types:
+    - Shapes: Circle, Rectangle, Line, Ellipse
+    - Containers: Group, Layer, Drawing
+    - Models: Transform2D, Point2D, Color (if needed)
+    
+    Custom types:
+    Users can register additional types using:
+    >>> register_drawable_type("MyShape", MyShape)
+    """
     try:
         from claude_draw.shapes import Circle, Rectangle, Line, Ellipse
         register_drawable_type("Circle", Circle)

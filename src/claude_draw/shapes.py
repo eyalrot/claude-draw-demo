@@ -1,4 +1,30 @@
-"""Shape primitives for Claude Draw."""
+"""Shape primitives for Claude Draw.
+
+This module implements the concrete primitive shapes that form the visual
+building blocks of the Claude Draw graphics library. Each shape is a
+self-contained, immutable object that can be styled, transformed, and
+composed into more complex graphics.
+
+Available shapes:
+- Circle: Perfect circle defined by center and radius
+- Rectangle: Axis-aligned rectangle with position and dimensions
+- Ellipse: General ellipse with independent horizontal/vertical radii
+- Line: Straight line segment between two points
+
+All shapes inherit from the Primitive base class, providing:
+- Immutability for thread safety and predictable behavior
+- Full styling support (fill, stroke, opacity)
+- 2D transformations (translate, rotate, scale)
+- Visitor pattern integration for extensible rendering
+- Automatic bounds calculation
+- Validation of geometric constraints
+
+Design principles:
+- Shapes store minimal geometric data (e.g., center + radius for circles)
+- All derived properties are computed on demand
+- Validation ensures geometric validity (e.g., positive dimensions)
+- Methods return new instances to maintain immutability
+"""
 
 from typing import Any
 from pydantic import Field, field_validator
@@ -10,10 +36,45 @@ from claude_draw.models.bounding_box import BoundingBox
 
 
 class Circle(Primitive):
-    """Circle shape with center point and radius.
+    """A perfect circle shape defined by center point and radius.
     
-    A circle is defined by its center point and radius. The bounding box
-    is calculated as center ± radius in both dimensions.
+    The Circle class represents a perfect circular shape in 2D space. It is
+    one of the most fundamental geometric primitives, defined by just two
+    properties: a center point and a radius.
+    
+    Mathematical definition:
+        All points (x, y) where: (x - cx)² + (y - cy)² = r²
+        Where (cx, cy) is the center and r is the radius
+    
+    Key properties:
+    - **Simplicity**: Only requires center and radius
+    - **Symmetry**: Perfectly symmetric in all directions
+    - **Efficiency**: Fast hit testing and bounds calculation
+    - **Scalability**: Uniform scaling preserves shape
+    
+    Common use cases:
+    - Data visualization (scatter plots, bubble charts)
+    - UI elements (buttons, indicators, avatars)
+    - Diagrams (nodes in graphs, Venn diagrams)
+    - Decorative elements and patterns
+    
+    Attributes:
+        center (Point2D): The center point of the circle
+        radius (float): The radius of the circle (must be positive)
+    
+    Example:
+        >>> # Create a red circle at origin with radius 50
+        >>> circle = Circle(
+        ...     center=Point2D(x=0, y=0),
+        ...     radius=50,
+        ...     fill=Color(r=255, g=0, b=0)
+        ... )
+        >>> 
+        >>> # Move it to a new position
+        >>> moved = circle.with_center(Point2D(x=100, y=100))
+        >>> 
+        >>> # Check if a point is inside
+        >>> circle.contains_point(Point2D(x=25, y=25))  # True
     """
     
     center: Point2D = Field(description="Center point of the circle")
@@ -28,10 +89,30 @@ class Circle(Primitive):
         return v
     
     def get_bounds(self) -> BoundingBox:
-        """Calculate the bounding box of the circle.
+        """Calculate the axis-aligned bounding box of the circle.
+        
+        The bounding box of a circle is a square with sides equal to the
+        diameter (2 * radius). The box is centered on the circle's center.
+        
+        Calculation:
+        - Top-left corner: (center.x - radius, center.y - radius)
+        - Width and height: 2 * radius
+        
+        Note: This returns the bounds in the circle's local coordinate space.
+        Any transformations applied to the circle would need to be applied
+        to these bounds for world-space calculations.
         
         Returns:
-            BoundingBox: The bounding box containing the circle
+            BoundingBox: A square bounding box with width = height = 2 * radius,
+                positioned such that the circle touches all four sides
+                
+        Example:
+            >>> circle = Circle(center=Point2D(x=50, y=50), radius=30)
+            >>> bounds = circle.get_bounds()
+            >>> assert bounds.x == 20  # 50 - 30
+            >>> assert bounds.y == 20  # 50 - 30  
+            >>> assert bounds.width == 60  # 2 * 30
+            >>> assert bounds.height == 60  # 2 * 30
         """
         return BoundingBox(
             x=self.center.x - self.radius,
@@ -116,10 +197,58 @@ class Circle(Primitive):
 
 
 class Rectangle(Primitive):
-    """Rectangle shape with position and dimensions.
+    """An axis-aligned rectangle defined by position and dimensions.
     
-    A rectangle is defined by its position (x, y) and dimensions (width, height).
-    The position represents the top-left corner of the rectangle.
+    The Rectangle class represents a four-sided polygon with right angles
+    at each corner, aligned with the coordinate axes. It's one of the most
+    versatile and commonly used shapes in graphics programming.
+    
+    Coordinate system:
+    - Position (x, y) represents the top-left corner
+    - Width extends to the right (positive x direction)
+    - Height extends downward (positive y direction)
+    - All four corners are at right angles (90 degrees)
+    
+    Key properties:
+    - **Axis-aligned**: Edges parallel to x and y axes (no rotation)
+    - **Simple definition**: Just position and size needed
+    - **Efficient operations**: Fast hit testing and clipping
+    - **Versatile**: Can represent UI elements, bounds, frames
+    
+    Common use cases:
+    - UI components (buttons, panels, text boxes)
+    - Image and video frames
+    - Bounding boxes for collision detection
+    - Chart bars and histogram bins
+    - Layout containers and grids
+    
+    Attributes:
+        x (float): X coordinate of the top-left corner
+        y (float): Y coordinate of the top-left corner
+        width (float): Horizontal size (must be positive)
+        height (float): Vertical size (must be positive)
+    
+    Computed properties:
+        - center: The geometric center point
+        - corners: top_left, top_right, bottom_left, bottom_right
+        - area: width * height
+        - perimeter: 2 * (width + height)
+        - is_square: True if width equals height
+    
+    Example:
+        >>> # Create a blue rectangle
+        >>> rect = Rectangle(
+        ...     x=10, y=20,
+        ...     width=100, height=50,
+        ...     fill=Color(r=0, g=0, b=255)
+        ... )
+        >>> 
+        >>> # Get the center point
+        >>> center = rect.center  # Point2D(x=60, y=45)
+        >>> 
+        >>> # Create a square
+        >>> square = Rectangle(x=0, y=0, width=50, height=50)
+        >>> assert square.is_square()
     """
     
     x: float = Field(description="X coordinate of the top-left corner")
@@ -286,10 +415,59 @@ class Rectangle(Primitive):
 
 
 class Ellipse(Primitive):
-    """Ellipse shape with center point and two radii.
+    """A general ellipse shape defined by center and two radii.
     
-    An ellipse is defined by its center point and two radii (rx, ry).
-    The bounding box is calculated as center ± radii in each dimension.
+    The Ellipse class represents a closed curve where the sum of distances
+    from any point on the curve to two fixed points (foci) is constant.
+    It's a generalization of a circle, allowing different radii in the
+    horizontal and vertical directions.
+    
+    Mathematical definition:
+        All points (x, y) where: ((x-cx)/rx)² + ((y-cy)/ry)² = 1
+        Where (cx, cy) is the center, rx is horizontal radius, ry is vertical radius
+    
+    Key properties:
+    - **Generality**: Includes circles as special case (rx = ry)
+    - **Dual radii**: Independent control of width and height
+    - **Smooth curve**: No corners or discontinuities
+    - **Symmetry**: Symmetric about both axes through center
+    
+    Common use cases:
+    - Data visualization (confidence ellipses, orbital paths)
+    - UI design (oval buttons, pill-shaped elements)
+    - Technical diagrams (cylinders in perspective)
+    - Artistic elements (organic shapes, shadows)
+    
+    Attributes:
+        center (Point2D): The center point of the ellipse
+        rx (float): Horizontal radius (must be positive)
+        ry (float): Vertical radius (must be positive)
+    
+    Special characteristics:
+    - When rx = ry, the ellipse is a circle
+    - Area = π * rx * ry
+    - No simple formula for perimeter (uses approximation)
+    - Foci located at c * center ± sqrt(|rx² - ry²|)
+    
+    Example:
+        >>> # Create a horizontal ellipse
+        >>> ellipse = Ellipse(
+        ...     center=Point2D(x=100, y=100),
+        ...     rx=50,  # Wide
+        ...     ry=30,  # Short
+        ...     fill=Color.from_hex("#00FF00")
+        ... )
+        >>> 
+        >>> # Check if it's actually a circle
+        >>> ellipse.is_circle()  # False
+        >>> 
+        >>> # Create a circle using Ellipse
+        >>> circle_as_ellipse = Ellipse(
+        ...     center=Point2D(x=0, y=0),
+        ...     rx=40,
+        ...     ry=40
+        ... )
+        >>> circle_as_ellipse.is_circle()  # True
     """
     
     center: Point2D = Field(description="Center point of the ellipse")
@@ -422,10 +600,66 @@ class Ellipse(Primitive):
 
 
 class Line(Primitive):
-    """Line shape with start and end points.
+    """A straight line segment between two points.
     
-    A line is defined by its start and end points. The bounding box
-    is calculated from the min/max coordinates of the endpoints.
+    The Line class represents a straight line segment in 2D space, defined
+    by its start and end points. Unlike infinite lines in mathematics, this
+    represents a finite segment with specific endpoints.
+    
+    Mathematical properties:
+    - Direction vector: (end - start)
+    - Length: |end - start| (Euclidean distance)
+    - Slope: (end.y - start.y) / (end.x - start.x)
+    - Angle: atan2(end.y - start.y, end.x - start.x)
+    
+    Key characteristics:
+    - **Simplicity**: Just two points needed
+    - **Directionality**: Has a defined start and end
+    - **No area**: Infinitesimally thin (styled with stroke only)
+    - **Degenerate case**: Can be a point if start = end
+    
+    Common use cases:
+    - Connectors in diagrams (arrows, relationships)
+    - Axes and grid lines in charts
+    - Geometric constructions and technical drawings  
+    - Path segments and polylines (when combined)
+    - Dividers and separators in UI
+    
+    Attributes:
+        start (Point2D): The starting point of the line segment
+        end (Point2D): The ending point of the line segment
+    
+    Computed properties:
+        - length: Euclidean distance between endpoints
+        - midpoint: Point halfway between start and end
+        - slope: Rise over run (undefined for vertical lines)
+        - angle: Direction angle in radians
+        - is_horizontal/is_vertical: Axis alignment checks
+    
+    Styling notes:
+        - Lines are typically styled with stroke only (no fill)
+        - Stroke width affects visual thickness
+        - End caps and join styles may apply (implementation-specific)
+    
+    Example:
+        >>> # Create a diagonal line
+        >>> line = Line(
+        ...     start=Point2D(x=0, y=0),
+        ...     end=Point2D(x=100, y=100),
+        ...     stroke=Color(r=0, g=0, b=0),
+        ...     stroke_width=2
+        ... )
+        >>> 
+        >>> # Get line properties
+        >>> line.length()  # ~141.42 (sqrt(2) * 100)
+        >>> line.angle()   # ~0.785 radians (45 degrees)
+        >>> 
+        >>> # Create a horizontal line
+        >>> h_line = Line(
+        ...     start=Point2D(x=0, y=50),
+        ...     end=Point2D(x=100, y=50)
+        ... )
+        >>> h_line.is_horizontal()  # True
     """
     
     start: Point2D = Field(description="Start point of the line")
