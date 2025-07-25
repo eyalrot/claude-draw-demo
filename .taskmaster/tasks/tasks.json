@@ -2280,7 +2280,7 @@
           15,
           16
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -2377,7 +2377,7 @@
             "title": "Add backward compatibility",
             "description": "Support format evolution",
             "details": "- Design version handling\n- Implement migration\n- Add compatibility tests\n- Document changes",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2386,7 +2386,7 @@
             "title": "Write compatibility tests",
             "description": "Test version migration",
             "details": "- Test old format loading\n- Verify data preservation\n- Test migration paths\n- Check edge cases",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2395,7 +2395,7 @@
             "title": "Create serialization benchmarks",
             "description": "Measure I/O performance",
             "details": "- Benchmark vs JSON\n- Test compression impact\n- Measure throughput\n- Compare formats",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           }
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T20:54:33.384Z",
+      "updated": "2025-07-25T21:15:33.517Z",
       "description": "Tasks for master context"
     }
   }
