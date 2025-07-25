@@ -1662,7 +1662,7 @@
         "dependencies": [
           13
         ],
-        "status": "in-progress",
+        "status": "done",
         "subtasks": [
           {
             "id": 1,
@@ -1786,7 +1786,7 @@
             "title": "Write batch API tests",
             "description": "Test performance and correctness",
             "details": "Verify batch vs individual performance, test memory locality, validate results",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 14
           },
@@ -1795,7 +1795,7 @@
             "title": "Create integration tests",
             "description": "Test all models working together",
             "details": "Complex transformation chains, mixed operations, real-world scenarios",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 14
           },
@@ -1804,7 +1804,7 @@
             "title": "Write comprehensive benchmarks",
             "description": "Measure and validate performance improvements",
             "details": "Compare with Python baseline, test scaling behavior, profile hotspots",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 14
           }
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T07:42:45.134Z",
+      "updated": "2025-07-25T07:53:00.389Z",
       "description": "Tasks for master context"
     }
   }

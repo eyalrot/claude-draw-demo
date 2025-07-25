@@ -19,6 +19,12 @@ add_executable(claude_draw_tests
     # Memory tests
     memory/test_object_pool.cpp
     
+    # Batch operation tests
+    batch/test_batch_operations.cpp
+    
+    # Integration tests
+    integration/test_integration.cpp
+    
     # Container tests (to be added)
     # containers/test_group.cpp
     # containers/test_layer.cpp

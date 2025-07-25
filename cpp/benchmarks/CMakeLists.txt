@@ -3,17 +3,17 @@ add_executable(claude_draw_benchmarks
     # Main benchmark file
     bench_main.cpp
     
-    # Core benchmarks (to be added)
-    # bench_core.cpp
+    # Core type benchmarks
+    bench_core_types.cpp
+    
+    # SIMD benchmarks
+    bench_simd.cpp
     
     # Shape benchmarks (to be added)
     # bench_shapes.cpp
     
     # Container benchmarks (to be added)
     # bench_containers.cpp
-    
-    # SIMD benchmarks
-    bench_simd.cpp
     
     # Memory benchmarks (to be added)
     # bench_memory.cpp
