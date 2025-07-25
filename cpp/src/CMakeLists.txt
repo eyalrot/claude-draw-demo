@@ -44,17 +44,28 @@ set_target_properties(claude_draw_core PROPERTIES POSITION_INDEPENDENT_CODE ON)
 if(COMPILER_SUPPORTS_AVX2)
     target_compile_definitions(claude_draw_core PUBLIC HAS_AVX2)
     
-    # Add AVX2 specific files when available
-    # target_sources(claude_draw_core PRIVATE simd/transform_avx2.cpp)
-    # set_source_files_properties(simd/transform_avx2.cpp PROPERTIES COMPILE_FLAGS "-mavx2")
+    # Set AVX2 flags for files that use AVX2 intrinsics
+    if(NOT MSVC)
+        set_source_files_properties(
+            core/point2d.cpp
+            core/color.cpp
+            core/transform2d.cpp
+            core/bounding_box.cpp
+            PROPERTIES COMPILE_FLAGS "-mavx2"
+        )
+    endif()
 endif()
 
 if(COMPILER_SUPPORTS_AVX512)
     target_compile_definitions(claude_draw_core PUBLIC HAS_AVX512)
     
-    # Add AVX512 specific files when available
-    # target_sources(claude_draw_core PRIVATE simd/transform_avx512.cpp)
-    # set_source_files_properties(simd/transform_avx512.cpp PROPERTIES COMPILE_FLAGS "-mavx512f")
+    # Set AVX512 flags if needed in the future
+    # if(NOT MSVC)
+    #     set_source_files_properties(
+    #         simd/transform_avx512.cpp
+    #         PROPERTIES COMPILE_FLAGS "-mavx512f"
+    #     )
+    # endif()
 endif()
 
 # Python bindings
