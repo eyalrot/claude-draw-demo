@@ -257,7 +257,7 @@ void bind_core_types(py::module& m) {
         .def("to_hsl", &Color::to_hsl)
         
         // Static methods
-        .def_static("from_hex", &Color::from_hex, py::arg("hex"))
+        .def_static("from_hex", &Color::from_hex, py::arg("hex"), py::arg("alpha") = 255)
         .def_static("from_hsl", &Color::from_hsl, py::arg("h"), py::arg("s"), py::arg("l"), py::arg("a") = 1.0f)
         
         // Comparison
