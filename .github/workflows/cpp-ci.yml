@@ -1,0 +1,234 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [ main, develop, cpp-* ]
+    paths:
+      - 'cpp/**'
+      - '.github/workflows/cpp-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'cpp/**'
+      - '.github/workflows/cpp-ci.yml'
+
+env:
+  BUILD_TYPE: Release
+  CPP_DIR: cpp
+
+jobs:
+  build-and-test:
+    name: Build and Test - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            compiler: gcc
+            cpp_compiler: g++
+          - os: windows-latest
+            compiler: msvc
+            cpp_compiler: msvc
+          - os: macos-latest
+            compiler: clang
+            cpp_compiler: clang++
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-dev
+
+    - name: Install dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install ninja
+
+    - name: Install dependencies (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        choco install ninja
+
+    - name: Configure CMake
+      working-directory: ${{ env.CPP_DIR }}
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} \
+          -DBUILD_TESTS=ON \
+          -DBUILD_BENCHMARKS=ON \
+          -DBUILD_PYTHON_BINDINGS=ON
+
+    - name: Build
+      working-directory: ${{ env.CPP_DIR }}
+      run: cmake --build build --config ${{ env.BUILD_TYPE }} -j 2
+
+    - name: Run Tests
+      working-directory: ${{ env.CPP_DIR }}/build
+      run: ctest -C ${{ env.BUILD_TYPE }} --verbose --output-on-failure
+
+    - name: Run Benchmarks (Quick)
+      working-directory: ${{ env.CPP_DIR }}/build
+      run: ./benchmarks/claude_draw_benchmarks --benchmark_min_time=0.01s
+
+    - name: Test Python Bindings
+      working-directory: ${{ env.CPP_DIR }}
+      run: python3 test_bindings.py
+
+  sanitizers:
+    name: Sanitizers - ${{ matrix.sanitizer }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sanitizer: [address, undefined]
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-dev
+
+    - name: Configure CMake with Sanitizers
+      working-directory: ${{ env.CPP_DIR }}
+      run: |
+        cmake -B build-sanitizer \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DENABLE_SANITIZERS=ON \
+          -DBUILD_TESTS=ON \
+          -DBUILD_BENCHMARKS=OFF \
+          -DBUILD_PYTHON_BINDINGS=OFF
+
+    - name: Build with Sanitizers
+      working-directory: ${{ env.CPP_DIR }}
+      run: cmake --build build-sanitizer -j 2
+
+    - name: Run Tests with Sanitizers
+      working-directory: ${{ env.CPP_DIR }}/build-sanitizer
+      run: ctest --verbose --output-on-failure
+
+  coverage:
+    name: Code Coverage
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build lcov python3-dev
+
+    - name: Configure CMake with Coverage
+      working-directory: ${{ env.CPP_DIR }}
+      run: |
+        cmake -B build-coverage \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DENABLE_COVERAGE=ON \
+          -DBUILD_TESTS=ON \
+          -DBUILD_BENCHMARKS=OFF \
+          -DBUILD_PYTHON_BINDINGS=OFF
+
+    - name: Build with Coverage
+      working-directory: ${{ env.CPP_DIR }}
+      run: cmake --build build-coverage -j 2
+
+    - name: Run Tests
+      working-directory: ${{ env.CPP_DIR }}/build-coverage
+      run: ctest --verbose
+
+    - name: Generate Coverage Report
+      working-directory: ${{ env.CPP_DIR }}/build-coverage
+      run: |
+        lcov --capture --directory . --output-file coverage.info --no-external
+        lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info
+        lcov --list coverage.info
+
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./cpp/build-coverage/coverage.info
+        flags: cpp
+        name: claude-draw-cpp
+        fail_ci_if_error: false
+
+  clang-tidy:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build clang-tidy python3-dev
+
+    - name: Configure CMake
+      working-directory: ${{ env.CPP_DIR }}
+      run: |
+        cmake -B build-tidy \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Debug \
+          -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+    - name: Run clang-tidy
+      working-directory: ${{ env.CPP_DIR }}
+      run: |
+        find src include -name '*.cpp' -o -name '*.h' | \
+          xargs clang-tidy -p build-tidy --warnings-as-errors='*'
+
+  benchmarks:
+    name: Performance Benchmarks
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build python3-dev
+
+    - name: Configure CMake
+      working-directory: ${{ env.CPP_DIR }}
+      run: |
+        cmake -B build \
+          -G Ninja \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_TESTS=OFF \
+          -DBUILD_BENCHMARKS=ON \
+          -DBUILD_PYTHON_BINDINGS=OFF
+
+    - name: Build Benchmarks
+      working-directory: ${{ env.CPP_DIR }}
+      run: cmake --build build --target claude_draw_benchmarks -j 2
+
+    - name: Run Benchmarks
+      working-directory: ${{ env.CPP_DIR }}/build
+      run: |
+        ./benchmarks/claude_draw_benchmarks \
+          --benchmark_format=json \
+          --benchmark_out=benchmark_results.json
+
+    - name: Store Benchmark Result
+      uses: benchmark-action/github-action-benchmark@v1
+      with:
+        tool: 'googlecpp'
+        output-file-path: cpp/build/benchmark_results.json
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        auto-push: true

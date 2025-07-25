@@ -1,0 +1,47 @@
+# Build directories
+build/
+build-*/
+cmake-build-*/
+
+# IDE directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Generated files
+compile_commands.json
+
+# Coverage files
+*.gcno
+*.gcda
+*.gcov
+coverage/
+coverage.info
+coverage_html/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Archives
+*.tar.gz
+*.zip
+
+# Temporary files
+*.tmp
+*.temp
