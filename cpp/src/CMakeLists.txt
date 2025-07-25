@@ -10,8 +10,9 @@ add_library(claude_draw_core STATIC
     # Core types
     core/bounding_box.cpp
     
-    # Shapes (header-only for now)
+    # Shapes
     shapes/placeholder.cpp
+    shapes/shape_batch_ops.cpp
     
     # Containers (to be added)
     # containers/container.cpp
@@ -48,6 +49,7 @@ if(COMPILER_SUPPORTS_AVX2)
             core/color.cpp
             core/transform2d.cpp
             core/bounding_box.cpp
+            shapes/shape_batch_ops.cpp
             PROPERTIES COMPILE_FLAGS "-mavx2"
         )
     endif()
