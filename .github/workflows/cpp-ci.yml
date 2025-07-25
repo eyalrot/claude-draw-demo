@@ -129,7 +129,7 @@ jobs:
       working-directory: ${{ env.CPP_DIR }}/build-coverage
       run: |
         lcov --capture --directory . --output-file coverage.info --no-external
-        lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info --ignore-errors empty
+        lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info --ignore-errors empty,unused
         lcov --list coverage.info --ignore-errors empty
 
     - name: Upload Coverage to Codecov
