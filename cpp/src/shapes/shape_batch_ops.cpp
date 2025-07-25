@@ -1,6 +1,9 @@
 #include "claude_draw/shapes/shape_batch_ops.h"
 #include <algorithm>
 #include <limits>
+#ifdef __AVX2__
+#include <immintrin.h>
+#endif
 
 namespace claude_draw {
 namespace shapes {
@@ -139,12 +142,22 @@ void set_fill_colors(void* shapes[], const ShapeType types[],
                     size_t count, const Color& color) {
     #pragma omp parallel for
     for (size_t i = 0; i < count; ++i) {
-        // Lines don't have fill color
-        if (types[i] != ShapeType::Line) {
-            dispatch_shape_op(shapes[i], types[i], 
-                [&color](auto& shape) {
-                    shape.set_fill_color(color);
-                });
+        // Only set fill color for shapes that support it
+        switch (types[i]) {
+            case ShapeType::Circle:
+                static_cast<Circle*>(shapes[i])->set_fill_color(color);
+                break;
+            case ShapeType::Rectangle:
+                static_cast<Rectangle*>(shapes[i])->set_fill_color(color);
+                break;
+            case ShapeType::Ellipse:
+                static_cast<Ellipse*>(shapes[i])->set_fill_color(color);
+                break;
+            case ShapeType::Line:
+                // Lines don't have fill color, skip
+                break;
+            default:
+                break;
         }
     }
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "shape_base_optimized.h"
+#include "shape_validation.h"
 #include "../core/transform2d.h"
 #include <cmath>
 #include <memory>
@@ -23,10 +24,20 @@ public:
     // Constructors
     Circle() : data_() {}
     
-    Circle(float x, float y, float radius) : data_(x, y, radius) {}
+    Circle(float x, float y, float radius) : data_(x, y, radius) {
+        VALIDATE_IF_ENABLED(validate::is_finite(x), "Circle center x must be finite");
+        VALIDATE_IF_ENABLED(validate::is_finite(y), "Circle center y must be finite");
+        VALIDATE_IF_ENABLED(validate::is_finite(radius), "Circle radius must be finite");
+        VALIDATE_IF_ENABLED(validate::is_non_negative(radius), "Circle radius must be non-negative");
+    }
     
     Circle(const Point2D& center, float radius) 
-        : data_(center.x, center.y, radius) {}
+        : data_(center.x, center.y, radius) {
+        VALIDATE_IF_ENABLED(validate::is_finite(center.x), "Circle center x must be finite");
+        VALIDATE_IF_ENABLED(validate::is_finite(center.y), "Circle center y must be finite");
+        VALIDATE_IF_ENABLED(validate::is_finite(radius), "Circle radius must be finite");
+        VALIDATE_IF_ENABLED(validate::is_non_negative(radius), "Circle radius must be non-negative");
+    }
     
     // Copy and move constructors
     Circle(const Circle&) = default;
@@ -193,6 +204,14 @@ public:
     // Clone operation
     std::unique_ptr<Circle> clone() const {
         return std::make_unique<Circle>(*this);
+    }
+    
+    // Validation
+    bool is_valid() const {
+        return validate::is_finite(data_.center_x) &&
+               validate::is_finite(data_.center_y) &&
+               validate::is_finite(data_.radius) &&
+               validate::is_non_negative(data_.radius);
     }
     
     // Direct access to underlying data (for batch operations)
