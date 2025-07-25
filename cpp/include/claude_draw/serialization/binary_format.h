@@ -68,6 +68,25 @@ enum class FormatFlags : uint32_t {
     ChecksumCRC32 = 1 << 3 // Has CRC32 checksum
 };
 
+// Enable bitwise operations on FormatFlags
+inline FormatFlags operator|(FormatFlags a, FormatFlags b) {
+    return static_cast<FormatFlags>(static_cast<uint32_t>(a) | static_cast<uint32_t>(b));
+}
+
+inline FormatFlags operator&(FormatFlags a, FormatFlags b) {
+    return static_cast<FormatFlags>(static_cast<uint32_t>(a) & static_cast<uint32_t>(b));
+}
+
+inline FormatFlags& operator|=(FormatFlags& a, FormatFlags b) {
+    a = a | b;
+    return a;
+}
+
+inline FormatFlags& operator&=(FormatFlags& a, FormatFlags b) {
+    a = a & b;
+    return a;
+}
+
 /**
  * @brief Main file header
  */

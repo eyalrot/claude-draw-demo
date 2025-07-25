@@ -2314,7 +2314,7 @@
             "title": "Write zero-copy tests",
             "description": "Test memory-mapped I/O",
             "details": "- Test direct access\n- Verify data integrity\n- Test alignment\n- Check performance",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2323,7 +2323,7 @@
             "title": "Add compression support",
             "description": "Optional zstd/lz4 compression",
             "details": "- Integrate compression libs\n- Add compression levels\n- Implement streaming\n- Handle errors",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2332,7 +2332,7 @@
             "title": "Write compression tests",
             "description": "Test compressed formats",
             "details": "- Test compression ratios\n- Verify decompression\n- Test streaming mode\n- Check performance",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [],
             "parentTaskId": 18
           },
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T20:21:29.924Z",
+      "updated": "2025-07-25T20:29:22.390Z",
       "description": "Tasks for master context"
     }
   }
