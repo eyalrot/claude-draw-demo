@@ -9,6 +9,7 @@ using namespace claude_draw;
 
 // Forward declarations for binding functions
 void bind_core_types(py::module& m);
+void init_batch_ops(py::module& m);
 // void bind_shapes(py::module& m);
 // void bind_containers(py::module& m);
 
@@ -61,6 +62,7 @@ PYBIND11_MODULE(_claude_draw_cpp, m) {
     
     // Bind types
     bind_core_types(core);
+    init_batch_ops(m);  // Batch operations at top level
     // bind_shapes(shapes);
     // bind_containers(containers);
     

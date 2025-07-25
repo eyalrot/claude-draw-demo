@@ -6,6 +6,9 @@ pybind11_add_module(_claude_draw_cpp MODULE
     # Core type bindings
     core_types.cpp
     
+    # Batch operations
+    batch_ops.cpp
+    
     # Shape bindings (to be added)
     # shape_bindings.cpp
     

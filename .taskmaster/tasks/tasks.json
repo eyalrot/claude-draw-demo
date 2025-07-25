@@ -1777,7 +1777,7 @@
             "title": "Add batch creation APIs",
             "description": "Design APIs for creating thousands of objects at once",
             "details": "Bulk allocation methods, iterator-based construction, performance optimizations",
-            "status": "in-progress",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 14
           },
@@ -1786,7 +1786,7 @@
             "title": "Write batch API tests",
             "description": "Test performance and correctness",
             "details": "Verify batch vs individual performance, test memory locality, validate results",
-            "status": "pending",
+            "status": "in-progress",
             "dependencies": [],
             "parentTaskId": 14
           },
@@ -2948,7 +2948,7 @@
     ],
     "metadata": {
       "created": "2025-07-17T14:37:11.669Z",
-      "updated": "2025-07-25T07:38:16.473Z",
+      "updated": "2025-07-25T07:42:45.134Z",
       "description": "Tasks for master context"
     }
   }

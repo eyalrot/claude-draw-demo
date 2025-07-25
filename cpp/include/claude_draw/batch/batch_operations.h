@@ -64,7 +64,6 @@ public:
      */
     static std::vector<memory::PooledPtr<Point2D, memory::TypePools::POINT_BLOCK_SIZE>> 
     create_pooled_points(size_t count, float x = 0.0f, float y = 0.0f) {
-        auto& pools = memory::TypePools::instance();
         std::vector<memory::PooledPtr<Point2D, memory::TypePools::POINT_BLOCK_SIZE>> result;
         result.reserve(count);
         
