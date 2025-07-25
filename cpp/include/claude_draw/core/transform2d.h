@@ -42,22 +42,26 @@ public:
         m[0] = m00; m[1] = m01; m[2] = m02;
         m[3] = m10; m[4] = m11; m[5] = m12;
         m[6] = m20; m[7] = m21; m[8] = m22;
+        padding = 0.0f;
     }
     
     // Copy constructor
     Transform2D(const Transform2D& other) noexcept {
         std::memcpy(m, other.m, sizeof(m));
+        padding = other.padding;
     }
     
     // Move constructor
     Transform2D(Transform2D&& other) noexcept {
         std::memcpy(m, other.m, sizeof(m));
+        padding = other.padding;
     }
     
     // Copy assignment
     Transform2D& operator=(const Transform2D& other) noexcept {
         if (this != &other) {
             std::memcpy(m, other.m, sizeof(m));
+            padding = other.padding;
         }
         return *this;
     }
@@ -66,6 +70,7 @@ public:
     Transform2D& operator=(Transform2D&& other) noexcept {
         if (this != &other) {
             std::memcpy(m, other.m, sizeof(m));
+            padding = other.padding;
         }
         return *this;
     }
@@ -102,6 +107,7 @@ public:
         m[0] = 1.0f; m[1] = 0.0f; m[2] = 0.0f;
         m[3] = 0.0f; m[4] = 1.0f; m[5] = 0.0f;
         m[6] = 0.0f; m[7] = 0.0f; m[8] = 1.0f;
+        padding = 0.0f;
     }
     
     // Translation

@@ -46,4 +46,3 @@ CheckOptions:
     value:           '1'
   - key:             cppcoreguidelines-explicit-virtual-functions.IgnoreDestructors
     value:           '1'
-...

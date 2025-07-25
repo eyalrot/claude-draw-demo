@@ -8,8 +8,6 @@ add_executable(claude_draw_tests
     core/test_point2d.cpp
     core/test_color.cpp
     core/test_transform2d.cpp
-    
-    # Core tests
     core/test_bounding_box.cpp
     
     # Shape tests (to be added)
@@ -23,6 +21,34 @@ add_executable(claude_draw_tests
     # containers/test_layer.cpp
     # containers/test_spatial_index.cpp
 )
+
+# Add bindings tests if Python bindings are enabled
+if(BUILD_PYTHON_BINDINGS)
+    # Create separate test executable for bindings tests
+    add_executable(claude_draw_bindings_tests
+        test_main.cpp
+        bindings/test_conversions.cpp
+    )
+    
+    target_link_libraries(claude_draw_bindings_tests
+        PRIVATE
+            claude_draw_core
+            GTest::gtest
+            GTest::gtest_main
+            pybind11::embed  # For embedded Python interpreter
+    )
+    
+    target_include_directories(claude_draw_bindings_tests
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}
+            ${CMAKE_SOURCE_DIR}/include
+    )
+    
+    gtest_discover_tests(claude_draw_bindings_tests
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        PROPERTIES TIMEOUT 30
+    )
+endif()
 
 # Link with core library and Google Test
 target_link_libraries(claude_draw_tests 
