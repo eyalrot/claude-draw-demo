@@ -38,6 +38,9 @@ add_executable(claude_draw_tests
     serialization/test_simple_serialization.cpp
     serialization/test_zero_copy.cpp
     serialization/test_compression.cpp
+    serialization/test_streaming.cpp
+    serialization/test_streaming_simple.cpp
+    serialization/test_validation.cpp
     
     # Batch operation tests
     batch/test_batch_operations.cpp

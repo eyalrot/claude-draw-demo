@@ -1,6 +1,7 @@
 #pragma once
 
 #include "claude_draw/serialization/binary_format.h"
+#include "claude_draw/serialization/validation.h"
 #include "claude_draw/memory/arena_allocator.h"
 #include <vector>
 #include <fstream>
@@ -132,15 +133,57 @@ public:
     
     // File I/O
     void write_to_file(const std::string& filename) {
+        write_to_file_with_header(filename, true);
+    }
+    
+    void write_to_file_with_header(const std::string& filename, bool include_checksum = true) {
+        // Calculate checksum of data if requested
+        uint32_t checksum = 0;
+        if (include_checksum) {
+            checksum = CRC32::calculate(buffer_.data(), buffer_.size());
+        }
+        
+        // Create file header
+        FileHeader header;
+        header.magic = MAGIC_NUMBER;
+        header.version_major = CURRENT_VERSION_MAJOR;
+        header.version_minor = CURRENT_VERSION_MINOR;
+        header.flags = 0;
+        header.compression = CompressionType::None;
+        header.data_offset = sizeof(FileHeader);
+        header.total_size = sizeof(FileHeader) + buffer_.size();
+        header.object_count = static_cast<uint32_t>(object_index_.size());
+        header.checksum = checksum;
+        
+        // Write to file
         std::ofstream file(filename, std::ios::binary);
         if (!file) {
             throw std::runtime_error("Failed to open file for writing: " + filename);
         }
         
+        // Write header with endianness conversion
+        write_file_header_to_stream(file, header);
+        
+        // Write data
         file.write(reinterpret_cast<const char*>(buffer_.data()), buffer_.size());
         if (!file) {
             throw std::runtime_error("Failed to write to file: " + filename);
         }
+    }
+    
+    // Helper to write file header to a stream
+    static void write_file_header_to_stream(std::ostream& stream, const FileHeader& header) {
+        FileHeader file_header = header;
+        file_header.magic = to_file_endian(file_header.magic);
+        file_header.version_major = to_file_endian(file_header.version_major);
+        file_header.version_minor = to_file_endian(file_header.version_minor);
+        file_header.flags = to_file_endian(file_header.flags);
+        file_header.total_size = to_file_endian(file_header.total_size);
+        file_header.data_offset = to_file_endian(file_header.data_offset);
+        file_header.object_count = to_file_endian(file_header.object_count);
+        file_header.checksum = to_file_endian(file_header.checksum);
+        
+        stream.write(reinterpret_cast<const char*>(&file_header), sizeof(FileHeader));
     }
     
     // Buffer position control
@@ -237,11 +280,15 @@ public:
     void flush_chunk() {
         if (current_chunk_objects_ == 0) return;
         
+        // Calculate checksum of chunk data
+        auto& buffer = chunk_writer_.get_buffer();
+        uint32_t checksum = CRC32::calculate(buffer.data(), buffer.size());
+        
         ChunkHeader chunk_header;
         chunk_header.chunk_size = static_cast<uint32_t>(chunk_writer_.size());
         chunk_header.object_count = current_chunk_objects_;
         chunk_header.flags = 0;
-        chunk_header.checksum = 0;  // TODO: Calculate CRC32
+        chunk_header.checksum = checksum;
         
         // Write chunk header
         file_.write(reinterpret_cast<const char*>(&chunk_header), sizeof(ChunkHeader));
