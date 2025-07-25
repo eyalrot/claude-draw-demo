@@ -163,7 +163,7 @@ const char* SimdCapabilities::get_capabilities_string() noexcept {
     if (cpu_info_.avx) offset += snprintf(buffer + offset, sizeof(buffer) - offset, " AVX");
     if (cpu_info_.avx2) offset += snprintf(buffer + offset, sizeof(buffer) - offset, " AVX2");
     if (cpu_info_.avx512f) offset += snprintf(buffer + offset, sizeof(buffer) - offset, " AVX512F");
-    if (cpu_info_.fma) offset += snprintf(buffer + offset, sizeof(buffer) - offset, " FMA");
+    if (cpu_info_.fma) snprintf(buffer + offset, sizeof(buffer) - offset, " FMA");
     
     return buffer;
 }

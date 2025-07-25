@@ -18,7 +18,6 @@ Checks: >
 
 WarningsAsErrors: ''
 HeaderFilterRegex: '.*claude_draw.*'
-AnalyzeTemporaryDtors: false
 
 CheckOptions:
   - key:             readability-identifier-naming.ClassCase

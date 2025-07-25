@@ -68,6 +68,7 @@ PYBIND11_MODULE(_claude_draw_cpp, m) {
     m.def("set_thread_pool_size", [](size_t num_threads) {
         // TODO: Implement thread pool configuration
         py::print("Thread pool configuration not yet implemented");
+        (void)num_threads;  // Suppress unused parameter warning
     }, py::arg("num_threads"), "Set the number of threads for parallel operations");
     
     m.def("get_memory_usage", []() -> size_t {
@@ -79,5 +80,6 @@ PYBIND11_MODULE(_claude_draw_cpp, m) {
     m.def("enable_simd", [](bool enable) {
         // TODO: Implement SIMD control
         py::print("SIMD control not yet implemented");
+        (void)enable;  // Suppress unused parameter warning
     }, py::arg("enable") = true, "Enable or disable SIMD optimizations");
 }

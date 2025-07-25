@@ -129,8 +129,8 @@ jobs:
       working-directory: ${{ env.CPP_DIR }}/build-coverage
       run: |
         lcov --capture --directory . --output-file coverage.info --no-external
-        lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info
-        lcov --list coverage.info
+        lcov --remove coverage.info '*/tests/*' '*/_deps/*' --output-file coverage.info --ignore-errors empty
+        lcov --list coverage.info --ignore-errors empty
 
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v3
